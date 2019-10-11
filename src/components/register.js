@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import  { Link } from 'react-router-dom';
 
 export class register extends Component {
     displayContentOnChange = (e) => {
@@ -28,7 +29,9 @@ export class register extends Component {
                                     <input type = "password" className = "form-control" autoComplete = "new-password" />
                                 </div>
                             </div>
+                            <Link to ={'./login'}>
                             <button type = "submit" className = "btn signUpBtn">Sign me up!</button>
+                            </Link>
                         </form>
                     </div>
                 </div>

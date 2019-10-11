@@ -28,7 +28,9 @@ class login extends Component {
                                     <input type = "email" className = "form-control"/>
                                 </div>
                             </div>
+                            <Link to={'./dashboard'}>
                             <button type = "submit" className = "btn signUpBtn">Log in</button>
+                            </Link>
                             <p className='forgetPassword'>Forgot your password? <a href =''> Click here</a></p>
                         </form>
                     </div>

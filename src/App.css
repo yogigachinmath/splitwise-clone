@@ -3,16 +3,10 @@
   padding: 0;
 }
 
-<<<<<<< HEAD
-.signup h3,
-h6 {
-  font-weight: normal;
-=======
 /* Signup */
 
 .signup h3, h6 {
     font-weight: normal;
->>>>>>> b88765af2ccb8d260b452088a24701677bcc80dd
 }
 
 .main {
@@ -69,7 +63,6 @@ input[type='password'] {
 
 /* Screen width 800px */
 @media screen and (max-width: 992px) {
-<<<<<<< HEAD
   .logo {
     display: none;
   }
@@ -105,11 +98,10 @@ header {
 .navbar-brand img{
     width: 30%;
 }
-=======
     .signup .logo {
         display: none;
     }
-}
+
 
 /* /Signup */
 
@@ -172,4 +164,3 @@ header {
     width: 15em;
 }
 /* /Dashboard */
->>>>>>> b88765af2ccb8d260b452088a24701677bcc80dd

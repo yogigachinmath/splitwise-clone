@@ -1,6 +1,7 @@
 import React from "react";
-import Register from "./components/register";
 import {BrowserRouter as Router, Route} from "react-router-dom";
+import Register from "./components/Register";
+import Dashboard from "./components/Dashboard";
 
 import "./App.css";
 
@@ -9,6 +10,7 @@ function App() {
     <Router>
       <div className="App">
         <Route path = "/register" component = {Register} />
+        <Route path = "/dashboard" component = {Dashboard} />
       </div>
     </Router>
   );

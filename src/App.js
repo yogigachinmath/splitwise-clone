@@ -6,6 +6,7 @@ import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
 
 import "./App.css";
+import Login from './components/auth/login' 
 
 function App() {
   return (

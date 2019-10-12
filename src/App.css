@@ -1,3 +1,7 @@
+.font-mono {
+  font-family: "Montserrat";
+}
+
 .header {
   max-width: 1280px;
   margin: auto;
@@ -6,36 +10,139 @@
 .navbar {
   padding: 0px;
 }
+.nav-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.green-color {
+  color: #1cc29f;
+}
+
+.green-background {
+  color: #fff;
+  background-color: #1cc29f;
+  box-shadow: 0 2px 0 0 rgba(55, 59, 63, 0.5);
+}
+
 .slider {
   padding: 0 10rem;
   background-size: 1250px;
   background-position: center 0px;
   background-image: url("./facets.png");
   width: 100%;
-  height: 200px;
   background-repeat: repeat-x;
 }
 .slider-left {
   width: 50%;
 }
-
+.slider-right {
+  padding: 50px 25px;
+  box-sizing: border-box;
+}
+.icon-container {
+  width: 14rem;
+}
 .slider-icon {
-  width: 3rem;
-  color: blue;
+  opacity: 0.5;
+  font-size: 3rem;
 }
 #plane-icon {
-  fill: #1cc29f;
+  color: #1cc29f;
 }
 #home-icon {
-  fill: #8656cd;
+  color: #8656cd;
 }
 #heart-icon {
-  fill: #a6002f;
+  color: #a6002f;
 }
-#star-icon {
-  fill: #383b3f;
+#all-icon {
+  color: #383b3f;
 }
 
+.sign-up-btn {
+  font-weight: 600;
+  padding: 1rem 4rem;
+  border-radius: 5px;
+}
+
+.slider-slides {
+  font-size: 25rem;
+  opacity: 0.4;
+}
+.slider-slides:hover {
+  opacity: 1;
+}
 h1 {
+  font-family: "Montserrat";
+  max-width: 23rem;
   font-weight: 700;
+}
+p {
+  max-width: 20rem;
+  font-size: 1.125rem;
+  margin: 1.5rem 0;
+}
+.signup h3,
+h6 {
+  font-weight: normal;
+}
+
+.main {
+  justify-content: center;
+  margin-top: 6em;
+  display: flex;
+  justify-content: space-around;
+}
+
+.introText {
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #a1a2a3;
+  margin-bottom: 1em;
+}
+
+.row {
+  width: 100%;
+  justify-content: center;
+}
+
+.logo img {
+  width: 12em;
+}
+
+.form {
+  margin-left: 2em;
+}
+
+.signUpBtn {
+  padding: 0.4em;
+  font-size: 1.4em;
+  background: #ff652f;
+  color: #fff;
+}
+
+.signUpBtn:hover {
+  background: #ee541e;
+  color: #fff;
+}
+
+.signup input[type="text"] {
+  font-size: 32px;
+}
+
+.signup input[type="email"],
+input[type="password"] {
+  font-size: 20px;
+}
+
+.displayOnChange {
+  display: none;
+}
+
+/* Screen width 800px */
+@media screen and (max-width: 992px) {
+  .logo {
+    display: none;
+  }
 }

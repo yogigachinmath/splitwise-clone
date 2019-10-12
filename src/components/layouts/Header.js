@@ -9,14 +9,14 @@ class Header extends Component {
           <a className="navbar-brand" href="/">
             <img src={logo} className="App-logo" alt="logo" />
           </a>
-          <ul className="nav nav-pills">
+          <ul className="font-mono nav nav-pills">
             <li className="nav-item">
-              <a className="nav-link" href="/">
+              <a className="nav-link green-color" href="/">
                 Log in
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/">
+              <a className="nav-link green-background" href="/register">
                 Sign Up
               </a>
             </li>

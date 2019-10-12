@@ -8,7 +8,7 @@ export class register extends Component {
         return (
             <div className = "container main">
                 <div className = "row">
-                    <div className = "logo">
+                    <div className = "signup-logo">
                         <img src = "https://dx0qysuen8cbs.cloudfront.net/assets/core/logo-square-65a6124237868b1d2ce2f5db2ab0b7c777e2348b797626816400534116ae22d7.svg" alt = "logo" />
                     </div>
                     <div className = "form signup">
@@ -28,7 +28,7 @@ export class register extends Component {
                                     <input type = "password" className = "form-control" autoComplete = "new-password" required />
                                 </div>
                             </div>
-                            <button type = "submit" className = "btn signUpBtn">Sign me up!</button>
+                            <button type = "submit" className = "btn btn-orange signUpBtn">Sign me up!</button>
                         </form>
                     </div>
                 </div>

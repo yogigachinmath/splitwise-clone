@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom'
+import {BrowserRouter,Link,Route} from 'react-router-dom'
+import Register from './register'
 
 class Header extends Component {
   render() {
@@ -20,7 +21,7 @@ class Header extends Component {
             </li>
           </ul>
         </nav>  
-      </div>
+      </div>    
     );
   }
 }

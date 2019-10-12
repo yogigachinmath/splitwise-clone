@@ -1,14 +1,33 @@
 import React, { Component } from 'react';
 import Header from '../nav'
-import {Link} from 'react-router-dom'
+import {BrowserRouter,Link,Route} from 'react-router-dom'
+import Register from '../register';
+import Dashboard from '../Dashboard';
+import fire from '../../config/fire';
 
 class login extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        this.state = {
+            email:'',
+            password:''
+        }
+        this.login = this.login.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(e){
+        this.setState ({[e.target.name]:e.target.value})
+    }
+    login(e){
+        fire.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
+            
+        }).catch((error)=>{
+            console.log(error);
+        });
     }
     render() { 
         return (
-         <React.Fragment>
+            <React.Fragment>
             <Header />
             <div className = "container main">
                 <div className = "row">
@@ -20,16 +39,16 @@ class login extends Component {
                             <h6 className = "introText">WELCOME TO SPLITWISE</h6>
                             <h6>Email address</h6>
                             <div className = "form-group">
-                                <input type = "text" className = "form-control"/>
+                                <input type = "email" value = {this.state.name} onChange={this.handleChange} name = 'email' className = "form-control"/>
                             </div>
                             <div className = "loginCred">
                                 <div className = "form-group">
                                     <h6>Password</h6>
-                                    <input type = "email" className = "form-control"/>
+                                    <input value={this.state.name} onChange={this.handleChange} type = 'password' name = 'password' className = "form-control"/>
                                 </div>
                             </div>
-                            <Link to={'./dashboard'}>
-                            <button type = "submit" className = "btn signUpBtn">Log in</button>
+                            <Link to = {'./dashboard'}>
+                            <button type = "submit" onClick={this.login} className = "btn signUpBtn">Log in</button>
                             </Link>
                             <p className='forgetPassword'>Forgot your password? <a href =''> Click here</a></p>
                         </form>

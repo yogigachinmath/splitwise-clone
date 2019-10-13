@@ -3,6 +3,19 @@
   padding: 0;
 }
 
+/* Miscellaneous */
+.btn-orange {
+  background: #ff652f;
+  color: #fff;
+}
+
+.btn-orange:hover {
+  background: #ee541e;
+  color: #fff;
+}
+/* /Miscellaenous */
+/* Signup */
+
 .signup h3,
 h6 {
   font-weight: normal;
@@ -15,7 +28,8 @@ h6 {
   justify-content: space-around;
 }
 
-.introText {
+.introText,
+.addGroupText {
   text-transform: uppercase;
   font-weight: 500;
   color: #a1a2a3;
@@ -28,26 +42,24 @@ h6 {
 }
 
 .logo img {
-  width: 12em;
+  width: 10em;
 }
 
 .form {
   margin-left: 2em;
 }
 
+.App-logo {
+  height: 2em;
+}
+
 .signUpBtn {
   padding: 0.4em;
   font-size: 1.4em;
-  background: #ff652f;
-  color: #fff;
 }
 
-.signUpBtn:hover {
-  background: #ee541e;
-  color: #fff;
-}
-
-.signup input[type='text'] {
+.signup input[type='text'],
+.bigbox {
   font-size: 32px;
 }
 
@@ -62,38 +74,109 @@ input[type='password'] {
 
 /* Screen width 800px */
 @media screen and (max-width: 992px) {
-  .logo {
+  .signup-logo {
     display: none;
+  }
+  .addApartment-logo {
+    display: none;
+  }
+  .addFriendForm input {
+    width: 13em;
+  }
+  .addFriendForm {
+    justify-content: flex-start;
   }
 }
 
-/* login */
+/* /Signup */
 
-.forgetPassword {
-  font-size: 15px;
-  margin-top: 2%;
-}
-header {
-  padding: 1.25rem 2rem;
-}
+/* navbar */
 .navbar {
-  padding: 0px;
-  background-color:#5bc5a7 ;
-  display: flex;
-  justify-content: space-around;
+  background: #5bc5a7;
 }
-.login{
-    font-size: 1em;
-    background: #5bc5a7;
-    color: #fff;
-    margin: 1em;
+.navbar .logo {
+  height: 1.5em;
+  border: 2px solid #fff;
 }
-.signUp{
-    font-size: 1em;
-    background: #ff652f;
-    color: #fff;
-    margin: 1em;
+
+.userName {
+  color: #fff;
 }
-.navbar-brand img{
-    width: 30%;
+
+.dropdown-toggle {
+  color: #fff;
+  cursor: pointer;
 }
+.dropdown-toggle:hover {
+  background: #449c83;
+}
+.text-logo {
+  color: #fff;
+  margin-left: 0.5em;
+  font-weight: 600;
+}
+/* /navbar */
+
+/* Dashboard */
+.welcome-content {
+  margin-left: 4em;
+}
+.dash-logo {
+  height: 3em;
+}
+.welcomeMsg {
+  font-size: 2em;
+  margin-left: 0.2em;
+}
+.question {
+  margin-top: 2em;
+  text-align: center;
+}
+.userDummyPic,
+.addApartment .profileImg {
+  height: 1.5em;
+}
+.orange-person img {
+  height: 20em;
+}
+.addGrpBtn,
+.addAptBtn {
+  padding: 0.4em;
+  font-size: 1.7em;
+  width: 15em;
+  margin-bottom: 0.6em;
+}
+
+.skipBtn {
+  padding: 0.4em;
+  font-size: 1.7em;
+  width: 15em;
+}
+/* /Dashboard */
+
+/* createGroup */
+.addApartment .userArea {
+  justify-content: flex-start;
+}
+.addFriendForm {
+  margin: 0;
+}
+.userArea {
+  margin: 0;
+}
+.addFriendForm input {
+  padding: 0 0.2em;
+}
+.removeAddFriendForm {
+  color: red;
+  font-size: 1.4em;
+  cursor: pointer;
+}
+.appendNewFriendForm {
+  cursor: pointer;
+  color: blue;
+}
+.appendNewFriendForm:hover {
+  text-decoration: underline;
+}
+/* /createGroup */

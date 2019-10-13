@@ -1,10 +1,30 @@
 import React, { Component } from 'react';
 import Header from '../nav'
-import {Link} from 'react-router-dom'
+import {BrowserRouter,Link,Route,Redirect} from 'react-router-dom'
+import fire from '../../config/fire';
 
 class login extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        console.log(props);
+        this.state = {
+            email:'',
+            password:''
+        }
+        this.login = this.login.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(e){
+        this.setState ({[e.target.name]:e.target.value})
+    }
+    login(e){
+        e.preventDefault();
+        fire.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
+            console.log(u);
+        }).catch((error)=>{
+            console.log(error);
+            // <Redirect to = '/dashboard'/>
+        });
     }
     render() { 
         return (
@@ -28,8 +48,8 @@ class login extends Component {
                                     <input type = "email" className = "form-control"/>
                                 </div>
                             </div>
-                            <button type = "submit" className = "btn signUpBtn">Log in</button>
-                            <p className='forgetPassword'>Forgot your password? <a href =''> Click here</a></p>
+                            <button type = "submit" onClick ={this.login} className = "btn btn-orange signUpBtn">Log in</button>
+                            <p className='forgetPassword'>Forgot your password? <a> Click here</a></p>
                         </form>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ import Login from './components/auth/login';
 import fire from './config/fire';
 import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
+import PrivateRouteLogin from './components/auth/privaterouterlogin'
 
 
 class App extends React.Component {
@@ -36,9 +37,9 @@ class App extends React.Component {
         <div className="App">
           <Switch>
           <Route path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-          {console.log(this.state.authorized)}
-          <PrivateRoute  path='/dashboard' authed={this.state.authorized} component={Dashboard} />
+          {/* <Route exact path="/login" component={Login} /> */}
+          <PrivateRouteLogin  path='/login' authed={this.state.authorized} component={Login} />
+          <PrivateRoute  path='/dashboard' authed={this.state.authorized} component={Dashboard} />      
             {/* <Route path="/dashboard" component={Dashboard} /> */}
             <Route path = "/new/apartment" component = {AddApartment} />
         <Route path = "/dash/main" component = {DashboardMain} />

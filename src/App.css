@@ -21,6 +21,10 @@ h6 {
   font-weight: normal;
 }
 
+.errorMsg {
+  display: none;
+}
+
 .main {
   justify-content: center;
   margin-top: 6em;
@@ -63,8 +67,8 @@ h6 {
   font-size: 32px;
 }
 
-.signup input[type="email"],
-input[type="password"] {
+.signup input[type='email'],
+input[type='password'] {
   font-size: 20px;
 }
 

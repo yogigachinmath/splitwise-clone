@@ -59,8 +59,6 @@ export class register extends Component {
                   <h6>
                     Here's my <b>email address</b>:
                   </h6>
-                    value={this.state.name}
-                  </h6>
                   <input
                     value={this.state.name}
                     onChange={this.handleChange}

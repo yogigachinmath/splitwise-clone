@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import userDummyPic from "./user.png";
+import fire from '../../config/fire';
 
 class Header extends Component {
+  constructor(props){
+    super(props);
+  }
+  logout(e){
+    fire.auth().signOut().then((u)=>{
+      console.log('signedout successfully');
+    })
+    .catch((error)=>console.log(error))
+  }
   render() {
     return (
       <div className="header">
@@ -42,7 +52,7 @@ class Header extends Component {
                   <a className="dropdown-item" href="/create-group">
                     Create a group
                   </a>
-                  <a className="dropdown-item" href="/logout">
+                  <a className="dropdown-item" onClick ={this.logout} href="/login">
                     Log out
                   </a>
                 </div>

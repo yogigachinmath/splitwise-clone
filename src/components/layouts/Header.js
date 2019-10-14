@@ -16,17 +16,6 @@ class Header extends Component {
               <span className="text-logo">Splitwise</span>
             </a>
             <ul className="nav nav-pills">
-              {/* <li className="nav-item">
-             <a className="nav-link" href="/">
-               Log in
-             </a>
-           </li>
-           <li className="nav-item">
-             <a className="nav-link" href="/">
-               Sign Up
-             </a>
-           </li> */}
-              {/* <li className = "nav-item">   */}
               <div className="dropdown">
                 <div
                   className="dropdown-toggle"
@@ -47,7 +36,6 @@ class Header extends Component {
                   </a>
                 </div>
               </div>
-              {/* </li> */}
             </ul>
           </div>
         </nav>

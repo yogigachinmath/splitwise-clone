@@ -46,4 +46,4 @@ export class DashboardMain extends Component {
     }
 }
 
-export default DashboardMain
+export default DashboardMain;

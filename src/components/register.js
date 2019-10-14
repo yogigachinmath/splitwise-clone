@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
-import fire from '../config/fire';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import fire from "../config/fire";
 
 export class register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: '',
-      email: '',
-      password: ''
+      username: "",
+      email: "",
+      password: ""
     };
     this.register = this.register.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   displayContentOnChange = e => {
-    e.target.parentElement.nextSibling.style.display = 'block';
+    e.target.parentElement.nextSibling.style.display = "block";
     this.setState({ [e.target.name]: e.target.value });
   };
   handleChange(e) {
@@ -94,6 +94,7 @@ export class register extends Component {
                     onChange={this.handleChange} name="password" className = "form-control" autoComplete = "new-password" required />
                                 </div>
               </div>
+              <Link to={"./dashboard"}>
                 <button
                   type="submit"
                   className="btn btn-orange signUpBtn"
@@ -101,6 +102,7 @@ export class register extends Component {
                 >
                   Sign me up!
                 </button>
+                </Link>
             </form>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
-import Register from './register';
+import Register from '../register';
 
 class Header extends Component {
   render() {

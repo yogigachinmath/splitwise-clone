@@ -1,7 +1,122 @@
-* {
-  margin: 0;
-  padding: 0;
+.font-mono {
+  font-family: "Montserrat";
 }
+
+/* home page header */
+.header {
+  max-width: 1280px;
+  margin: auto;
+  padding: 1.25rem 2rem;
+}
+.navbar {
+  padding: 0px;
+}
+.nav-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.green-color {
+  color: #1cc29f;
+}
+
+.green-background {
+  color: #fff;
+  background-color: #1cc29f;
+  box-shadow: 0 2px 0 0 rgba(55, 59, 63, 0.5);
+}
+
+/*close header*/
+
+/* login header */
+.login-header {
+  position: fixed;
+  background: #5bc5a7;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid #48be9d;
+  color: #fff;
+  text-shadow: 0 -1px 0 #39a385;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+  padding: 0 12rem;
+}
+.login-logo {
+  padding: 12px 10px;
+}
+.login-logo img {
+  height: 1.5rem;
+}
+.login-login-btn {
+  color: #fff;
+}
+.orange-background {
+  background-color: #ff652f;
+  color: #fff;
+}
+/* login header close */
+
+/* home page slider*/
+.slider {
+  padding: 0 10rem;
+  background-size: 1250px;
+  background-position: center 0px;
+  background-image: url("./facets.png");
+  width: 100%;
+  background-repeat: repeat-x;
+}
+.slider-left {
+  width: 50%;
+}
+.slider-right {
+  padding: 50px 25px;
+  box-sizing: border-box;
+}
+.icon-container {
+  width: 14rem;
+}
+.slider-icon {
+  opacity: 0.5;
+  font-size: 3rem;
+}
+#plane-icon {
+  color: #1cc29f;
+}
+#home-icon {
+  color: #8656cd;
+}
+#heart-icon {
+  color: #a6002f;
+}
+#all-icon {
+  color: #383b3f;
+}
+
+.sign-up-btn {
+  font-weight: 600;
+  padding: 1rem 4rem;
+  border-radius: 5px;
+}
+
+.slider-slides {
+  font-size: 25rem;
+  opacity: 0.4;
+}
+.slider-slides:hover {
+  opacity: 1;
+}
+h1 {
+  font-family: "Montserrat";
+  max-width: 23rem;
+  font-weight: 700;
+}
+p {
+  max-width: 20rem;
+  font-size: 1.125rem;
+  margin: 1.5rem 0;
+}
+/* home page slider end */
 
 /* Miscellaneous */
 .btn-orange {
@@ -32,8 +147,7 @@ h6 {
   justify-content: space-around;
 }
 
-.introText,
-.addGroupText {
+.introText {
   text-transform: uppercase;
   font-weight: 500;
   color: #a1a2a3;
@@ -53,16 +167,21 @@ h6 {
   margin-left: 2em;
 }
 
-.App-logo {
-  height: 2em;
-}
-
 .signUpBtn {
   padding: 0.4em;
   font-size: 1.4em;
+  background: #ff652f;
+  color: #fff;
+}
+.App-logo {
+  height: 2em;
+}
+.signUpBtn:hover {
+  background: #ee541e;
+  color: #fff;
 }
 
-.signup input[type='text'],
+.signup input[type="text"],
 .bigbox {
   font-size: 32px;
 }
@@ -95,7 +214,7 @@ input[type='password'] {
 /* /Signup */
 
 /* navbar */
-.navbar {
+/* .navbar {
   background: #5bc5a7;
 }
 .navbar .logo {
@@ -118,7 +237,7 @@ input[type='password'] {
   color: #fff;
   margin-left: 0.5em;
   font-weight: 600;
-}
+} */
 /* /navbar */
 
 /* Dashboard */

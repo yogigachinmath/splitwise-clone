@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from '../nav';
+import Header from '../layouts/nav';
 import { BrowserRouter, Link, Route, Redirect } from 'react-router-dom';
 import fire from '../../config/fire';
 

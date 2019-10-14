@@ -47,14 +47,21 @@ export class Dashboard extends Component {
               />
               <span className="welcomeMsg"> Welcome to Splitwise! </span>
             </div>
-            <p className = "question"> What would you like to do first? </p>
+            <p className="question"> What would you like to do first? </p>
             <div className="row">
-              <button type="button" className="btn btn-orange addAptBtn fa fa-home" onClick={this.redirectToAddGroup}>
+              <button
+                type="button"
+                className="btn btn-orange addAptBtn fa fa-home"
+                onClick={this.redirectToAddGroup}
+              >
                 Add your apartment
               </button>
             </div>
             <div className="row">
-              <button type="button" className="btn btn-orange addGrpBtn fa fa-globe">
+              <button
+                type="button"
+                className="btn btn-orange addGrpBtn fa fa-globe"
+              >
                 Add a group trip
               </button>
             </div>

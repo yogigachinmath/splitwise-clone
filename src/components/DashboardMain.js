@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
-import Header from './layouts/Header';
+import React, { Component } from "react";
+import Header from "./layouts/HomeHeader";
 
 export class DashboardMain extends Component {
-    render() {
-        return (
-            <React.Fragment>
-                <Header />
-                <h1 className="mt-4"><center>Welcome to Splitwise Dashboard</center></h1>
-            </React.Fragment>
-        )
-    }
+  render() {
+    return (
+      <React.Fragment>
+        <Header />
+        <h1 className="mt-4">
+          <center>Welcome to Splitwise Dashboard</center>
+        </h1>
+      </React.Fragment>
+    );
+  }
 }
 
-export default DashboardMain
+export default DashboardMain;

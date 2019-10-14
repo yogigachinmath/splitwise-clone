@@ -3,6 +3,7 @@ import userDummyPic from "./user.png";
 
 class Header extends Component {
   render() {
+    console.log(this.props);
     return (
       <div className="header">
         <nav className="navbar">

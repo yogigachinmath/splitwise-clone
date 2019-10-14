@@ -18,7 +18,7 @@ class App extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         console.log('app.js user found',user);

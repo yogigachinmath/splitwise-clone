@@ -2,6 +2,7 @@
   font-family: "Montserrat";
 }
 
+/* home page header */
 .header {
   max-width: 1280px;
   margin: auto;
@@ -25,6 +26,38 @@
   box-shadow: 0 2px 0 0 rgba(55, 59, 63, 0.5);
 }
 
+/*close header*/
+
+/* login header */
+.login-header {
+  position: fixed;
+  background: #5bc5a7;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid #48be9d;
+  color: #fff;
+  text-shadow: 0 -1px 0 #39a385;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+  padding: 0 12rem;
+}
+.login-logo {
+  padding: 12px 10px;
+}
+.login-logo img {
+  height: 1.5rem;
+}
+.login-login-btn {
+  color: #fff;
+}
+.orange-background {
+  background-color: #ff652f;
+  color: #fff;
+}
+/* login header close */
+
+/* home page slider*/
 .slider {
   padding: 0 10rem;
   background-size: 1250px;
@@ -83,6 +116,21 @@ p {
   font-size: 1.125rem;
   margin: 1.5rem 0;
 }
+/* home page slider end */
+
+/* Miscellaneous */
+.btn-orange {
+  background: #ff652f;
+  color: #fff;
+}
+
+.btn-orange:hover {
+  background: #ee541e;
+  color: #fff;
+}
+/* /Miscellaenous */
+/* Signup */
+
 .signup h3,
 h6 {
   font-weight: normal;
@@ -108,7 +156,7 @@ h6 {
 }
 
 .logo img {
-  width: 12em;
+  width: 10em;
 }
 
 .form {
@@ -121,13 +169,16 @@ h6 {
   background: #ff652f;
   color: #fff;
 }
-
+.App-logo {
+  height: 2em;
+}
 .signUpBtn:hover {
   background: #ee541e;
   color: #fff;
 }
 
-.signup input[type="text"] {
+.signup input[type="text"],
+.bigbox {
   font-size: 32px;
 }
 
@@ -142,7 +193,109 @@ input[type="password"] {
 
 /* Screen width 800px */
 @media screen and (max-width: 992px) {
-  .logo {
+  .signup-logo {
     display: none;
   }
+  .addApartment-logo {
+    display: none;
+  }
+  .addFriendForm input {
+    width: 13em;
+  }
+  .addFriendForm {
+    justify-content: flex-start;
+  }
 }
+
+/* /Signup */
+
+/* navbar */
+/* .navbar {
+  background: #5bc5a7;
+}
+.navbar .logo {
+  height: 1.5em;
+  border: 2px solid #fff;
+}
+
+.userName {
+  color: #fff;
+}
+
+.dropdown-toggle {
+  color: #fff;
+  cursor: pointer;
+}
+.dropdown-toggle:hover {
+  background: #449c83;
+}
+.text-logo {
+  color: #fff;
+  margin-left: 0.5em;
+  font-weight: 600;
+} */
+/* /navbar */
+
+/* Dashboard */
+.welcome-content {
+  margin-left: 4em;
+}
+.dash-logo {
+  height: 3em;
+}
+.welcomeMsg {
+  font-size: 2em;
+  margin-left: 0.2em;
+}
+.question {
+  margin-top: 2em;
+  text-align: center;
+}
+.userDummyPic,
+.addApartment .profileImg {
+  height: 1.5em;
+}
+.orange-person img {
+  height: 20em;
+}
+.addGrpBtn,
+.addAptBtn {
+  padding: 0.4em;
+  font-size: 1.7em;
+  width: 15em;
+  margin-bottom: 0.6em;
+}
+
+.skipBtn {
+  padding: 0.4em;
+  font-size: 1.7em;
+  width: 15em;
+}
+/* /Dashboard */
+
+/* createGroup */
+.addApartment .userArea {
+  justify-content: flex-start;
+}
+.addFriendForm {
+  margin: 0;
+}
+.userArea {
+  margin: 0;
+}
+.addFriendForm input {
+  padding: 0 0.2em;
+}
+.removeAddFriendForm {
+  color: red;
+  font-size: 1.4em;
+  cursor: pointer;
+}
+.appendNewFriendForm {
+  cursor: pointer;
+  color: blue;
+}
+.appendNewFriendForm:hover {
+  text-decoration: underline;
+}
+/* /createGroup */

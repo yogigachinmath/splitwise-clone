@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Header from "./layouts/Header";
+import Header from "./layouts/HomeHeader";
 import Slider from "./layouts/slider";
 
 class Home extends Component {

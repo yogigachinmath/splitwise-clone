@@ -13,6 +13,7 @@ class Header extends Component {
     .catch((error)=>console.log(error))
   }
   render() {
+    console.log(this.props);
     return (
       <div className="header">
         <nav className="navbar">

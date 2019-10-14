@@ -28,21 +28,22 @@ class Header extends Component {
            </li> */}
               {/* <li className = "nav-item">   */}
               <div className="dropdown">
-                <img src={userDummyPic} alt = "user-dummy-pic" className = "userDummyPic" />
-                <span className = "userName"> user </span> 
-                <span
+                <div
                   className="dropdown-toggle"
                   data-toggle="dropdown"
-                ></span>
+                >
+                    <img src={userDummyPic} alt = "user-dummy-pic" className = "userDummyPic" />
+                    <span className = "userName"> user </span> 
+                </div>
                 <div className="dropdown-menu">
-                  <a className="dropdown-item" href="#">
-                    Link 1
+                  <a className="dropdown-item" href="/account">
+                    Your account
                   </a>
-                  <a className="dropdown-item" href="#">
-                    Link 2
+                  <a className="dropdown-item" href="/create-group">
+                    Create a group
                   </a>
-                  <a className="dropdown-item" href="#">
-                    Link 3
+                  <a className="dropdown-item" href="/logout">
+                    Log out
                   </a>
                 </div>
               </div>

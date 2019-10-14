@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Header from "./layouts/Header";
 
 export class Dashboard extends Component {
+  redirectToAddGroup = (e) => {
+    window.location.replace('/new/apartment')
+  }
   render() {
     return (
       <React.Fragment>
@@ -25,12 +28,12 @@ export class Dashboard extends Component {
             </div>
             <p className = "question"> What would you like to do first? </p>
             <div className="row">
-              <button type="button" className="btn addAptBtn fa fa-home">
+              <button type="button" className="btn btn-orange addAptBtn fa fa-home" onClick={this.redirectToAddGroup}>
                 Add your apartment
               </button>
             </div>
             <div className="row">
-              <button type="button" className="btn addGrpBtn fa fa-globe">
+              <button type="button" className="btn btn-orange addGrpBtn fa fa-globe">
                 Add a group trip
               </button>
             </div>

@@ -9,7 +9,7 @@ export class register extends Component {
       username: '',
       email: '',
       password: ''
-    }
+    };
     this.register = this.register.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -21,11 +21,12 @@ export class register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
   register(e) {
-    
     fire
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(u => {console.log('success')})
+      .then(u => {
+        console.log('success');
+      })
       .catch(error => {
         console.log(error);
       });
@@ -46,7 +47,9 @@ export class register extends Component {
               <h3>Hi there! My name is</h3>
               <div className="form-group">
                 <input
-                  type="text" value={this.state.name}  name = 'username'
+                  type="text"
+                  value={this.state.name}
+                  name="username"
                   className="form-control"
                   onChange={this.displayContentOnChange}
                 />
@@ -56,14 +59,14 @@ export class register extends Component {
                   <h6>
                     Here's my <b>email address</b>:
                   </h6>
-                  <input value={this.state.name} onChange={this.handleChange} type = 'email' name = 'email' className="form-control" />
-                </div>
-                <div className="form-group">
-                  <h6>
-                    And here's my <b>password</b>:
+                    value={this.state.name}
                   </h6>
                   <input
-                   value={this.state.name} onChange={this.handleChange} type = 'password' name = 'password' className="form-control"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                    type="password"
+                    name="password"
+                    className="form-control"
                     autoComplete="new-password"
                   />
                 </div>
@@ -71,7 +74,7 @@ export class register extends Component {
               <Link to={'./dashboard'}>
                 <button
                   type="submit"
-                  className="btn signUpBtn"
+                  className="btn btn-orange signUpBtn"
                   onClick={this.register}
                 >
                   Sign me up!

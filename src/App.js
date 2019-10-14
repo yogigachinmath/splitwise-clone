@@ -1,28 +1,31 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
 import PrivateRoute from './components/auth/privaterouter'
 import Register from './components/register';
 import Dashboard from './components/Dashboard';
 import './App.css';
 import Login from './components/auth/login';
 import fire from './config/fire';
+import AddApartment from "./components/AddApartment";
+import DashboardMain from "./components/DashboardMain";
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authed:false
+      authorized:true
     };
   }
 
-  componentDidMount() {
-    console.log('fsfdd');
+  componentWillMount() {
     fire.auth().onAuthStateChanged(user => {
-      console.log(user);
       if (user) {
-        this.setState({ authed:true });
+        console.log('app.js user found',user);
+        this.setState({ authorized:true });
       } else {
-        this.setState({ authed:false });
+        console.log('app.js user not found',user);
+        this.setState({ authorized:false });
       }
     });
   }
@@ -31,10 +34,15 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
+          <Switch>
           <Route path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          {/* <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} /> */}
-            <Route path="/dashboard" component={Dashboard} />
+          {console.log(this.state.authorized)}
+          <PrivateRoute  path='/dashboard' authed={this.state.authorized} component={Dashboard} />
+            {/* <Route path="/dashboard" component={Dashboard} /> */}
+            <Route path = "/new/apartment" component = {AddApartment} />
+        <Route path = "/dash/main" component = {DashboardMain} />
+        </Switch>
         </div>
       </Router>
     );

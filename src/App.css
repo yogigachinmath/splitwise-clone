@@ -174,3 +174,67 @@ input[type="password"] {
     text-decoration: underline;
 }
 /* /createGroup */
+
+/* dashboard-main */
+.dash-main-content {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  box-shadow: 4px 0 3px 1px #eee, -4px 0 2px 1px #eee;
+  min-height: 90vh;
+}
+.friendPic {
+  height: 1.2em;
+}
+.logoDash {
+  height: 1.2em;
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1)
+}
+.left-sidebar .row{
+  justify-content: flex-start;
+  color: #999;
+  cursor: pointer;
+  margin: 0.2em 0;
+  width: 80%;
+  padding: 0.5em;
+}
+.left-sidebar .row:hover{
+  background: #eee;;
+}
+.lh {
+  line-height: 1;
+}
+.appendGroupNames {
+  color: #5bc5a7;
+}
+.appendGroupNames p, .appendFriendNames p {
+  margin: 3px 0;
+}
+.groupSidebar .row, .friendsSidebar .row {
+  cursor: default;
+}
+.btn-blue {
+  background: #5bc5a7;
+  color: #fff;
+}
+.btn-blue:hover {
+  background: #4ab496;
+  color: #fff;
+}
+.dash-header {
+  background: #eee;
+}
+.dash-header .row{
+  margin: 0;
+}
+.dash-main-content {
+  padding: 0;
+}
+.logo-dash-right {
+  height: 10em;
+}
+.labelListsSidebar {
+  text-transform: uppercase;
+}
+/* /dashboard-main */

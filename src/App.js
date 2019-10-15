@@ -10,6 +10,7 @@ import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
 import PrivateRouteLogin from './components/auth/privaterouterlogin'
 import "./App.css";
+import './loader'
 
 class App extends Component {
   constructor(props) {

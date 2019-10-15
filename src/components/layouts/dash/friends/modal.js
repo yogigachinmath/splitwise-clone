@@ -31,7 +31,7 @@ class Modal extends Component {
           <img src="/img/logo.svg" className="logo" />
           Invite friends
         </h3>
-        <div className="btn addFriend">
+        <div className="btn">
           <p>TO</p>
           <input
             type="email"
@@ -47,10 +47,10 @@ class Modal extends Component {
           value={this.state.name}
           onChange={this.handleChange}
         ></input>
-        <Link to={`${this.props.location.pathname}`}>
+        <Link to={'/'}>
           <a className="waves-effect waves-light btn">cancel</a>
         </Link>
-        <Link to={`${this.props.location.pathname}`}>
+        <Link to={'/'}>
           <a onClick={this.handleClick}>Add</a>
         </Link>
         <br />

@@ -8,7 +8,7 @@ import fire from "./config/fire";
 import Dashboard from "./components/Dashboard";
 import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
-import PrivateRouteLogin from './components/auth/privaterouterlogin'
+import PrivateRouteLogin from "./components/auth/privaterouterlogin";
 import "./App.css";
 
 class App extends Component {
@@ -36,9 +36,17 @@ class App extends Component {
       <Router>
         <div className="App">
           <Switch>
-          <Route path="/register" component={Register} />
-          <PrivateRouteLogin  path='/login' authed={this.state.authorized} component={Login} />
-          <PrivateRoute  path='/dashboard' authed={this.state.authorized} component={Dashboard} />      
+            <Route path="/register" component={Register} />
+            <PrivateRouteLogin
+              path="/login"
+              authed={this.state.authorized}
+              component={Login}
+            />
+            <PrivateRoute
+              path="/dashboard"
+              authed={this.state.authorized}
+              component={Dashboard}
+            />
             <Route exact path="/" component={Home} />
             <Route path="/new/apartment" component={AddApartment} />
             <Route path="/dash/main" component={DashboardMain} />

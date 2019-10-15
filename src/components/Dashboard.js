@@ -1,35 +1,33 @@
 import React, { Component } from "react";
 import Header from "./layouts/Header";
-import fire from '../config/fire'
+import fire from "../config/fire";
 
 export class Dashboard extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      user : {}
-    }
+      user: {}
+    };
   }
-  redirectToAddGroup = (e) => {
-    window.location.replace('/new/apartment')
-  }
+  redirectToAddGroup = e => {
+    window.location.replace("/new/apartment");
+  };
   componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState(() => 
-        ({ user: user })
-      )
+        this.setState(() => ({ user: user }));
         // console.log(this.state.user);
       } else {
         // alert('please login');
       }
     });
   }
-  
+
   render() {
     return (
       <React.Fragment>
         {console.log(this.state.user)}
-        <Header userDetails = {this.state.user}/>
+        <Header userDetails={this.state.user} />
         <div className="row dash-content mt-5">
           <div className="orange-person">
             <img

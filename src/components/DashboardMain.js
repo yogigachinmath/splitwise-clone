@@ -10,7 +10,7 @@ export class DashboardMain extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="left-sidebar col-md-3">
-                            <LeftSidebar />
+                            <LeftSidebar {...this.props} />
                         </div>
                         <div className="dash-main-content col-md-6">
                             <div className="dash-header p-3">

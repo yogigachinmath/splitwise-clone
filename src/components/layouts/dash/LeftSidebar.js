@@ -2,16 +2,26 @@ import React, { Component } from 'react';
 import UserPic from "../user.png";
 
 export class LeftSidebar extends Component {
+    handleChangeOverClick = (e) => {
+        document.querySelectorAll('.sidebarText').forEach((element) => {
+            element.classList.remove('colorBlue');
+        })
+        e.target.classList.add('colorBlue');
+        if(e.target.classList.contains('dashClass')) {
+            console.log("Class list");
+            e.target.previousSibling.classList.remove('grayImg');
+        }
+    }
     render() {
         return (
             <div>
                 <div className="row mt-3">
-                    <img src="https://dx0qysuen8cbs.cloudfront.net/assets/core/logo-square-65a6124237868b1d2ce2f5db2ab0b7c777e2348b797626816400534116ae22d7.svg" className="logoDash" alt="logo" />
-                    <span className="sidebarText ml-2 lh">Dashboard</span>
+                    <img src="/img/logo1.svg" className="logoDash grayImg" alt="logo" />
+                    <span className="sidebarText dashClass ml-2 lh" onClick={this.handleChangeOverClick}>Dashboard</span>
                 </div>
                 <div className="row">
                     <span className="fa fa-flag"></span>
-                    <span className="sidebarText ml-2 lh">Recent activity</span>
+                    <span className="sidebarText colorBlue ml-2 lh">Recent activity</span>
                 </div>
                 <div className="row mt-2">
                     <span className="fa fa-bars"></span>

@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import Header from "../layouts/loginHeader";
-import fire from "../../config/fire";
+import React, { Component } from 'react';
+import Header from '../layouts/nav';
+import fire from '../../config/fire';
 
 class login extends Component {
   constructor(props) {
     super(props);
     console.log(props);
     this.state = {
-      email: "",
-      password: ""
+      email: '',
+      password: ''
     };
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -18,15 +18,19 @@ class login extends Component {
   }
   login(e) {
     e.preventDefault();
+    const target = e.target;
     fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(u => {
-        console.log(u);
+        this.props.history.push('/dashboard');
       })
       .catch(error => {
         console.log(error);
-        // <Redirect to = '/dashboard'/>
+        // alert('Invalid username or password');
+        console.log('Event login', target.previousSibling);
+        target.previousSibling.style.display = 'block';
+        target.previousSibling.textContent = 'Invalid credentials';
       });
   }
   render() {
@@ -66,6 +70,7 @@ class login extends Component {
                     />
                   </div>
                 </div>
+                <div className="errorMsg bg-danger text-light p-3 mb-3"></div>
                 <button
                   type="submit"
                   onClick={this.login}
@@ -74,7 +79,7 @@ class login extends Component {
                   Log in
                 </button>
                 <p className="forgetPassword">
-                  Forgot your password? <a> Click here</a>
+                  Forgot your password? <a href="/forgotPassword"> Click here</a>
                 </p>
               </form>
             </div>

@@ -14,11 +14,88 @@
   color: #fff;
 }
 /* /Miscellaenous */
+
+/* Home Page */
+.font-mono {
+  font-family: "Montserrat";
+ }
+ /* home page header */
+ .green-color {
+  color: #5bc5a7;
+ }
+
+ .green-background {
+  color: #fff;
+  background-color: #5bc5a7;
+  box-shadow: 0 2px 0 0 rgba(55, 59, 63, 0.5);
+ }
+
+ .slider {
+  padding: 0 10rem;
+  background-size: 1250px;
+  background-position: center 0px;
+  background-image: url("/img/facets.png");
+  background-repeat: repeat-x;
+ }
+ .slider-left {
+  width: 50%;
+ }
+ .slider-right {
+  padding: 50px 25px;
+  box-sizing: border-box;
+ }
+ .icon-container {
+  width: 14rem;
+ }
+ .slider-icon {
+  opacity: 0.5;
+  font-size: 3rem;
+ }
+ #plane-icon {
+  color: #5bc5a7;
+ }
+ #home-icon {
+  color: #8656cd;
+ }
+ #heart-icon {
+  color: #a6002f;
+ }
+ #all-icon {
+  color: #383b3f;
+ }
+ .sign-up-btn {
+  font-weight: 600;
+  padding: 1rem 4rem;
+  border-radius: 5px;
+ }
+ .slider-slides {
+  font-size: 25rem;
+  opacity: 0.4;
+ }
+ .slider-slides:hover {
+  opacity: 1;
+ }
+ .slider h1 {
+  font-family: "Montserrat";
+  max-width: 23rem;
+  font-weight: 700;
+ }
+ .slider p {
+  max-width: 20rem;
+  font-size: 1.125rem;
+  margin: 1.5rem 0;
+ }
+/* /Home Page */
+
 /* Signup */
 
 .signup h3,
 h6 {
   font-weight: normal;
+}
+
+.errorMsg {
+  display: none;
 }
 
 .main {
@@ -57,13 +134,17 @@ h6 {
   font-size: 32px;
 }
 
-.signup input[type="email"],
-input[type="password"] {
+.signup input[type='email'],
+input[type='password'] {
   font-size: 20px;
 }
 
 .displayOnChange {
   display: none;
+}
+
+.App-logo-login {
+  height: 2em;
 }
 
 /* Screen width 800px */
@@ -89,8 +170,11 @@ input[type="password"] {
   background: #5bc5a7;
 }
 .navbar .logo {
-  height: 1.5em;
-  border: 2px solid #fff;
+  width: 6em;
+}
+
+.homeNav {
+  background: #fff;
 }
 
 .userName {
@@ -103,11 +187,6 @@ input[type="password"] {
 }
 .dropdown-toggle:hover {
   background: #449c83;
-}
-.text-logo {
-  color: #fff;
-  margin-left: 0.5em;
-  font-weight: 600;
 }
 /* /navbar */
 
@@ -185,11 +264,18 @@ input[type="password"] {
 .friendPic {
   height: 1.2em;
 }
+
+.colorBlue {
+  color: #5bc5a7;
+}
+
 .logoDash {
   height: 1.2em;
+}
+.grayImg {
   filter: gray; /* IE6-9 */
   -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
-  filter: grayscale(1)
+  filter: grayscale(1);
 }
 .left-sidebar .row{
   justify-content: flex-start;

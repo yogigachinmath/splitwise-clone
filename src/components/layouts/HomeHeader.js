@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import logo from "../../logo.svg";
 
 class Header extends Component {
   render() {
     return (
       <div className="header">
-        <nav className="navbar">
+        <nav className="navbar homeNav">
           <a className="navbar-brand" href="/">
-            <img src={logo} className="App-logo" alt="logo" />
+            <img src="/img/logo-black.svg" className="logo" alt="logo" />
           </a>
           <ul className="font-mono nav nav-pills">
             <li className="nav-item">

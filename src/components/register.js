@@ -21,13 +21,21 @@ export class register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
   register(e) {
+    e.preventDefault();
     fire
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(u => {
-        console.log("success");
+        fire.auth().signOut().then((u)=>{
+          console.log('signedout successfully');
+        })
+        .catch((error)=>console.log(error))
+        window.location.replace('/dashboard');
+        console.log('success');
       })
       .catch(error => {
+        alert(error.code)
+        console.log(this.state);
         console.log(error);
       });
   }
@@ -49,7 +57,7 @@ export class register extends Component {
                 <input
                   type="text"
                   value={this.state.name}
-                  name="username"
+                  name="displayName"
                   className="form-control"
                   onChange={this.displayContentOnChange}
                 />
@@ -62,12 +70,29 @@ export class register extends Component {
                   <input
                     value={this.state.name}
                     onChange={this.handleChange}
+                    type="email"
+                    name="email"
+                    className="form-control"
+                  />
+                </div>
+                {/* <div className="form-group">
+                  <h6>
+                    And here's my <b>password</b>:
+                  </h6> */}
+                  {/* <input
+                    value={this.state.name}
+                    onChange={this.handleChange}
                     type="password"
                     name="password"
                     className="form-control"
                     autoComplete="new-password"
                   />
-                </div>
+                </div> */}
+                <div className = "form-group">
+                                    <h6>And here's my <b>password</b>:</h6>
+                                    <input type = "password"  value={this.state.name}
+                    onChange={this.handleChange} name="password" className = "form-control" autoComplete = "new-password" required />
+                                </div>
               </div>
               <Link to={"./dashboard"}>
                 <button
@@ -77,7 +102,7 @@ export class register extends Component {
                 >
                   Sign me up!
                 </button>
-              </Link>
+                </Link>
             </form>
           </div>
         </div>

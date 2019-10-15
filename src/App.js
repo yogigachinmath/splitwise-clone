@@ -8,6 +8,7 @@ import fire from "./config/fire";
 import Dashboard from "./components/Dashboard";
 import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
+import PrivateRouteLogin from './components/auth/privaterouterlogin'
 import "./App.css";
 
 class App extends Component {
@@ -18,7 +19,7 @@ class App extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         console.log("app.js user found", user);
@@ -35,16 +36,10 @@ class App extends Component {
       <Router>
         <div className="App">
           <Switch>
+          <Route path="/register" component={Register} />
+          <PrivateRouteLogin  path='/login' authed={this.state.authorized} component={Login} />
+          <PrivateRoute  path='/dashboard' authed={this.state.authorized} component={Dashboard} />      
             <Route exact path="/" component={Home} />
-            <Route path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            {console.log(this.state.authorized)}
-            <PrivateRoute
-              path="/dashboard"
-              authed={this.state.authorized}
-              component={Dashboard}
-            />
-            {/* <Route path="/dashboard" component={Dashboard} /> */}
             <Route path="/new/apartment" component={AddApartment} />
             <Route path="/dash/main" component={DashboardMain} />
           </Switch>

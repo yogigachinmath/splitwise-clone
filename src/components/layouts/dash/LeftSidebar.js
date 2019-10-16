@@ -32,23 +32,33 @@ export class LeftSidebar extends Component {
       <BrowserRouter>
         <div>
           <div className="row mt-3">
-            <img src="/img/logo1.svg" className="logoDash grayImg" alt="logo" />
-            <span
-              className="sidebarText dashClass ml-2 lh"
-              onClick={this.handleChangeOverClick}
-            >
-              Dashboard
-            </span>
+            <a href="./main">
+              <img
+                src="/img/logo1.svg"
+                className="logoDash grayImg"
+                alt="logo"
+              />
+              <span
+                className="sidebarText dashClass ml-2 lh"
+                onClick={this.handleChangeOverClick}
+              >
+                Dashboard
+              </span>
+            </a>
           </div>
           <div className="row">
-            <span className="fa fa-flag"></span>
-            <span className="sidebarText colorBlue ml-2 lh">
-              Recent activity
-            </span>
+            <a href="">
+              <span className="fa fa-flag"></span>
+              <span className="sidebarText colorBlue ml-2 lh">
+                Recent activity
+              </span>
+            </a>
           </div>
           <div className="row mt-2">
-            <span className="fa fa-bars"></span>
-            <span className="sidebarExpensesText ml-2 lh">All expenses</span>
+            <a href="./all">
+              <span className="fa fa-bars"></span>
+              <span className="sidebarExpensesText ml-2 lh">All expenses</span>
+            </a>
           </div>
           <div className="groupSidebar">
             <div className="row bg-light text-secondary px-2">

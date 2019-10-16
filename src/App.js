@@ -10,6 +10,7 @@ import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
 import PrivateRouteLogin from "./components/auth/privaterouterlogin";
 import "./App.css";
+import AllExpences from "./components/AllExpences";
 
 class App extends Component {
   constructor(props) {
@@ -50,6 +51,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/new/apartment" component={AddApartment} />
             <Route path="/dash/main" component={DashboardMain} />
+            <Route path="/dash/all" component={AllExpences} />
           </Switch>
         </div>
       </Router>

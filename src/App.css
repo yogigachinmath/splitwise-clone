@@ -146,6 +146,10 @@ input[type='password'] {
 .App-logo-login {
   height: 2em;
 }
+.navbar .logo {
+  width: 6em;
+}
+
 
 /* Screen width 800px */
 @media screen and (max-width: 992px) {

@@ -11,6 +11,7 @@ import DashboardMain from "./components/DashboardMain";
 import PrivateRouteLogin from "./components/auth/privaterouterlogin";
 import "./App.css";
 import AllExpences from "./components/AllExpences";
+import "./loader";
 
 class App extends Component {
   constructor(props) {

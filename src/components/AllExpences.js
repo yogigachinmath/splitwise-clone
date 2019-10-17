@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Header from "./layouts/Header";
-import LeftSidebar from "../components/layouts/dash/LeftSidebar";
 import ExpenseDetail from "./ExpenseDetail";
 import "./expenses.css";
 import $ from "jquery";
@@ -146,36 +144,19 @@ export class DashboardMain extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header />
-        <div className="container">
-          <div className="row">
-            <div className="left-sidebar col-md-3">
-              <LeftSidebar {...this.props} />
-            </div>
-            <div className="dash-main-content col-md-6">
-              <div className="dash-header p-3">
-                <div className="row">
-                  <h4 className="mr-auto">All Expenses</h4>
-                  <div className="dash-header-right ml-auto">
-                    <button className="btn btn-orange">Add an expense</button>
-                    <button className="btn btn-blue ml-2">Settle up</button>
-                  </div>
-                </div>
+        <div className="dash-main-content col-md-6">
+          <div className="dash-header p-3">
+            <div className="row">
+              <h4 className="mr-auto">All Expenses</h4>
+              <div className="dash-header-right ml-auto">
+                <button className="btn btn-orange">Add an expense</button>
+                <button className="btn btn-blue ml-2">Settle up</button>
               </div>
-              {Object.keys(this.state.expenses).map(expense => {
-                return (
-                  <Expense expense={this.state.expenses[expense]} />
-                );
-              })}
-            </div>
-            <div className="right-sidebar col-md-3">
-              <img
-                src="https://dx0qysuen8cbs.cloudfront.net/assets/core/logo-square-65a6124237868b1d2ce2f5db2ab0b7c777e2348b797626816400534116ae22d7.svg"
-                className="logo-dash-right ml-2 mt-2"
-                alt="logo"
-              />
             </div>
           </div>
+          {Object.keys(this.state.expenses).map(expense => {
+            return <Expense expense={this.state.expenses[expense]} />;
+          })}
         </div>
       </React.Fragment>
     );

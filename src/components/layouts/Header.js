@@ -26,17 +26,6 @@ class Header extends Component {
               <img src="/img/logoWithSplitwiseText.svg" className="logo" alt="logo" />
             </a>
             <ul className="nav nav-pills">
-              {/* <li className="nav-item">
-             <a className="nav-link" href="/">
-               Log in
-             </a>
-           </li>
-           <li className="nav-item">
-             <a className="nav-link" href="/">
-               Sign Up
-             </a>
-           </li> */}
-              {/* <li className = "nav-item">   */}
               <div className="dropdown">
                 <div className="dropdown-toggle" data-toggle="dropdown">
                   <img
@@ -44,7 +33,7 @@ class Header extends Component {
                     alt="user-dummy-pic"
                     className="userDummyPic"
                   />
-                  <span className="userName"> user </span>
+                  <span className="userName"> {this.props.userDetails.displayName} </span>
                 </div>
                 <div className="dropdown-menu">
                   <a className="dropdown-item" href="/account">

@@ -1,4 +1,4 @@
-#modal1 {
+/* #modal1 {
     z-index: 3;
     display: block;
     opacity: 1;
@@ -9,7 +9,7 @@
   }
   .modal {
     /* display: none; */
-    position: fixed;
+    /* position: fixed;
     left: 0;
     right: 0;
     background-color: #fafafa;
@@ -27,4 +27,5 @@
   }
   .addFriend{
     display: flex;
-  }
+  } */ 
+  

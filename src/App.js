@@ -8,7 +8,9 @@ import fire from "./config/fire";
 import Dashboard from "./components/Dashboard";
 import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
-import PrivateRouteLogin from './components/auth/privaterouterlogin'
+import PrivateRouteLogin from "./components/auth/privaterouterlogin";
+import FireBasePrac from "./components/FireBaseDB";
+import { createBrowserHistory as history } from 'history';
 import "./App.css";
 
 class App extends Component {
@@ -33,15 +35,24 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div className="App">
           <Switch>
-          <Route path="/register" component={Register} />
-          <PrivateRouteLogin  path='/login' authed={this.state.authorized} component={Login} />
-          <PrivateRoute  path='/dashboard' authed={this.state.authorized} component={Dashboard} />      
+            <Route path="/register" component={Register} />
+            <PrivateRouteLogin
+              path="/login"
+              authed={this.state.authorized}
+              component={Login}
+            />
+            <PrivateRoute
+              path="/dashboard"
+              authed={this.state.authorized}
+              component={Dashboard}
+            />
             <Route exact path="/" component={Home} />
             <Route path="/new/apartment" component={AddApartment} />
             <Route path="/dash/main" component={DashboardMain} />
+            <Route path="/fireBase/prac" component={FireBasePrac} />
           </Switch>
         </div>
       </Router>

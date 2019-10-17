@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import fire from "../config/fire";
+import 'firebase/firestore';
 
 export class register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      name: "",
       email: "",
       password: ""
     };
@@ -26,19 +26,26 @@ export class register extends Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(u => {
-        fire.auth().signOut().then((u)=>{
-          console.log('signedout successfully');
+        u.user.updateProfile({
+          displayName: this.state.name
         })
-        .catch((error)=>console.log(error))
-        window.location.replace('/dashboard');
-        console.log('success');
+        console.log(u.user.uid);
+        fire.firestore().collection('users').doc(u.user.uid).set({
+          name: this.state.name,
+          email: this.state.email
+        }).then(() => {
+          this.props.history.push('/dashboard');
+        }).catch(error => {
+          document.querySelector('.errorMsg').textContent = error;
+          document.querySelector('.errorMsg').style.display = 'block';
+        })
       })
       .catch(error => {
-        alert(error.code)
-        console.log(this.state);
-        console.log(error);
+        document.querySelector('.errorMsg').textContent = error;
+        document.querySelector('.errorMsg').style.display = 'block';
       });
   }
+  
   render() {
     return (
       <div className="container main">
@@ -57,7 +64,7 @@ export class register extends Component {
                 <input
                   type="text"
                   value={this.state.name}
-                  name="displayName"
+                  name="name"
                   className="form-control"
                   onChange={this.displayContentOnChange}
                 />
@@ -68,33 +75,29 @@ export class register extends Component {
                     Here's my <b>email address</b>:
                   </h6>
                   <input
-                    value={this.state.name}
+                    value={this.state.email}
                     onChange={this.handleChange}
                     type="email"
                     name="email"
                     className="form-control"
                   />
                 </div>
-                {/* <div className="form-group">
+                <div className="form-group">
                   <h6>
                     And here's my <b>password</b>:
-                  </h6> */}
-                  {/* <input
-                    value={this.state.name}
-                    onChange={this.handleChange}
+                  </h6>
+                  <input
                     type="password"
+                    value={this.state.password}
+                    onChange={this.handleChange}
                     name="password"
                     className="form-control"
                     autoComplete="new-password"
+                    required
                   />
-                </div> */}
-                <div className = "form-group">
-                                    <h6>And here's my <b>password</b>:</h6>
-                                    <input type = "password"  value={this.state.name}
-                    onChange={this.handleChange} name="password" className = "form-control" autoComplete = "new-password" required />
-                                </div>
+                </div>
               </div>
-              <Link to={"./dashboard"}>
+              <div className="bg-danger text-light errorMsg p-3 my-2"></div>
                 <button
                   type="submit"
                   className="btn btn-orange signUpBtn"
@@ -102,7 +105,6 @@ export class register extends Component {
                 >
                   Sign me up!
                 </button>
-                </Link>
             </form>
           </div>
         </div>

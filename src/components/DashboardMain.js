@@ -1,7 +1,7 @@
-import React, { Component,Main} from 'react';
+import React, { Component} from 'react';
 import Header from './layouts/Header';
 import LeftSidebar from '../components/layouts/dash/LeftSidebar';
-import { BrowserRouter, Link, Route} from 'react-router-dom';
+import { BrowserRouter, Route} from 'react-router-dom';
 import Dash from './dashboardInner';
 import Expense from './Expenses/expense'
 import AllExpenses from "./AllExpences";

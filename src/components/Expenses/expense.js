@@ -8,9 +8,37 @@ class Expense extends Component{
             description:[],
             ammount: [],
             currentdesc:'',
-            currentamount:''
+            currentamount:'',
+            curruser1:'',
+            curruser2:''
         }
+        this.handleClick=this.handleClick.bind(this);
         this.handleChange=this.handleChange.bind(this);
+    }
+    handleClick(e){
+        let currSum = parseInt(this.state.curruser1,10)+parseInt(this.state.curruser2,10);
+        console.log(currSum);
+        if(currSum === parseInt(this.state.currentamount)){
+            const userD = {'repayment':[{
+                'from':'yogi',
+                'to':'arun',
+                "youpaid": this.state.currentamount,
+                "youlent": this.state.curruser1
+            }]};
+            const description = this.state.description;
+            description.push(userD);
+                this.setState({
+                    description,
+                    currentdesc:'',
+                    currentamount:'',
+                    curruser1:'',
+                    curruser2:''
+                })
+
+        }
+        else{
+            alert('Error occured : Please split amount correctly ')
+        }
     }
     handleChange(e) {
         this.setState({
@@ -25,7 +53,7 @@ class Expense extends Component{
   <div className="modal-dialog modal-dialog-centered" role="document">
     <div className="modal-content">
       <div className="modal-header" style = {{background:'#5cc5a7'}}>
-        <h7 className="modal-title" id="exampleModalCenterTitle">Add an expense</h7>
+        <h6 className="modal-title" id="exampleModalCenterTitle">Add an expense</h6>
         <button type="button" className="close" data-dismiss="modal" style = {{color:'white'}} aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -36,20 +64,25 @@ class Expense extends Component{
         <div className = "infoDesc">
             <img src = '/img/desc.png' />
             <div className = "main-content">
-            <input type="text" className="description ml-3 mb-4" name = {'currentdesc'} onChange = {this.handleChange} value={this.state.name} placeholder="Enter a description" style={{"font-size": "20px"}}/>
+            <input type="text" className="description ml-3 mb-4" name = {'currentdesc'} onChange = {this.handleChange} value={this.state.currentdesc} placeholder="Enter a description" style={{"font-size": "20px"}}/>
             <div className = 'cost-conatiner ml-3'>
-            <span class="currency_code">Rs</span>
-            <input type="number" class="ml-1 mb-2" name = {'currentamount'}  onChange = {this.handleChange} placeholder="0.00" value={this.state.name}/>
+            <span className="currency_code">Rs</span>
+            <input type="number" className="ml-1 mb-2" name = {'currentamount'}  onChange = {this.handleChange} placeholder="0.00" value={this.state.currentamount}/>
             </div>
             </div>
         </div>
-        <div>
-
+        <div className='splitAmount mt-3'>
+            <h5>Split by exact amounts</h5>
+            <div className = 'innerDetails m-3'>
+            <span>You</span>
+            <input type="number" className="description ml-1 mb-2" name={'curruser1'} onChange={this.handleChange} placeholder="0.00" value={this.state.curruser1}/></div>
+          <div className = 'innerDetails m-3'><span>Arun</span> 
+          <input type="number" className="description ml-1 mb-2" name={'curruser2'} onChange={this.handleChange} placeholder="0.00" value={this.state.curruser2}/></div>
         </div>
       </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" className="btn btn-primary">Save changes</button>
+        <button type="button" className="btn btn-primary" onClick ={this.handleClick}>Save changes</button>
       </div>
     </div>
   </div>
@@ -57,7 +90,7 @@ class Expense extends Component{
         {/* modal */}
                             <div className="dash-header p-3">
                                 <div className="row">
-                                    {/* {console.log(this.props)} */}
+                                    {console.log(this.state)}
                                     <h4 className="mr-auto">{this.props.match.params.name}</h4>
                                     <div className="dash-header-right ml-auto">
                                     <button

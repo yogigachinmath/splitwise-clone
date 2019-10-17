@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import "./modal.css";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Modal extends Component {
   constructor(props) {
     super(props);
     console.log(props);
     this.state = {
-      email: '',
-      username: ' '
+      email: "",
+      username: " "
     };
-    this.handleChange = this.handleChange.bind(this);this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
   handleChange(e) {
-    console.log('fsfd');
+    console.log("fsfd");
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -31,7 +31,7 @@ class Modal extends Component {
           <img src="/img/logo.svg" className="logo" />
           Invite friends
         </h3>
-        <div className="btn addFriend">
+        <div className="btn">
           <p>TO</p>
           <input
             type="email"
@@ -47,10 +47,10 @@ class Modal extends Component {
           value={this.state.name}
           onChange={this.handleChange}
         ></input>
-        <Link to={`${this.props.location.pathname}`}>
+        <Link to={"/"}>
           <a className="waves-effect waves-light btn">cancel</a>
         </Link>
-        <Link to={`${this.props.location.pathname}`}>
+        <Link to={"/"}>
           <a onClick={this.handleClick}>Add</a>
         </Link>
         <br />

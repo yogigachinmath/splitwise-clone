@@ -8,8 +8,7 @@
     border-width:10px;
   }
   .modal {
-    /* display: none; */
-    /* position: fixed;
+    position: fixed;
     left: 0;
     right: 0;
     background-color: #fafafa;
@@ -21,11 +20,12 @@
     border-radius: 2px;
     will-change: top, opacity;
     z-index:1;
-  }
-  .logo{
-    width:1.5em;
-  }
-  .addFriend{
-    display: flex;
-  } */ 
-  
+  } */
+
+.logo {
+  width: 1.5em;
+}
+.modal-popup-text {
+  line-height: 2;
+  font-size: 1.2em;
+}

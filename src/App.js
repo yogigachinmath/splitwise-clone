@@ -53,7 +53,7 @@ class App extends Component {
             <Route path="/new/apartment" component={AddApartment} />
             <Route exact path="/dash/main" component={DashboardMain} />
             <Route exact path="/expenses" component={DashboardMain}/>
-            <Route exaact path="/dash/:name" component={DashboardMain}/>
+            <Route exaact path="/dash/friend/:name" component={DashboardMain}/>
             {/* <Route exact path="/dash/all" component={AllExpences} /> */}
           </Switch>
         </div>

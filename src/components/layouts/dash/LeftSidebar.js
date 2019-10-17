@@ -181,7 +181,7 @@ export class LeftSidebar extends Component {
             {this.state.friends.map(val => (
               <p className="textGroups">
                   <Link to={{
-                      pathname :`/dash/${val.username}`,
+                      pathname :`/dash/friend/${val.username}`,
                       state:{
                         info:val.username
                       }}} >

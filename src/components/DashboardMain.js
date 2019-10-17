@@ -18,7 +18,7 @@ export class DashboardMain extends Component {
             </div>
     <Route exact path="/dash/main" render = {props => ( <Dash {...props} />)}/>
     <Route exact path="/expenses" render = {props => ( <AllExpenses {...props} />)}/>
-    <Route exact path="/dash/:name" render = {props => ( <Expense {...props} />)}/>
+    <Route exact path="/dash/friend/:name" render = {props => ( <Expense {...props} />)}/>
             <div className="right-sidebar col-md-3">
                         <img
                             src="https://dx0qysuen8cbs.cloudfront.net/assets/core/logo-square-65a6124237868b1d2ce2f5db2ab0b7c777e2348b797626816400534116ae22d7.svg"

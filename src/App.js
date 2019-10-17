@@ -13,13 +13,14 @@ import { createBrowserHistory as history } from 'history';
 import PrivateRouteLogin from "./components/auth/privaterouterlogin";
 import "./App.css";
 import "./loader";
-
+import data from "./data.json";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authorized: true
+      authorized: true,
+      currentUser: "user1"
     };
   }
 
@@ -39,6 +40,7 @@ class App extends Component {
     return (
       <Router history={history}>
         <div className="App">
+          {console.log(data)}
           <Switch>
             <Route path="/register" component={Register} />
             <PrivateRouteLogin
@@ -56,8 +58,8 @@ class App extends Component {
             <Route path="/dash/main" component={DashboardMain} />
             <Route path="/fireBase/prac" component={FireBasePrac} />
             <Route exact path="/dash/main" component={DashboardMain} />
-            <Route exact path="/expenses" component={DashboardMain}/>
-            <Route exaact path="/dash/friend/:name" component={DashboardMain}/>
+            <Route exact path="/expenses" component={DashboardMain} />
+            <Route exaact path="/dash/friend/:name" component={DashboardMain} />
             {/* <Route exact path="/dash/all" component={AllExpences} /> */}
           </Switch>
         </div>

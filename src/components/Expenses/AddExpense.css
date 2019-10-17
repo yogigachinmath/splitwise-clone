@@ -18,3 +18,7 @@
 .cost-conatiner{
     border-bottom: 1px dashed #ccc !important;
 }
+.splitAmount{
+    display: flex;
+    flex-direction: column;
+}

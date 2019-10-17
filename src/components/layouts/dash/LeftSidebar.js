@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import UserPic from "../user.png";
-import { BrowserRouter, Link, Route } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import Modal from "./friends/modal";
 import './friends/friends.css';
-import Friend from '../friend/friend'
+// import Friend from '../friend/friend'
 
 export class LeftSidebar extends Component {
   constructor(props) {

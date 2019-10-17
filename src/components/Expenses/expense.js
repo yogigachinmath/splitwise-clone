@@ -17,7 +17,6 @@ class Expense extends Component{
     }
     handleClick(e){
         let currSum = parseInt(this.state.curruser1,10)+parseInt(this.state.curruser2,10);
-        console.log(currSum);
         if(currSum === parseInt(this.state.currentamount)){
             const userD = {'repayment':[{
                 'from':'yogi',
@@ -90,7 +89,7 @@ class Expense extends Component{
         {/* modal */}
                             <div className="dash-header p-3">
                                 <div className="row">
-                                    {console.log(this.state)}
+                                    {/* {console.log(this.state)} */}
                                     <h4 className="mr-auto">{this.props.match.params.name}</h4>
                                     <div className="dash-header-right ml-auto">
                                     <button
@@ -112,6 +111,9 @@ class Expense extends Component{
                                         <p>To add a new expense, click the orange “Add an expense” button.</p>
                                     </div>
                                 </div>
+                            </div>
+                            <div className = "main-content">
+                                {this.state.description.map(val => console.log(val))}   
                             </div>
                         </div>
         )

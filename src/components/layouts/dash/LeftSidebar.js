@@ -1,8 +1,17 @@
+<<<<<<< Updated upstream
 import React, { Component } from "react";
 import {  Link } from "react-router-dom";
 import Modal from "./friends/modal";
 import './friends/friends.css';
 // import Friend from '../friend/friend'
+=======
+import React, { Component } from 'react';
+// import UserPic from '../user.png';
+import { BrowserRouter, Link, Route } from 'react-router-dom';
+// import Modal from './friends/modal';
+import './friends/friends.css';
+import Friend from '../friend/friend'
+>>>>>>> Stashed changes
 
 export class LeftSidebar extends Component {
   constructor(props) {

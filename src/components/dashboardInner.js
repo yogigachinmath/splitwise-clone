@@ -31,29 +31,42 @@ class Dash extends Component {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-between pl-3 pr-3 pt-1 pb-1">
-          <div className="d-flex flex-column w-50">
+        <div className="d-flex justify-content-between">
+          <div className="d-flex flex-column w-50 pt-2 pl-3 pr-3">
             <span className="text-secondary font-weight-bold balance-heading">
               YOU OWE
             </span>
-            <div className="d-flex line-height-18">
+            <div className="d-flex line-height-18 border border-left-0 border-top-0 border-bottom-0 mt-3">
               <img
-                className="expense-user-img border rounded-circle"
+                className="expense-user-img border rounded-circle mr-2"
                 src="/img/default-avatar.png"
                 alt=""
               />
               <div>
-                <h6 className="m-0">Saurav Chaudhary</h6>
+                <h6 className="m-0">Saurav Choudhury</h6>
                 <small className="orange-color">
-                  you owe <b>INR -100</b>
+                  you owe <b>INR100</b>
                 </small>
               </div>
             </div>
           </div>
-          <div className="d-flex flex-column w-50">
+          <div className="d-flex flex-column w-50 pt-2 pl-3 pr-3">
             <span className="text-secondary align-self-end font-weight-bold balance-heading">
               YOU ARE OWED
             </span>
+            <div className="d-flex line-height-18 mt-3">
+              <img
+                className="expense-user-img border rounded-circle mr-2"
+                src="/img/default-avatar.png"
+                alt=""
+              />
+              <div>
+                <h6 className="m-0">Saurav Choudhury</h6>
+                <small className="colorBlue">
+                  owes you <b>INR100</b>
+                </small>
+              </div>
+            </div>
           </div>
         </div>
         {/*<div className="content-dash p-5">

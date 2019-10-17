@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-// import UserPic from '../user.png';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
-// import Modal from './friends/modal';
+import React, { Component } from "react";
+import UserPic from "../user.png";
+import { BrowserRouter, Link, Route } from "react-router-dom";
+import Modal from "./friends/modal";
 import './friends/friends.css';
 import Friend from '../friend/friend'
 
@@ -10,8 +10,8 @@ export class LeftSidebar extends Component {
     super(props);
     this.state = {
       friends: [],
-      userName: '',
-      email: ''
+      userName: "",
+      email: ""
     };
     this.handleclick = this.handleclick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -40,11 +40,11 @@ export class LeftSidebar extends Component {
     });
   }
   handleChangeOverClick = e => {
-    document.querySelectorAll('.sidebarText').forEach(element => {
-      element.classList.remove('colorBlue');
+    document.querySelectorAll(".sidebarText").forEach(element => {
+      element.classList.remove("colorBlue");
     });
-    e.target.classList.add('colorBlue');
-    if (e.target.classList.contains('dashClass')) {
+    e.target.classList.add("colorBlue");
+    if (e.target.classList.contains("dashClass")) {
       //   console.log('Class list');
     //   e.target.previousSibling.classList.remove('grayImg');
     }

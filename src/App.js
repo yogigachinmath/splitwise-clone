@@ -8,9 +8,9 @@ import fire from "./config/fire";
 import Dashboard from "./components/Dashboard";
 import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
-import PrivateRouteLogin from './components/auth/privaterouterlogin'
+import PrivateRouteLogin from "./components/auth/privaterouterlogin";
 import "./App.css";
-import './loader'
+import "./loader";
 
 
 class App extends Component {
@@ -38,14 +38,23 @@ class App extends Component {
       <Router>
         <div className="App">
           <Switch>
-          <Route path="/register" component={Register} />
-          <PrivateRouteLogin  path='/login' authed={this.state.authorized} component={Login} />
-          <PrivateRoute  path='/dashboard' authed={this.state.authorized} component={Dashboard} />      
+            <Route path="/register" component={Register} />
+            <PrivateRouteLogin
+              path="/login"
+              authed={this.state.authorized}
+              component={Login}
+            />
+            <PrivateRoute
+              path="/dashboard"
+              authed={this.state.authorized}
+              component={Dashboard}
+            />
             <Route exact path="/" component={Home} />
             <Route path="/new/apartment" component={AddApartment} />
             <Route exact path="/dash/main" component={DashboardMain} />
             <Route exact path="/expenses" component={DashboardMain}/>
             <Route exaact path="/dash/:name" component={DashboardMain}/>
+            {/* <Route exact path="/dash/all" component={AllExpences} /> */}
           </Switch>
         </div>
       </Router>

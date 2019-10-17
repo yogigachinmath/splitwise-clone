@@ -4,6 +4,7 @@ import LeftSidebar from '../components/layouts/dash/LeftSidebar';
 import { BrowserRouter, Link, Route} from 'react-router-dom';
 import Dash from './dashboardInner';
 import Expense from './Expenses/expense'
+import AllExpenses from "./AllExpences";
 
 export class DashboardMain extends Component {
   render() {
@@ -16,7 +17,7 @@ export class DashboardMain extends Component {
               <LeftSidebar {...this.props} />
             </div>
     <Route exact path="/dash/main" render = {props => ( <Dash {...props} />)}/>
-    <Route exact path="/expenses" render = {props => ( <Dash {...props} />)}/>
+    <Route exact path="/expenses" render = {props => ( <AllExpenses {...props} />)}/>
     <Route exact path="/dash/:name" render = {props => ( <Expense {...props} />)}/>
             <div className="right-sidebar col-md-3">
                         <img

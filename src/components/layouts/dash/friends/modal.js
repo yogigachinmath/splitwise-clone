@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import "./modal.css";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Modal extends Component {
   constructor(props) {
     super(props);
     console.log(props);
     this.state = {
-      email: '',
-      username: ' '
+      email: "",
+      username: " "
     };
-    this.handleChange = this.handleChange.bind(this);this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
   handleChange(e) {
-    console.log('fsfd');
+    console.log("fsfd");
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -47,10 +47,10 @@ class Modal extends Component {
           value={this.state.name}
           onChange={this.handleChange}
         ></input>
-        <Link to={'/'}>
+        <Link to={"/"}>
           <a className="waves-effect waves-light btn">cancel</a>
         </Link>
-        <Link to={'/'}>
+        <Link to={"/"}>
           <a onClick={this.handleClick}>Add</a>
         </Link>
         <br />

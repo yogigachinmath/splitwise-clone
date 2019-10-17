@@ -1,0 +1,31 @@
+.expense-img {
+  width: 35px;
+  height: 35px;
+}
+.expence-row {
+  margin: 0;
+  height: 55px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.expenses-child {
+  min-width: 25%;
+  max-width: 50%;
+}
+.expense-heading {
+  width: 11rem;
+}
+.line-height-18 {
+  line-height: 1.125rem !important;
+}
+.lent-color {
+  color: #5bc5a7;
+}
+.group-expense-link {
+  font-size: 10px;
+  background: #eee;
+  display: inline-block;
+  padding: 0px 3px;
+  border-radius: 3px;
+  line-height: 14px;
+}

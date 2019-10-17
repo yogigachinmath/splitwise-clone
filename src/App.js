@@ -12,6 +12,7 @@ import PrivateRouteLogin from './components/auth/privaterouterlogin'
 import "./App.css";
 import './loader'
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +43,9 @@ class App extends Component {
           <PrivateRoute  path='/dashboard' authed={this.state.authorized} component={Dashboard} />      
             <Route exact path="/" component={Home} />
             <Route path="/new/apartment" component={AddApartment} />
-            <Route path="/dash/main" component={DashboardMain} />
+            <Route exact path="/dash/main" component={DashboardMain} />
+            <Route exact path="/expenses" component={DashboardMain}/>
+            <Route exaact path="/dash/:name" component={DashboardMain}/>
           </Switch>
         </div>
       </Router>

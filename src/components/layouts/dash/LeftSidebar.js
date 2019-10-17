@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 // import UserPic from '../user.png';
-// import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { BrowserRouter, Link, Route } from 'react-router-dom';
 // import Modal from './friends/modal';
 import './friends/friends.css';
+import Friend from '../friend/friend'
 
 export class LeftSidebar extends Component {
   constructor(props) {
@@ -15,12 +16,6 @@ export class LeftSidebar extends Component {
     this.handleclick = this.handleclick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  //   handleAddfriend(friendusername, friendemail) {
-  //     console.log(friendusername);
-  //     this.setState({
-  //       friends: friendusername
-  //     });
-  //   }
   handleclick(e) {
     e.preventDefault();
     console.log(this.state);
@@ -30,19 +25,20 @@ export class LeftSidebar extends Component {
     this.setState({
       friends
     });
-    console.log(this.state.friends);
-    e.target.setAttribute('data-dismiss', 'modal');
+    this.setState({
+        userName:'',
+        email:''
+    }) 
+  document.getElementById('addFriendForm').reset();
+//   document.getElementById('addFriendForm')
+// document.querySelector('.modal-dialog').setAttribute('data-dismiss',"modal");
+    // e.target.setAttribute('type', 'modal');
   }
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
-  //   handleClick(e) {
-  //     this.props.friends.push(this.state.username);
-  //     this.props.handleAddfriend(this.props.friends, this.state.email);
-  //   }
-
   handleChangeOverClick = e => {
     document.querySelectorAll('.sidebarText').forEach(element => {
       element.classList.remove('colorBlue');
@@ -50,7 +46,7 @@ export class LeftSidebar extends Component {
     e.target.classList.add('colorBlue');
     if (e.target.classList.contains('dashClass')) {
       //   console.log('Class list');
-      e.target.previousSibling.classList.remove('grayImg');
+    //   e.target.previousSibling.classList.remove('grayImg');
     }
   };
   render() {
@@ -70,7 +66,7 @@ export class LeftSidebar extends Component {
               <div className="modal-header">
                 <div className="modal-title row" id="exampleModalLabel">
                   <img src="/img/logo1.svg" className="logo" alt="site" />
-                  <span className="modal-popup-text ml-2">Invite friends</span>
+                  <span className="modal-popup-text ml-2"><b>ADD FRIEND</b></span>
                 </div>
                 <button
                   type="button"
@@ -81,7 +77,7 @@ export class LeftSidebar extends Component {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form onSubmit={this.handleclick}>
+              <form onSubmit={this.handleclick} id='addFriendForm'>
                 <div className="modal-body">
                   <div className="form-group">
                     <input
@@ -118,7 +114,6 @@ export class LeftSidebar extends Component {
                     type="submit"
                     className="btn btn-primary"
                     // onClick={this.handleclick}
-                    // data-dismiss="modal"
                   >
                     ADD FRIEND
                   </button>
@@ -131,20 +126,24 @@ export class LeftSidebar extends Component {
 
         <div className="row mt-3">
           <img src="/img/logo1.svg" className="logoDash grayImg" alt="logo" />
-          <span
+          <Link to = {`/dash/main`}>
+              <span
             className="sidebarText dashClass ml-2 lh"
             onClick={this.handleChangeOverClick}
           >
             Dashboard
           </span>
+          </Link>
         </div>
         <div className="row">
           <span className="fa fa-flag"></span>
           <span className="sidebarText colorBlue ml-2 lh">Recent activity</span>
         </div>
         <div className="row mt-2">
+            <Link to = {`/expenses`}>
           <span className="fa fa-bars"></span>
           <span className="sidebarExpensesText ml-2 lh">All expenses</span>
+          </Link>
         </div>
         <div className="groupSidebar">
           <div className="row bg-light text-secondary px-2">
@@ -170,19 +169,25 @@ export class LeftSidebar extends Component {
             <span className="labelListsSidebar mr-auto">Friends</span>
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn"
               data-toggle="modal"
               data-target="#exampleModal"
             >
-              add
+              <span className='addIcon fa fa-plus mr-1'> add</span>
             </button>
             <span className="addSidebar"></span>
           </div>
           <div className="appendFriendNames ml-3">
             {this.state.friends.map(val => (
               <p className="textGroups">
-                <span className="fa fa-tag mr-2"></span>
+                  <Link to={{
+                      pathname :`/dash/${val.username}`,
+                      state:{
+                        info:val.username
+                      }}} >
+                <i className = 'icon-user'></i>
                 {val.username}
+                </Link>
               </p>
             ))}
           </div>

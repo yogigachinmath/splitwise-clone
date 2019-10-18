@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import "./dashboardinner.css";
 
 class Dash extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     if (this.props.expenseData.length > 0) {
       return (
@@ -77,14 +74,14 @@ class Dash extends Component {
       return (
         <div className="dash-main-content col-md-6">
           <div className="dash-header pt-2 pl-3 pr-3 border border-top-0 border-left-0 border-right-0">
-        <div className="row">
+            <div className="row">
               <h4 className="mr-auto">Dashboard</h4>
               <div className="dash-header-right ml-auto">
                 <button className="btn btn-orange">Add an expense</button>
                 <button className="btn btn-blue ml-2">Settle up</button>
               </div>
             </div>
-            </div>
+          </div>
           <div className="content-dash p-5">
             <div className="row">
               <img

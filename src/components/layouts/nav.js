@@ -16,15 +16,8 @@ class Header extends Component {
             </a>
             <ul className="nav nav-pills">
               <li className="nav-item">
-                <button type="submit" className="btn btn-orange login mr-3">
-                  {" "}
-                  Log in
-                </button>
-                <span className="text-white">or</span>
-              </li>
-              <li className="nav-item">
                 <Link to={"./register"}>
-                  <button type="submit" className="btn btn-primary signUp ml-3">
+                  <button type="submit" className="btn btn-orange signUp ml-3">
                     {" "}
                     Sign Up
                   </button>

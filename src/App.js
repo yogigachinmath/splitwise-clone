@@ -9,11 +9,10 @@ import Dashboard from "./components/Dashboard";
 import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
 import FireBasePrac from "./components/FireBaseDB";
-import { createBrowserHistory as history } from 'history';
+import { createBrowserHistory as history } from "history";
 import PrivateRouteLogin from "./components/auth/privaterouterlogin";
 import "./App.css";
 import "./loader";
-import data from "./data.json";
 
 class App extends Component {
   constructor(props) {
@@ -40,7 +39,6 @@ class App extends Component {
     return (
       <Router history={history}>
         <div className="App">
-          {console.log(data)}
           <Switch>
             <Route path="/register" component={Register} />
             <PrivateRouteLogin

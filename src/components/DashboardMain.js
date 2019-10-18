@@ -5,7 +5,7 @@ import fire from "../config/fire";
 import { BrowserRouter, Route } from "react-router-dom";
 import Dash from "./dashboardInner";
 import Expense from "./Expenses/expense";
-import AllExpenses from "./AllExpences";
+import AllExpenses from "./AllExpenses";
 
 export class DashboardMain extends Component {
   constructor(props) {
@@ -16,6 +16,7 @@ export class DashboardMain extends Component {
     };
   }
   componentDidMount() {
+    let arr = [];
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState(() => ({ user: user }));
@@ -27,10 +28,11 @@ export class DashboardMain extends Component {
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
               console.log(doc.id, " => ", doc.data());
-              this.setState({
-                expenseData: [{ id: doc.id, ...doc.data() }]
-              });
+              arr.push({id: doc.id, ...doc.data()});
             });
+            this.setState({
+                expenseData: arr
+              });
           })
           .catch(function(error) {
             console.log("Error getting documents: ", error);
@@ -85,3 +87,10 @@ function URLcheck(props) {
 }
 
 export default DashboardMain;
+
+
+// har ek transaction par friend
+// ek ek ko dash mai nhi dikhana - sirf hisab settlements
+// pura object mai sab ko compare krke nikalna hga - common hisabs
+// group ka v dkhna hga - agar grp mai wahi frnd hua tha to wo hisab v 
+// overall hisab frnd wise

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./AddExpense.css";
-import FriendExenses from "../FriendExpenses";
+import FriendExpenses from "../FriendExpenses";
 
 class Expense extends Component {
   constructor(props) {
@@ -46,6 +46,28 @@ class Expense extends Component {
       [e.target.name]: e.target.value
     });
   }
+
+  showSplitEqually = (e) => {
+    e.preventDefault();
+    document.querySelector('.splitEqually').style.display = 'block';
+    document.querySelector('.splitExact').style.display = 'none';
+    document.querySelector('.splitPercentage').style.display = 'none';
+  }
+
+  showSplitExact = (e) => {
+    e.preventDefault();
+    document.querySelector('.splitEqually').style.display = 'none';
+    document.querySelector('.splitExact').style.display = 'block';
+    document.querySelector('.splitPercentage').style.display = 'none';
+  }
+
+  showSplitPercentage = (e) => {
+    e.preventDefault();
+    document.querySelector('.splitEqually').style.display = 'none';
+    document.querySelector('.splitExact').style.display = 'none';
+    document.querySelector('.splitPercentage').style.display = 'block';
+  }
+
   onSubmit = e => {
     e.preventDefault();
     let expenses = this.state.expenses;
@@ -84,9 +106,8 @@ class Expense extends Component {
           curruser1: "",
           curruser2: ""
         });
-      }
-      else {
-        alert('Please split the amount correctly!');
+      } else {
+        alert("Please split the amount correctly!");
       }
     } else {
       alert("Please input correctly!");
@@ -154,28 +175,86 @@ class Expense extends Component {
                     </div>
                   </div>
                   <div className="splitAmount mt-3">
-                    <h5>Split by exact amounts</h5>
-                    <div className="innerDetails m-3">
-                      <span>You</span>
-                      <input
-                        type="number"
-                        className="description ml-1 mb-2"
-                        name={"curruser1"}
-                        onChange={this.handleChange}
-                        placeholder="0.00"
-                        value={this.state.curruser1}
-                      />
+                    <div className="row mb-3">
+                      <button
+                        className="btn btn-secondary mr-2"
+                        onClick={this.showSplitEqually}
+                      >
+                        =
+                      </button>
+                      <button
+                        className="btn btn-secondary mr-2"
+                        onClick={this.showSplitExact}
+                      >
+                        RS. 1.50
+                      </button>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={this.showSplitPercentage}
+                      >
+                        %
+                      </button>
                     </div>
-                    <div className="innerDetails m-3">
-                      <span>Arun</span>
-                      <input
-                        type="number"
-                        className="description ml-1 mb-2"
-                        name={"curruser2"}
-                        onChange={this.handleChange}
-                        placeholder="0.00"
-                        value={this.state.curruser2}
-                      />
+                    <div className="splitEqually">
+                    <h5>Split Equally</h5>
+                      <div className="innerDetails m-3">
+                        <span>You</span>
+                        
+                      </div>
+                      <div className="innerDetails m-3">
+                        <span>{this.props.match.params.name}</span>
+                       
+                      </div>
+                    </div>
+                    <div className="splitExact" style={{display:'none'}}>
+                      <h5>Split by exact amounts</h5>
+                      <div className="innerDetails m-3">
+                        <span>You</span>
+                        <input
+                          type="number"
+                          className="description ml-1 mb-2"
+                          name={"curruser1"}
+                          onChange={this.handleChange}
+                          placeholder="0.00"
+                          value={this.state.curruser1}
+                        />
+                      </div>
+                      <div className="innerDetails m-3">
+                        <span>{this.props.match.params.name}</span>
+                        <input
+                          type="number"
+                          className="description ml-1 mb-2"
+                          name={"curruser2"}
+                          onChange={this.handleChange}
+                          placeholder="0.00"
+                          value={this.state.curruser2}
+                        />
+                      </div>
+                    </div>
+                    <div className="splitPercentage" style={{display: 'none'}}>
+                    <h5>Split Equally</h5>
+                      <div className="innerDetails m-3">
+                        <span>You</span>
+                        <input
+                          type="number"
+                          className="description ml-1 mb-2"
+                          name={"curruser1"}
+                          onChange={this.handleChange}
+                          placeholder="0.00"
+                          value={this.state.curruser1}
+                        />
+                      </div>
+                      <div className="innerDetails m-3">
+                        <span>{this.props.match.params.name}</span>
+                        <input
+                          type="number"
+                          className="description ml-1 mb-2"
+                          name={"curruser2"}
+                          onChange={this.handleChange}
+                          placeholder="0.00"
+                          value={this.state.curruser2}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -230,7 +309,7 @@ class Expense extends Component {
             </div>
     </div>
     </div>*/}
-        <FriendExenses expenses={this.state.expenses} />
+        <FriendExpenses expenses={this.state.expenses} />
       </div>
     );
   }

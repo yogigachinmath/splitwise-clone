@@ -5,7 +5,7 @@ import fire from '../../config/fire';
 class login extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     this.state = {
       email: '',
       password: ''

@@ -8,6 +8,8 @@ import fire from "./config/fire";
 import Dashboard from "./components/Dashboard";
 import AddApartment from "./components/AddApartment";
 import DashboardMain from "./components/DashboardMain";
+import FireBasePrac from "./components/FireBaseDB";
+import { createBrowserHistory as history } from 'history';
 import PrivateRouteLogin from "./components/auth/privaterouterlogin";
 import "./App.css";
 import "./loader";
@@ -36,7 +38,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div className="App">
           {console.log(data)}
           <Switch>
@@ -53,6 +55,8 @@ class App extends Component {
             />
             <Route exact path="/" component={Home} />
             <Route path="/new/apartment" component={AddApartment} />
+            <Route path="/dash/main" component={DashboardMain} />
+            <Route path="/fireBase/prac" component={FireBasePrac} />
             <Route exact path="/dash/main" component={DashboardMain} />
             <Route exact path="/expenses" component={DashboardMain} />
             <Route exaact path="/dash/friend/:name" component={DashboardMain} />

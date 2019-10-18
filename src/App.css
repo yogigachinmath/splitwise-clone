@@ -117,11 +117,15 @@ h6 {
   justify-content: center;
 }
 
-.logo img {
+.logo img, .addApartment-logo img  {
   width: 12em;
 }
 
 .form {
+  margin-left: 12em;
+}
+
+.addApartment {
   margin-left: 2em;
 }
 
@@ -222,7 +226,11 @@ input[type='password'] {
   width: 15em;
   margin-bottom: 0.6em;
 }
-
+.addIconBtn {
+  outline: none;
+  border: none;
+  background: transparent;
+}
 .skipBtn {
   padding: 0.4em;
   font-size: 1.7em;

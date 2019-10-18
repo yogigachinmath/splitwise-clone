@@ -56,30 +56,37 @@ class Expense extends Component {
       this.state.curruser1 !== "" &&
       this.state.curruser2 !== ""
     ) {
-      const expense = {
-        description: this.state.currentdesc,
-        creationMethod: "exact payment",
-        friendId: "arun",
-        cost: this.state.currentamount,
-        repayments: [
-          {
-            from: "this",
-            to: "user1",
-            amount: +this.state.curruser2
-          }
-        ],
-        createdBy: "user1",
-        createAt: "date"
-      };
-      expenses[length] = expense;
-      console.log(expenses);
-      this.setState({
-        expenses: expenses,
-        currentdesc: "",
-        currentamount: "",
-        curruser1: "",
-        curruser2: ""
-      });
+      if (
+        +this.state.curruser1 + +this.state.curruser2 ===
+        +this.state.currentamount
+      ) {
+        const expense = {
+          description: this.state.currentdesc,
+          creationMethod: "exact payment",
+          friendId: "arun",
+          cost: this.state.currentamount,
+          repayments: [
+            {
+              from: this.props.match.params.name,
+              to: "user1",
+              amount: +this.state.curruser2
+            }
+          ],
+          createdBy: "user1",
+          createAt: "date"
+        };
+        expenses[length] = expense;
+        console.log(expenses);
+        this.setState({
+          expenses: expenses,
+          currentdesc: "",
+          currentamount: "",
+          curruser1: "",
+          curruser2: ""
+        });
+      } else {
+        alert("Please split the amount correctly!");
+      }
     } else {
       alert("Please input correctly!");
     }

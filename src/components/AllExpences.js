@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ExpenseDetail from "./ExpenseDetail";
 import "./expenses.css";
-import $ from "jquery";
 
 class Expense extends Component {
   state = { showExpenseDetails: false };
@@ -12,6 +11,7 @@ class Expense extends Component {
       this.setState({ showExpenseDetails: false });
     }
   };
+
   render() {
     return (
       <React.Fragment>
@@ -56,24 +56,38 @@ class Expense extends Component {
                   </span>
                 </div>
                 <div className="d-flex flex-column ">
-                  <small className="text-secondary">you lent</small>
-                  <span className="font-weight-bold lent-color">
+                  <small className="text-secondary">
+                    you
+                    {+this.props.expense.users[this.props.currentUser]
+                      .netBalance > 0
+                      ? " lent"
+                      : " borrowed"}
+                  </small>
+                  <span
+                    className={
+                      +this.props.expense.users[this.props.currentUser]
+                        .netBalance > 0
+                        ? "font-weight-bold colorBlue"
+                        : "font-weight-bold orange-color"
+                    }
+                  >
                     INR
-                    {this.props.expense.repayments.reduce(
-                      (lentAmount, repayment) => {
-                        let totalAmount = lentAmount;
-                        totalAmount += repayment.amount;
-                        return totalAmount;
-                      },
-                      0
-                    )}
+                    {this.props.expense.users[this.props.currentUser]
+                      .netBalance > 0
+                      ? this.props.expense.users[this.props.currentUser]
+                          .netBalance
+                      : -this.props.expense.users[this.props.currentUser]
+                          .netBalance}
                   </span>
                 </div>
               </div>
             </div>
           </div>
           {this.state.showExpenseDetails ? (
-            <ExpenseDetail expense={this.props.expense} />
+            <ExpenseDetail
+              expense={this.props.expense}
+              currentUser={this.props.currentUser}
+            />
           ) : null}
         </div>
       </React.Fragment>
@@ -82,7 +96,7 @@ class Expense extends Component {
 }
 export class DashboardMain extends Component {
   state = {
-    currentUser: "user1",
+    currentUser: "user2",
     expenses: {
       expense1: {
         description: "Food",
@@ -102,7 +116,24 @@ export class DashboardMain extends Component {
           }
         ],
         createdBy: "user1",
-        createAt: "date"
+        createAt: "date",
+        users: {
+          user1: {
+            netBalance: 166.66,
+            owedShare: 133.33,
+            paidShare: 400
+          },
+          user2: {
+            netBalance: -133.66,
+            owedShare: 133.33,
+            paidShare: 0
+          },
+          user3: {
+            netBalance: -133.33,
+            owedShare: 133.33,
+            paidShare: 0
+          }
+        }
       },
       expense2: {
         description: "Taxi",
@@ -116,7 +147,19 @@ export class DashboardMain extends Component {
           }
         ],
         createdBy: "user1",
-        createAt: "date"
+        createAt: "date",
+        users: {
+          user1: {
+            netBalance: 200,
+            owedShare: 200,
+            paidShare: 400
+          },
+          user2: {
+            netBalance: -200,
+            owedShare: 200,
+            paidShare: 0
+          }
+        }
       },
       expense3: {
         description: "Stationary",
@@ -125,18 +168,35 @@ export class DashboardMain extends Component {
         cost: 600,
         repayments: [
           {
-            from: "user2",
-            to: "user1",
+            from: "user1",
+            to: "user3",
             amount: 200
           },
           {
-            from: "user3",
-            to: "user1",
+            from: "user2",
+            to: "user3",
             amount: 200
           }
         ],
         createdBy: "user1",
-        createAt: "date"
+        createAt: "date",
+        users: {
+          user1: {
+            netBalance: -200,
+            owedShare: 200,
+            paidShare: 0
+          },
+          user2: {
+            netBalance: -200,
+            owedShare: 200,
+            paidShare: 0
+          },
+          user3: {
+            netBalance: 400,
+            owedShare: 200,
+            paidShare: 600
+          }
+        }
       }
     }
   };
@@ -155,7 +215,12 @@ export class DashboardMain extends Component {
             </div>
           </div>
           {Object.keys(this.state.expenses).map(expense => {
-            return <Expense expense={this.state.expenses[expense]} />;
+            return (
+              <Expense
+                expense={this.state.expenses[expense]}
+                currentUser={this.state.currentUser}
+              />
+            );
           })}
         </div>
       </React.Fragment>

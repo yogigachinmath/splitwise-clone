@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 class ExpenseDetail extends Component {
+  payerOwes = expense => {};
   render() {
     const expense = this.props.expense;
     return (
@@ -20,7 +21,7 @@ class ExpenseDetail extends Component {
           </div>
         </div>
         <hr className="m-0 mb-3" />
-        {expense.repayments.map(repayment => {
+        {Object.keys(expense.users).map(user => {
           return (
             <div className="mb-2">
               <img
@@ -29,8 +30,13 @@ class ExpenseDetail extends Component {
                 alt=""
               />
               <small>
-                {" "}
-                <b>{repayment.from}</b> owes <b>INR{repayment.amount}</b>
+                <b>{user}</b>
+                {expense.users[user].paidShare !== 0 && " paid "}
+                {expense.users[user].paidShare !== 0 && (
+                  <b>{expense.users[user].paidShare}</b>
+                )}
+                {expense.users[user].paidShare !== 0 && " and"} owes{" "}
+                <b>INR{expense.users[user].owedShare}</b>
               </small>
             </div>
           );

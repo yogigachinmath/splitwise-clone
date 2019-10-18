@@ -1,210 +1,25 @@
 import React, { Component } from "react";
-import ExpenseDetail from "./ExpenseDetail";
 import "./expenses.css";
+import ShowExpense from "./ShowExpenses";
+import data from "../data.json";
 
-class Expense extends Component {
-  state = { showExpenseDetails: false };
-  showDetails = e => {
-    if (this.state.showExpenseDetails === false) {
-      this.setState({ showExpenseDetails: true });
-    } else {
-      this.setState({ showExpenseDetails: false });
-    }
-  };
-
-  render() {
-    return (
-      <React.Fragment>
-        <div className="expense" onClick={this.showDetails}>
-          <div className="row expence-row line-height-18 border border-top-0 border-left-0 border-right-0">
-            <div className="d-flex justify-content-between container">
-              <div className="d-flex expenses-child ">
-                <div className="d-flex flex-column mr-2 text-secondary">
-                  <small>Oct</small>
-                  <h5 className="line-height-18">14</h5>
-                </div>
-                <img
-                  className="expense-img mr-2"
-                  src="/img/general@2x.png"
-                  alt=""
-                />
-                <div className="d-flex flex-column">
-                  <a
-                    className="expense-heading text-truncate font-weight-bold"
-                    href="#"
-                  >
-                    {this.props.expense.description}
-                  </a>
-                  {this.props.expense.groupId ? (
-                    <a href="#">
-                      <small className="text-secondary group-expense-link">
-                        Hacker
-                      </small>
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-              <div className="d-flex justify-content-between expenses-child">
-                <div className="d-flex flex-column mr-3">
-                  <small className="align-self-sm-end text-secondary">
-                    you paid
-                  </small>
-                  <span className="font-weight-bold">
-                    INR {this.props.expense.cost}
-                  </span>
-                </div>
-                <div className="d-flex flex-column ">
-                  <small className="text-secondary">
-                    you
-                    {+this.props.expense.users[this.props.currentUser]
-                      .netBalance > 0
-                      ? " lent"
-                      : " borrowed"}
-                  </small>
-                  <span
-                    className={
-                      +this.props.expense.users[this.props.currentUser]
-                        .netBalance > 0
-                        ? "font-weight-bold colorBlue"
-                        : "font-weight-bold orange-color"
-                    }
-                  >
-                    INR
-                    {this.props.expense.users[this.props.currentUser]
-                      .netBalance > 0
-                      ? this.props.expense.users[this.props.currentUser]
-                          .netBalance
-                      : -this.props.expense.users[this.props.currentUser]
-                          .netBalance}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          {this.state.showExpenseDetails ? (
-            <ExpenseDetail
-              expense={this.props.expense}
-              currentUser={this.props.currentUser}
-            />
-          ) : null}
-        </div>
-      </React.Fragment>
-    );
-  }
-}
 export class DashboardMain extends Component {
+  getUserExpenses = (expenses, userExpensesId) => {
+    return userExpensesId.reduce((userExpenses, userExpenseId) => {
+      userExpenses[userExpenseId] = expenses[userExpenseId];
+      return userExpenses;
+    }, {});
+  };
   state = {
-    currentUser: "user2",
-    expenses: {
-      expense1: {
-        description: "Food",
-        creationMethod: "equal",
-        groupId: "group1",
-        cost: 400,
-        repayments: [
-          {
-            from: "user2",
-            to: "user1",
-            amount: 133.33
-          },
-          {
-            from: "user3",
-            to: "user1",
-            amount: 133.33
-          }
-        ],
-        createdBy: "user1",
-        createAt: "date",
-        users: {
-          user1: {
-            netBalance: 166.66,
-            owedShare: 133.33,
-            paidShare: 400
-          },
-          user2: {
-            netBalance: -133.66,
-            owedShare: 133.33,
-            paidShare: 0
-          },
-          user3: {
-            netBalance: -133.33,
-            owedShare: 133.33,
-            paidShare: 0
-          }
-        }
-      },
-      expense2: {
-        description: "Taxi",
-        creationMethod: "equal",
-        cost: 400,
-        repayments: [
-          {
-            from: "user3",
-            to: "user1",
-            amount: 200.0
-          }
-        ],
-        createdBy: "user1",
-        createAt: "date",
-        users: {
-          user1: {
-            netBalance: 200,
-            owedShare: 200,
-            paidShare: 400
-          },
-          user2: {
-            netBalance: -200,
-            owedShare: 200,
-            paidShare: 0
-          }
-        }
-      },
-      expense3: {
-        description: "Stationary",
-        creationMethod: "equal",
-        groupId: "group1",
-        cost: 600,
-        repayments: [
-          {
-            from: "user1",
-            to: "user3",
-            amount: 200
-          },
-          {
-            from: "user2",
-            to: "user3",
-            amount: 200
-          }
-        ],
-        createdBy: "user1",
-        createAt: "date",
-        users: {
-          user1: {
-            netBalance: -200,
-            owedShare: 200,
-            paidShare: 0
-          },
-          user2: {
-            netBalance: -200,
-            owedShare: 200,
-            paidShare: 0
-          },
-          user3: {
-            netBalance: 400,
-            owedShare: 200,
-            paidShare: 600
-          }
-        }
-      }
-    }
+    currentUser: "user1",
+    expenses: this.getUserExpenses(data.expenses, data.users["user1"].expenses)
   };
 
   render() {
     return (
       <React.Fragment>
         <div className="dash-main-content col-md-6">
+          {console.log(data)}
           <div className="dash-header p-3">
             <div className="row">
               <h4 className="mr-auto">All Expenses</h4>
@@ -216,7 +31,7 @@ export class DashboardMain extends Component {
           </div>
           {Object.keys(this.state.expenses).map(expense => {
             return (
-              <Expense
+              <ShowExpense
                 expense={this.state.expenses[expense]}
                 currentUser={this.state.currentUser}
               />

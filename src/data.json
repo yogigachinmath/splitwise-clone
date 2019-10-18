@@ -4,22 +4,22 @@
       "name": "Arun Prajapati",
       "email": "arun@gmail.com",
       "friends": ["user2", "user3"],
-      "groups": ["group1"],
-      "expenses": ["expense1"]
+      "groups": ["groupId1"],
+      "expenses": ["expense1", "expense2", "expense3"]
     },
     "user2": {
       "name": "Yogishankar",
       "email": "yogi@gmail.com",
       "friends": ["user1", "user3"],
-      "groups": ["group1"],
-      "expenses": ["expense2"]
+      "groups": ["groupId1"],
+      "expenses": ["expense1", "expense3"]
     },
     "user3": {
       "name": "Saurav Choudhury",
       "email": "saurav@gmail.com",
       "friends": ["user1", "user2"],
-      "groups": ["group1"],
-      "expenses": ["expense3"]
+      "groups": ["groupId1"],
+      "expenses": ["expense1", "expense2", "expense3"]
     }
   },
   "groups": {
@@ -27,8 +27,7 @@
       "name": "Group1",
       "members": ["userid1", "userid2", "userid3"],
       "deleteBy": "null/deletorId",
-      "deletedAt": "null/date",
-      "expenses": []
+      "deletedAt": "null/date"
     }
   },
   "expenses": {
@@ -72,6 +71,7 @@
     "expense2": {
       "description": "Taxi",
       "creationMethod": "equal",
+      "friendId": "user3",
       "cost": 400,
       "repayments": [
         {
@@ -88,7 +88,7 @@
           "owedShare": 200,
           "paidShare": 400
         },
-        "user2": {
+        "user3": {
           "netBalance": -200,
           "owedShare": 200,
           "paidShare": 0

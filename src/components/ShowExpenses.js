@@ -16,7 +16,7 @@ class ShowExpenses extends Component {
         <div className="expense" onClick={this.showDetails}>
           <div className="row expence-row line-height-18 border border-top-0 border-left-0 border-right-0">
             <div className="d-flex justify-content-between container">
-              <div className="d-flex expenses-child ">
+              <div className="d-flex expenses-child-1 ">
                 <div className="d-flex flex-column mr-2 text-secondary">
                   <small>Oct</small>
                   <h5 className="line-height-18">14</h5>
@@ -44,17 +44,17 @@ class ShowExpenses extends Component {
                   )}
                 </div>
               </div>
-              <div className="d-flex justify-content-between expenses-child">
-                <div className="d-flex flex-column mr-3">
-                  <small className="align-self-sm-end text-secondary">
+              <div className="d-flex justify-content-between expenses-child-2">
+                <div className="d-flex flex-column align-items-end mr-3 w-50">
+                  <small className="text-secondary text-truncate">
                     you paid
                   </small>
                   <span className="font-weight-bold">
                     INR {this.props.expense.cost}
                   </span>
                 </div>
-                <div className="d-flex flex-column ">
-                  <small className="text-secondary">
+                <div className="d-flex flex-column w-50">
+                  <small className="text-secondary text-truncate">
                     you
                     {+this.props.expense.users[this.props.currentUser]
                       .netBalance > 0

@@ -11,13 +11,15 @@
   box-sizing: border-box;
   padding: 8px 5px 5px;
 }
-.expenses-child {
-  min-width: 25%;
-  max-width: 50%;
-}
 .expense-heading {
   color: #333333;
   width: 11rem;
+}
+.expenses-child-1 {
+  width: 55%;
+}
+.expenses-child-2 {
+  width: 45%;
 }
 .expense-heading:hover {
   color: #333333;

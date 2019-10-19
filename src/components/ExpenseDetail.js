@@ -1,6 +1,34 @@
 import React, { Component } from "react";
+import fire from "../config/fire";
 
 class ExpenseDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userName: {}
+    };
+  }
+  getUserNames = usersId => {
+    usersId.forEach(userId => {
+      let userNames = this.state.userName;
+      fire.auth().onAuthStateChanged(async user => {
+        if (user) {
+          this.setState(() => ({ currentUser: user.uid }));
+          this.setState(() => ({ user: user }));
+          const expenseData = await fire
+            .firestore()
+            .collection("users")
+            .doc(userId)
+            .get();
+          userNames[userId] = expenseData.data().name;
+          this.setState({ userName: userNames });
+        }
+      });
+    });
+  };
+  componentDidMount() {
+    this.getUserNames(Object.keys(this.props.expense.users));
+  }
   payerOwes = expense => {};
   render() {
     const expense = this.props.expense;
@@ -16,7 +44,8 @@ class ExpenseDetail extends Component {
             <span>{expense.description}</span>
             <h5 className="m-0 font-weight-bold">INR {expense.cost}</h5>
             <small className="text-secondary">
-              Added by Arun p. on October 15, 2019
+              Added by {this.state.userName[expense.createdBy]} on October 15,
+              2019
             </small>
           </div>
         </div>
@@ -30,7 +59,7 @@ class ExpenseDetail extends Component {
                 alt=""
               />
               <small>
-                <b>{user}</b>
+                <b>{this.state.userName[user]}</b>
                 {expense.users[user].paidShare !== 0 && " paid "}
                 {expense.users[user].paidShare !== 0 && (
                   <b>{expense.users[user].paidShare}</b>

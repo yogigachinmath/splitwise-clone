@@ -12,42 +12,54 @@ export class DashboardMain extends Component {
     super(props);
     this.state = {
       user: {},
-      expenseData: []
+      currentUser: {},
+      expenseData: {},
+      expensesData: {}
     };
   }
-  componentDidMount() {
-    let arr = [];
-    fire.auth().onAuthStateChanged(user => {
+  async getExpenses(expensesId) {
+    let expenses = this.state.expensesData;
+    expensesId.forEach(expenseId => {
+      fire.auth().onAuthStateChanged(async user => {
+        if (user) {
+          this.setState(() => ({ currentUser: user.uid }));
+          this.setState(() => ({ user: user }));
+          const expenseData = await fire
+            .firestore()
+            .collection("expenses")
+            .doc(expenseId)
+            .get();
+          expenses[expenseId] = expenseData.data();
+          this.setState({ expensesData: expenses });
+        }
+      });
+    });
+  }
+  getAllExpenses() {
+    return fire.auth().onAuthStateChanged(async user => {
       if (user) {
         this.setState(() => ({ user: user }));
-        fire
+        const userData = await fire
           .firestore()
-          .collection("expenses")
-          .where("createdBy", "==", user.uid)
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              console.log(doc.id, " => ", doc.data());
-              arr.push({id: doc.id, ...doc.data()});
-            });
-            this.setState({
-                expenseData: arr
-              });
-          })
-          .catch(function(error) {
-            console.log("Error getting documents: ", error);
-          });
-      } else {
-        // alert('please login');
+          .collection("users")
+          .doc(user.uid)
+          .get();
+        this.getExpenses(userData.data().expenses);
+        // return userData.data();
       }
     });
+  }
+  componentDidMount() {
+    const user = this.getAllExpenses();
+    console.log("user", user);
   }
   //   f3qC7AmBDnaC4uODf1HzNWyy6W72 - new
   //   Tlpa5fQ5lUdQmuq4x9I91PW6GCD3 - 2
   render() {
     return (
       <BrowserRouter>
-        <Header userDetails={this.state.user}/>
+        {console.log(this.props.user)}
+        <Header userDetails={this.props.user} />
         <div className="container" style={{ display: "flex" }}>
           <div className="row">
             <div className="left-sidebar col-md-3">
@@ -61,7 +73,7 @@ export class DashboardMain extends Component {
             <Route
               exact
               path="/expenses"
-              render={props => <AllExpenses {...props} />}
+              render={props => <AllExpenses {...props} {...this.state} />}
             />
             <Route
               exact
@@ -88,9 +100,8 @@ function URLcheck(props) {
 
 export default DashboardMain;
 
-
 // har ek transaction par friend
 // ek ek ko dash mai nhi dikhana - sirf hisab settlements
 // pura object mai sab ko compare krke nikalna hga - common hisabs
-// group ka v dkhna hga - agar grp mai wahi frnd hua tha to wo hisab v 
+// group ka v dkhna hga - agar grp mai wahi frnd hua tha to wo hisab v
 // overall hisab frnd wise

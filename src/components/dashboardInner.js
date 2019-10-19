@@ -76,7 +76,7 @@ class Dash extends Component {
     } else {
       return (
         <div className="dash-main-content col-md-6">
-          <div className="dash-header pt-2 pl-3 pr-3 border border-top-0 border-left-0 border-right-0">
+          <div className="dash-header p-3 border border-top-0 border-left-0 border-right-0">
         <div className="row">
               <h4 className="mr-auto">Dashboard</h4>
               <div className="dash-header-right ml-auto">

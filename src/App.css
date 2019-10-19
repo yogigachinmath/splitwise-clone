@@ -303,9 +303,6 @@ input[type='password'] {
 .lh {
   line-height: 1;
 }
-.appendGroupNames {
-  color: #5bc5a7;
-}
 .appendGroupNames p, .appendFriendNames p {
   margin: 3px 0;
 }

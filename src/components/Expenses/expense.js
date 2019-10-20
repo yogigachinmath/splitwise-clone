@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import "./AddExpense.css";
-import FriendExpenses from "../FriendExpenses";
+import FriendExenses from "../FriendExpenses";
+import NoExpenses from '../noExpenses'
 
 class Expense extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       currentdesc: "",
       currentamount: "",
       curruser2: "",
-      currentUser: "user1",
+      currentUser: this.props.match.params.name,
       expenses: {}
     };
     this.handleChange = this.handleChange.bind(this);
@@ -100,7 +102,7 @@ class Expense extends Component {
         expenses[length] = expense;
         console.log(expenses);
         this.setState({
-          expenses: expenses,
+         expenses: expenses,
           currentdesc: "",
           currentamount: "",
           curruser1: "",
@@ -116,6 +118,8 @@ class Expense extends Component {
   // this.props.addTodo(this.state.title);
   // this.setState({ title: "" });
   render() {
+    let expenses = this.state.expenses;
+    const length = Object.keys(expenses).length;
     return (
       <div className="dash-main-content col-md-6">
         {/* MOdal */}
@@ -291,25 +295,8 @@ class Expense extends Component {
             </div>
           </div>
         </div>
-        {/*<div className="content-dash p-5">
-          <div className="row">
-            <img
-              src="https://dx0qysuen8cbs.cloudfront.net/assets/fat_rabbit/empty-table-effed2a2e610373b6407d746cb95858f5d47329c8610bb70f1fd2040dfa35165.png"
-              alt="blue-man"
-              className="blue-person mr-auto col-md-4"
-            />
-            <div className="content-dash-right ml-auto col-md-8">
-              <h3>
-                You’re all settled up.
-                <br /> Awesome!
-              </h3>
-              <p>
-                To add a new expense, click the orange “Add an expense” button.
-              </p>
-            </div>
-    </div>
-    </div>*/}
-        <FriendExpenses expenses={this.state.expenses} />
+        {length > 0 ? <FriendExenses expenses={this.state.expenses} /> : <NoExpenses />}
+        
       </div>
     );
   }

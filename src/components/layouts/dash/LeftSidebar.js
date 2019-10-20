@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import {  Link } from "react-router-dom";
-import Modal from "./friends/modal";
+import React, { Component } from 'react';
+// import UserPic from '../user.png';
+import { BrowserRouter, Link, Route } from 'react-router-dom';
+// import Modal from './friends/modal';
 import './friends/friends.css';
 import fire from "../../../config/fire";
 import "firebase/database";

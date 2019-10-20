@@ -18,21 +18,15 @@ export class DashboardMain extends Component {
   }
   // we have to fetch the names by querying to users collection
   componentDidMount() {
-     async function getuser(){
-      return new Promise(async (resolve,reject)=> {
-        await fire.auth().onAuthStateChanged(async user => {
-          if (user) {
-              resolve(user);
-              return ;
-          }
-          reject('error');
-      })  
-      }) 
-     }
-     getuser().then(val => this.setState({
-       user:val
-     }));
-}
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState(() => ({ user: user }));
+      } else {
+        // alert('please login');
+      }
+
+    });
+  }
   //   f3qC7AmBDnaC4uODf1HzNWyy6W72 - new
   //   Tlpa5fQ5lUdQmuq4x9I91PW6GCD3 - 2
   render() {

@@ -38,33 +38,33 @@ class Dash extends Component {
         .get();
       // console.log('this is for friends', userData.data());
       let friends = {};
-      userData.data().friends.map(val => {
-        console.log(val, 'this is val');
-        friends[val] = {name:'',friendAllExpenses:[],friendTotalAmount:''};
-      });
+      // userData.data().friends.map(val => {
+      //   console.log(val, 'this is val');
+      //   friends[val] = {name:'',friendAllExpenses:[],friendTotalAmount:''};
+      // });
       this.setState({
-        noOfExpenses: userData.data().expenses.length,
+        // noOfExpenses: userData.data().expenses.length,
         uid: user.uid,
         friends
       });
-      userData.data().expenses.map(async expenseId => {
-        const expenseData = await fire
-          .firestore()
-          .collection('expenses')
-          .doc(expenseId)
-          .get();
-        // console.log('expenseData',expenseData);
-        arr.push(expenseData.data());
-        this.setState({
-          expenseData: arr
-        });
-        if (arr.length === this.state.noOfExpenses) {
-          this.setState({
-            ready: true
-          });
-          this.ComputeToatal();
-        }
-      });
+      // userData.data().expenses.map(async expenseId => {
+      //   const expenseData = await fire
+      //     .firestore()
+      //     .collection('expenses')
+      //     .doc(expenseId)
+      //     .get();
+      //   // console.log('expenseData',expenseData);
+      //   arr.push(expenseData.data());
+      //   this.setState({
+      //     expenseData: arr
+      //   });
+      //   if (arr.length === this.state.noOfExpenses) {
+      //     this.setState({
+      //       ready: true
+      //     });
+      //     this.ComputeToatal();
+      //   }
+      // });
     });
   }
   ComputeToatal() {

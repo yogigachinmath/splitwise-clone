@@ -8,10 +8,11 @@ function PrivateRoute({ component: RouteComponent, authed, ...rest }) {
     <Route
       {...rest}
       render={props =>
-        authed === true ? (
-            <Redirect to={'/dashboard'} />  
+        authed === false ? (
+          <RouteComponent {...props} />  
         ) : (
-            <RouteComponent {...props} />
+          <Redirect to={'/dashboard'} />
+            
         )
       }
     />

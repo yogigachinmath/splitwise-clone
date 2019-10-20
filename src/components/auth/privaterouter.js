@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-function PrivateRoute({ component: RouteComponent, authed, ...rest }) {
+export const PrivateRoute = ({ component: RouteComponent, authed, ...rest }) => {
   console.log(authed);
   return (
     <Route
@@ -16,4 +16,19 @@ function PrivateRoute({ component: RouteComponent, authed, ...rest }) {
     />
   );
 }
-export default PrivateRoute;
+ 
+export const PrivateRouteRegister = ({ component: RouteComponent, authed, ...rest }) => {
+  console.log(authed);
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        authed === false ? (
+          <RouteComponent {...props} />
+        ) : (
+          <Redirect to={"/dash/main"} />
+        )
+      }
+    />
+  );
+}

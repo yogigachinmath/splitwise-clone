@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./dashboardinner.css";
 import fire from "../config/fire";
-// import undefined from 'firebase/empty-import';
 
 class Dash extends Component {
   constructor(props) {
@@ -47,7 +46,7 @@ class Dash extends Component {
         });
       } else {
         userData.data().friends.map(val => {
-          console.log(val, "this is val");
+          // console.log(val, "this is val");
           friends[val] = {
             name: "",
             friendAllExpenses: [],
@@ -59,7 +58,7 @@ class Dash extends Component {
           uid: user.uid,
           friends
         });
-        if (userData.data().expenses) {
+        if (userData.data().expenses !== undefined) {
           userData.data().expenses.map(async expenseId => {
             const expenseData = await fire
               .firestore()
@@ -191,7 +190,11 @@ class Dash extends Component {
                 YOU ARE OWED
               </span>
               {Object.keys(this.state.friends).map(element => {
-                if (this.state.friends[element].friendTotalAmount < 0) {
+                if (this.state.friends[element].friendTotalAmount > 0) {
+                  // console.log(
+                  //   "ppp",
+                  //   this.state.friends[element].friendTotalAmount
+                  // );
                   return (
                     <div className="d-flex line-height-18 border border-left-0 border-top-0 border-bottom-0 mt-3">
                       <img

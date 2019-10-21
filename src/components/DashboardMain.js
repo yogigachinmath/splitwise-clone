@@ -6,6 +6,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Dash from "./dashboardInner";
 import Expense from "./Expenses/expense";
 import AllExpenses from "./AllExpenses";
+import Group from "./group/group";
 import { resolve } from "path";
 
 export class DashboardMain extends Component {
@@ -81,6 +82,11 @@ export class DashboardMain extends Component {
               exact
               path="/dash/friend/:name"
               render={props => <Expense {...props} />}
+            />
+            <Route
+              exact
+              path="/group/:groupId/:groupName"
+              render={props => <Group {...props} {...this.state} />}
             />
           </div>
         </div>

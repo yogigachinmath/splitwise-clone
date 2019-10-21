@@ -104,11 +104,13 @@ export class AddApartment extends Component {
             .doc(Members[i].id)
             .set(
               {
-                friends: [{
-                  id: this.state.user.uid,
-                  name: this.state.user.displayName,
-                  email: this.state.user.email
-                }]
+                friends: [
+                  {
+                    id: this.state.user.uid,
+                    name: this.state.user.displayName,
+                    email: this.state.user.email
+                  }
+                ]
               },
               { merge: true }
             );
@@ -130,10 +132,42 @@ export class AddApartment extends Component {
             createdBy: this.state.user.uid,
             name: document.querySelector(".bigbox").value
           });
-        window.location.replace("/dash/main");
       } catch (e) {
         document.querySelector(".errorMsg").textContent = e;
       }
+
+      // fetching groups
+      let groupId;
+      let snapGroup = await fire
+        .firestore()
+        .collection("group")
+        .where("name", "==", document.querySelector(".bigbox").value)
+        .where("createdBy", "==", this.state.user.uid)
+        .get();
+      if (snapGroup.size > 0) {
+        snapGroup.forEach(doc => {
+          groupId = doc.id;
+        });
+      }
+      for (let i = 0; i < Members.length; i++) {
+        try {
+          await fire
+            .firestore()
+            .collection("users")
+            .doc(Members[i].id)
+            .set(
+              {
+                groups: [
+                  { id: groupId, name: document.querySelector(".bigbox").value }
+                ]
+              },
+              { merge: true }
+            );
+        } catch (e) {
+          document.querySelector(".errorMsg").textContent = e;
+        }
+      }
+      window.location.replace("/dash/main");
     } else {
       document.querySelector(".errorMsg").style.display = "block";
       document.querySelector(".errorMsg").textContent =

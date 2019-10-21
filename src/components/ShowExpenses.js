@@ -25,6 +25,7 @@ class ShowExpenses extends Component {
     }
     return payers.length;
   };
+
   render() {
     return (
       <React.Fragment>

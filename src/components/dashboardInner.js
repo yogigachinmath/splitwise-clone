@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './dashboardinner.css';
 import fire from '../config/fire';
+// import undefined from 'firebase/empty-import';
 
 class Dash extends Component {
   constructor(props) {
@@ -38,6 +39,14 @@ class Dash extends Component {
         .get();
       // console.log('this is for friends', userData.data());
       let friends = {};
+      if(userData.data().friends === undefined){
+        this.setState({
+          totalbalance:0,
+          youOwe: 0,
+          youOwed: 0
+        })
+      }
+else{
       userData.data().friends.map(val => {
         console.log(val, 'this is val');
         friends[val] = {name:'',friendAllExpenses:[],friendTotalAmount:''};
@@ -65,6 +74,7 @@ class Dash extends Component {
           this.ComputeToatal();
         }
       });
+    }
     });
   }
   ComputeToatal() {
@@ -187,7 +197,33 @@ class Dash extends Component {
         </div>
       </div>
     ) : (
-      <div></div>
+      <div className="dash-main-content col-md-6">
+      <div className="dash-header pt-2 pl-3 pr-3 border border-top-0 border-left-0 border-right-0">
+      <div className="row">
+        <h4 className="mr-auto">Dashboard</h4>
+        <div className="dash-header-right ml-auto">
+          <button className="btn btn-orange">Add an expense</button>
+          <button className="btn btn-blue ml-2">Settle up</button>
+        </div>
+      </div>
+      <div className="d-flex justify-content-between border border-left-0 border-right-0 border-bottom-0 mt-3 pt-2 pb-2">
+        <div className="d-flex flex-column align-items-center w-3">
+          <small className="text-secondary">total balance</small>
+          <small className="orange-color">
+            INR {this.state.totalbalance}
+          </small>
+        </div>
+        <div className="d-flex flex-column align-items-center w-3 border border-top-0 border-bottom-0">
+          <small className="text-secondary">you owe</small>
+          <small className="orange-color">INR {this.state.youOwe}</small>
+        </div>
+        <div className="d-flex flex-column align-items-center w-3">
+          <small className="text-secondary">you are owed</small>
+          <small className="colorBlue">INR {this.state.youOwed}*</small>
+        </div>
+      </div>
+    </div>
+    </div>
     );
     // } else {
     //   return (

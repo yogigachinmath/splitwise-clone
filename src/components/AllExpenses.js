@@ -4,7 +4,7 @@ import ShowExpense from "./ShowExpenses";
 import data from "../data.json";
 import fire from "../config/fire";
 
-export class DashboardMain extends Component {
+export class AllExpenses extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,9 +51,16 @@ export class DashboardMain extends Component {
             );
           })}
         </div>
+        <div className="right-sidebar col-md-3">
+          <img
+            src="https://dx0qysuen8cbs.cloudfront.net/assets/core/logo-square-65a6124237868b1d2ce2f5db2ab0b7c777e2348b797626816400534116ae22d7.svg"
+            className="logo-dash-right ml-2 mt-2"
+            alt="logo"
+          />
+        </div>
       </React.Fragment>
     );
   }
 }
 
-export default DashboardMain;
+export default AllExpenses;

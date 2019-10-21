@@ -10,6 +10,21 @@ class ShowExpenses extends Component {
       this.setState({ showExpenseDetails: false });
     }
   };
+  payer = users => {
+    const payers = Object.keys(users).reduce((payerNames, currentUser) => {
+      if (users[currentUser].netBalance > 0) {
+        payerNames.push(users[currentUser].name);
+      }
+      return payerNames;
+    }, []);
+    if (payers.length === 1) {
+      if (payers[0] === users[this.props.currentUser].name) {
+        return "you";
+      }
+      return payers[0];
+    }
+    return payers.length;
+  };
   render() {
     return (
       <React.Fragment>
@@ -47,7 +62,7 @@ class ShowExpenses extends Component {
               <div className="d-flex justify-content-between expenses-child-2">
                 <div className="d-flex flex-column align-items-end mr-3 w-50">
                   <small className="text-secondary text-truncate">
-                    you paid
+                    {this.payer(this.props.expense.users)} paid
                   </small>
                   <span className="font-weight-bold">
                     INR {this.props.expense.cost}

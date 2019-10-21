@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import fire from "../config/fire";
 
 class ExpenseDetail extends Component {
+  payerOwes = expense => {};
   render() {
     const expense = this.props.expense;
     return (
@@ -15,12 +17,12 @@ class ExpenseDetail extends Component {
             <span>{expense.description}</span>
             <h5 className="m-0 font-weight-bold">INR {expense.cost}</h5>
             <small className="text-secondary">
-              Added by Arun p. on October 15, 2019
+              Added by {expense.createdBy.name} on October 15, 2019
             </small>
           </div>
         </div>
         <hr className="m-0 mb-3" />
-        {expense.repayments.map(repayment => {
+        {Object.keys(expense.users).map(user => {
           return (
             <div className="mb-2">
               <img
@@ -29,8 +31,13 @@ class ExpenseDetail extends Component {
                 alt=""
               />
               <small>
-                {" "}
-                <b>{repayment.from}</b> owes <b>INR{repayment.amount}</b>
+                <b>{expense.users[user].name}</b>
+                {expense.users[user].paidShare !== 0 && " paid "}
+                {expense.users[user].paidShare !== 0 && (
+                  <b>{expense.users[user].paidShare}</b>
+                )}
+                {expense.users[user].paidShare !== 0 && " and"} owes{" "}
+                <b>INR{expense.users[user].owedShare}</b>
               </small>
             </div>
           );

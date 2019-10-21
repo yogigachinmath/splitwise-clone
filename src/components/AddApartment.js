@@ -157,7 +157,9 @@ export class AddApartment extends Component {
             .doc(Members[i].id)
             .set(
               {
-                groups: [groupId]
+                groups: [
+                  { id: groupId, name: document.querySelector(".bigbox").value }
+                ]
               },
               { merge: true }
             );

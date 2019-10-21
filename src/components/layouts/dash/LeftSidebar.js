@@ -11,25 +11,26 @@ export class LeftSidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {},
       friends: [],
       userName: "",
       email: "",
       group: [{name: 'You do not have any group'}]
     };
-    this.handleclick = this.handleclick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    fire.firestore().collection('group').where('Members',"==",true).where('name', '==',this.state.userName).get().then((snap) => {
-      snap.forEach(doc=>{
-        console.log("Left bar ",doc.data());
-        this.setState({group: [doc.data()]})
-      })
-    })
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState(() => ({ user: user }));
+      } else {
+        // alert('please login');
+      }
+    });
   }
 
-  handleclick(e) {
+  addFriendSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
     const userinfo = { email: this.state.email, username: this.state.username };
@@ -42,10 +43,8 @@ export class LeftSidebar extends Component {
         userName:'',
         email:''
     }) 
+   
   document.getElementById('addFriendForm').reset();
-//   document.getElementById('addFriendForm')
-// document.querySelector('.modal-dialog').setAttribute('data-dismiss',"modal");
-    // e.target.setAttribute('type', 'modal');
   }
   handleChange(e) {
     this.setState({
@@ -90,7 +89,7 @@ export class LeftSidebar extends Component {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form onSubmit={this.handleclick} id='addFriendForm'>
+              <form onSubmit={this.addFriendSubmit} id='addFriendForm'>
                 <div className="modal-body">
                   <div className="form-group">
                     <input

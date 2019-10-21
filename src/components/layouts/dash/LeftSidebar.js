@@ -88,6 +88,8 @@ export class LeftSidebar extends Component {
     const userinfo = { email: this.state.email, username: this.state.name };
     const friends = this.state.friends;
     friends.push(userinfo);
+
+    // getting friends of authenticated user
     try {
       let snapFriends = await fire
         .firestore()
@@ -104,6 +106,8 @@ export class LeftSidebar extends Component {
         });
       }
       if (alreadyExist === 0) {
+        
+        // getting details of requested friend
         let snap = await fire
           .firestore()
           .collection("users")
@@ -122,17 +126,17 @@ export class LeftSidebar extends Component {
               id: doc.id
             });
             console.log(friendsArr);
-            fire
-              .firestore()
-              .collection("users")
-              .doc(this.state.user.uid)
-              .set(
-                {
-                  friends: friendsArr
-                },
-                { merge: true }
-              );
           });
+          fire
+            .firestore()
+            .collection("users")
+            .doc(this.state.user.uid)
+            .set(
+              {
+                friends: friendsArr
+              },
+              { merge: true }
+            );
           let snapFriends2 = await fire
             .firestore()
             .collection("users")
@@ -305,7 +309,9 @@ export class LeftSidebar extends Component {
           </div>
           {console.log(this.state.group)}
           <div className="appendGroupNames ml-3 p-2 text-secondary">
-            {this.state.group.length === 0 ? 'You do not have any group': false}
+            {this.state.group.length === 0
+              ? "You do not have any group"
+              : false}
             {this.state.group.map(ele => (
               <p className="textGroups">
                 {/* {console.log(ele,'ele')} */}
@@ -336,7 +342,9 @@ export class LeftSidebar extends Component {
           </div>
           <div className="appendFriendNames ml-3 text-secondary p-2">
             {/* {console.log(this.state.friends)} */}
-            {this.state.friends.length === 0 ? 'You do not have any friends': false}
+            {this.state.friends.length === 0
+              ? "You do not have any friends"
+              : false}
             {this.state.friends.map(val => (
               <p className="textGroups">
                 <Link

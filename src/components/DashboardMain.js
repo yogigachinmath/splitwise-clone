@@ -6,6 +6,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Dash from "./dashboardInner";
 import Expense from "./Expenses/expense";
 import AllExpenses from "./AllExpenses";
+import Group from './group/group'
 import { resolve } from "path";
 
 export class DashboardMain extends Component {
@@ -18,18 +19,18 @@ export class DashboardMain extends Component {
       expenseData: []
     };
   }
-  async getExpenses(expensesId) {
-    let expenses = this.state.expensesData;
-    expensesId.forEach(async expenseId => {
-      const expenseData = await fire
-        .firestore()
-        .collection("expenses")
-        .doc(expenseId)
-        .get();
-      expenses[expenseId] = expenseData.data();
-      this.setState({ expensesData: expenses });
-    });
-  }
+  // async getExpenses(expensesId) {
+  //   let expenses = this.state.expensesData;
+  //   expensesId.forEach(async expenseId => {
+  //     const expenseData = await fire
+  //       .firestore()
+  //       .collection("expenses")
+  //       .doc(expenseId)
+  //       .get();
+  //     expenses[expenseId] = expenseData.data();
+  //     this.setState({ expensesData: expenses });
+  //   });
+  // }
   getAllExpenses() {
     fire.auth().onAuthStateChanged(async user => {
       if (user) {
@@ -40,7 +41,7 @@ export class DashboardMain extends Component {
           .collection("users")
           .doc(user.uid)
           .get();
-        this.getExpenses(userData.data().expenses);
+        // this.getExpenses(userData.data().expenses);
       }
     });
   }
@@ -79,6 +80,11 @@ export class DashboardMain extends Component {
               exact
               path="/dash/friend/:name"
               render={props => <Expense {...props} />}
+            />
+              <Route
+              exact
+              path="/group/:groupId/:groupName"
+              render={props => <Group {...props} {...this.state} />}
             />
             <div className="right-sidebar col-md-3">
               <img

@@ -11,7 +11,7 @@ function PrivateRoute({ component: RouteComponent, authed, ...rest }) {
         authed === false ? (
           <RouteComponent {...props} />  
         ) : (
-          <Redirect to={'/dashboard'} />
+          <Redirect to={'/dash/main'} />
             
         )
       }

@@ -14,7 +14,7 @@ export class LeftSidebar extends Component {
       friends: [],
       userName: "",
       email: "",
-      group: [{name: 'You do not have any group'}]
+      group: [{name: 'You do not have any group'}],
     };
     this.handleclick = this.handleclick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,6 +26,29 @@ export class LeftSidebar extends Component {
         console.log("Left bar ",doc.data());
         this.setState({group: [doc.data()]})
       })
+    })
+     function getuser() {
+      return new Promise(async (resolve, reject) => {
+        await fire.auth().onAuthStateChanged(async user => {
+          if (user) {
+            resolve(user);
+            return;
+          }
+          reject('error');
+        });
+      });
+    }
+    getuser().then(async user => {
+      let arr = [];
+      const userData = await fire
+        .firestore()
+        .collection('users')
+        .doc(user.uid)
+        .get();
+        userData.data().friends.map(val => arr.push({email:val.email,username:val.name}));
+        this.setState({
+          friends:arr
+        })
     })
   }
 
@@ -187,6 +210,7 @@ export class LeftSidebar extends Component {
             <span className="addSidebar"></span>
           </div>
           <div className="appendFriendNames ml-3">
+            {console.log(this.state.friends)}
             {this.state.friends.map(val => (
               <p className="textGroups">
                   <Link to={{

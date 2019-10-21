@@ -1,7 +1,10 @@
-import React, { Component } from "react";
-import {  Link } from "react-router-dom";
-import Modal from "./friends/modal";
+import React, { Component } from 'react';
+// import UserPic from '../user.png';
+import { BrowserRouter, Link, Route } from 'react-router-dom';
+// import Modal from './friends/modal';
 import './friends/friends.css';
+import fire from "../../../config/fire";
+import "firebase/database";
 // import Friend from '../friend/friend'
 
 export class LeftSidebar extends Component {
@@ -10,11 +13,22 @@ export class LeftSidebar extends Component {
     this.state = {
       friends: [],
       userName: "",
-      email: ""
+      email: "",
+      group: [{name: 'You do not have any group'}]
     };
     this.handleclick = this.handleclick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+
+  componentDidMount() {
+    fire.firestore().collection('group').where('Members',"==",true).where('name', '==',this.state.userName).get().then((snap) => {
+      snap.forEach(doc=>{
+        console.log("Left bar ",doc.data());
+        this.setState({group: [doc.data()]})
+      })
+    })
+  }
+
   handleclick(e) {
     e.preventDefault();
     console.log(this.state);
@@ -148,19 +162,15 @@ export class LeftSidebar extends Component {
           <div className="row bg-light text-secondary px-2">
             <span className="labelListsSidebar mr-auto">Groups</span>
             <span className="addSidebar">
-              <span className="addIcon fa fa-plus mr-1"></span>add
+            <a href="/new/apartment"><span className="addIcon fa fa-plus mr-1"></span>add</a>
             </span>
           </div>
-          <div className="appendGroupNames ml-3">
-            <p className="textGroups">
-              <span className="fa fa-tag mr-2"></span>Test
-            </p>
-            <p className="textGroups">
-              <span className="fa fa-tag mr-2"></span>Test
-            </p>
-            <p className="textGroups">
-              <span className="fa fa-tag mr-2"></span>Test
-            </p>
+          <div className="appendGroupNames ml-3 text-secondary">
+            {this.state.group.map(ele => (
+              <p className="textGroups">
+                <span className="fa fa-tag mr-2"></span>{ele.name}
+              </p>
+            ))}
           </div>
         </div>
         <div className="friendsSidebar">

@@ -6,6 +6,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Dash from "./dashboardInner";
 import Expense from "./Expenses/expense";
 import AllExpenses from "./AllExpenses";
+import { resolve } from "path";
 
 export class DashboardMain extends Component {
   constructor(props) {
@@ -13,8 +14,8 @@ export class DashboardMain extends Component {
     this.state = {
       user: {},
       currentUser: {},
-      expenseData: {},
-      expensesData: {}
+      expensesData: {},
+      expenseData: []
     };
   }
   async getExpenses(expensesId) {
@@ -44,6 +45,13 @@ export class DashboardMain extends Component {
     });
   }
   componentDidMount() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState(() => ({ user: user }));
+      } else {
+        // alert('')
+      }
+    });
     this.getAllExpenses();
   }
   //   f3qC7AmBDnaC4uODf1HzNWyy6W72 - new
@@ -51,7 +59,6 @@ export class DashboardMain extends Component {
   render() {
     return (
       <BrowserRouter>
-        {console.log(this.props.user)}
         <Header userDetails={this.state.user} />
         <div className="container" style={{ display: "flex" }}>
           <div className="row">

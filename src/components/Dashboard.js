@@ -12,6 +12,9 @@ export class Dashboard extends Component {
   redirectToAddGroup = e => {
     window.location.replace("/new/apartment");
   };
+  redirectToDashMain = e => {
+    window.location.replace("/dash/main");
+  };
   componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
@@ -64,12 +67,13 @@ export class Dashboard extends Component {
               <button
                 type="button"
                 className="btn btn-orange addGrpBtn fa fa-globe"
+                onClick={this.redirectToAddGroup}
               >
                 Add a group trip
               </button>
             </div>
             <div className="row">
-              <button type="button" className="btn btn-secondary skipBtn">
+              <button type="button" className="btn btn-secondary skipBtn" onClick={this.redirectToDashMain}>
                 Skip setup for now
               </button>
             </div>

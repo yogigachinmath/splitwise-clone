@@ -5,7 +5,6 @@ import fire from "../../config/fire";
 class Header extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
   logout(e) {
     fire
@@ -17,13 +16,16 @@ class Header extends Component {
       .catch(error => console.log(error));
   }
   render() {
-    console.log(this.props);
     return (
       <div className="header">
         <nav className="navbar">
           <div className="container">
             <a className="navbar-brand" href="/">
-              <img src="/img/logoWithSplitwiseText.svg" className="logo" alt="logo" />
+              <img
+                src="/img/logoWithSplitwiseText.svg"
+                className="logo"
+                alt="logo"
+              />
             </a>
             <ul className="nav nav-pills">
               <div className="dropdown">
@@ -33,7 +35,10 @@ class Header extends Component {
                     alt="user-dummy-pic"
                     className="userDummyPic"
                   />
-                  <span className="userName"> {this.props.userDetails.displayName} </span>
+                  <span className="userName">
+                    {" "}
+                    {this.props.userDetails.displayName}{" "}
+                  </span>
                 </div>
                 <div className="dropdown-menu">
                   <a className="dropdown-item" href="/account">

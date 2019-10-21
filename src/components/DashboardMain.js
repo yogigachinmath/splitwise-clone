@@ -6,6 +6,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Dash from "./dashboardInner";
 import Expense from "./Expenses/expense";
 import AllExpenses from "./AllExpenses";
+import Group from "./group/group";
 import { resolve } from "path";
 
 export class DashboardMain extends Component {
@@ -40,7 +41,9 @@ export class DashboardMain extends Component {
           .collection("users")
           .doc(user.uid)
           .get();
-        this.getExpenses(userData.data().expenses);
+        if (userData.data().expenses) {
+          this.getExpenses(userData.data().expenses);
+        }
       }
     });
   }
@@ -80,13 +83,11 @@ export class DashboardMain extends Component {
               path="/dash/friend/:name"
               render={props => <Expense {...props} />}
             />
-            <div className="right-sidebar col-md-3">
-              <img
-                src="https://dx0qysuen8cbs.cloudfront.net/assets/core/logo-square-65a6124237868b1d2ce2f5db2ab0b7c777e2348b797626816400534116ae22d7.svg"
-                className="logo-dash-right ml-2 mt-2"
-                alt="logo"
-              />
-            </div>
+            <Route
+              exact
+              path="/group/:groupId/:groupName"
+              render={props => <Group {...props} {...this.state} />}
+            />
           </div>
         </div>
       </BrowserRouter>

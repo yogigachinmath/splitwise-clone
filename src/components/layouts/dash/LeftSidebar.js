@@ -2,9 +2,9 @@ import React, { Component } from "react";
 // import UserPic from '../user.png';
 import { BrowserRouter, Link, Route } from "react-router-dom";
 // import Modal from './friends/modal';
-import "./friends/friends.css";
-import fire from "../../../config/fire";
-import "firebase/database";
+import './friends/friends.css';
+import fire from '../../../config/fire';
+import 'firebase/database';
 // import Friend from '../friend/friend'
 
 export class LeftSidebar extends Component {
@@ -34,6 +34,19 @@ export class LeftSidebar extends Component {
     //     this.setState({group: [doc.data()]})
     //   })
     // })
+
+    // fire
+    //   .firestore()
+    //   .collection('group')
+    //   .where('Members', '==', true)
+    //   .where('name', '==', this.state.userName)
+    //   .get()
+    //   .then(snap => {
+    //     snap.forEach(doc => {
+    //       // console.log('Left bar ', doc.data());
+    //       this.setState({ group: [doc.data()] });
+    //     });
+    //   });
     function getuser() {
       return new Promise(async (resolve, reject) => {
         await fire.auth().onAuthStateChanged(async user => {
@@ -173,11 +186,11 @@ export class LeftSidebar extends Component {
     });
   }
   handleChangeOverClick = e => {
-    document.querySelectorAll(".sidebarText").forEach(element => {
-      element.classList.remove("colorBlue");
+    document.querySelectorAll('.sidebarText').forEach(element => {
+      element.classList.remove('colorBlue');
     });
-    e.target.classList.add("colorBlue");
-    if (e.target.classList.contains("dashClass")) {
+    e.target.classList.add('colorBlue');
+    if (e.target.classList.contains('dashClass')) {
       //   console.log('Class list');
       //   e.target.previousSibling.classList.remove('grayImg');
     }
@@ -290,11 +303,17 @@ export class LeftSidebar extends Component {
               </a>
             </span>
           </div>
+          {console.log(this.state.group)}
           <div className="appendGroupNames ml-3 text-secondary">
             {this.state.group.map(ele => (
               <p className="textGroups">
+                {/* {console.log(ele,'ele')} */}
+                <Link to = {{
+                  pathname:`/group/${ele.id}/${ele.name}`
+                }}>
                 <span className="fa fa-tag mr-2"></span>
                 {ele.name}
+                </Link>
               </p>
             ))}
           </div>
@@ -313,7 +332,7 @@ export class LeftSidebar extends Component {
             <span className="addSidebar"></span>
           </div>
           <div className="appendFriendNames ml-3">
-            {console.log(this.state.friends)}
+            {/* {console.log(this.state.friends)} */}
             {this.state.friends.map(val => (
               <p className="textGroups">
                 <Link

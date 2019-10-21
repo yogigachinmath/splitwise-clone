@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+body {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
 /* Miscellaneous */
 .btn-orange {
   background: #ff652f;
@@ -18,73 +22,73 @@
 /* Home Page */
 .font-mono {
   font-family: "Montserrat";
- }
- /* home page header */
- .green-color {
+}
+/* home page header */
+.green-color {
   color: #5bc5a7;
- }
+}
 
- .green-background {
+.green-background {
   color: #fff;
   background-color: #5bc5a7;
   box-shadow: 0 2px 0 0 rgba(55, 59, 63, 0.5);
- }
+}
 
- .slider {
+.slider {
   padding: 0 10rem;
   background-size: 1250px;
   background-position: center 0px;
   background-image: url("/img/facets.png");
   background-repeat: repeat-x;
- }
- .slider-left {
+}
+.slider-left {
   width: 50%;
- }
- .slider-right {
+}
+.slider-right {
   padding: 50px 25px;
   box-sizing: border-box;
- }
- .icon-container {
+}
+.icon-container {
   width: 14rem;
- }
- .slider-icon {
+}
+.slider-icon {
   opacity: 0.5;
   font-size: 3rem;
- }
- #plane-icon {
+}
+#plane-icon {
   color: #5bc5a7;
- }
- #home-icon {
+}
+#home-icon {
   color: #8656cd;
- }
- #heart-icon {
+}
+#heart-icon {
   color: #a6002f;
- }
- #all-icon {
+}
+#all-icon {
   color: #383b3f;
- }
- .sign-up-btn {
+}
+.sign-up-btn {
   font-weight: 600;
   padding: 1rem 4rem;
   border-radius: 5px;
- }
- .slider-slides {
+}
+.slider-slides {
   font-size: 25rem;
   opacity: 0.4;
- }
- .slider-slides:hover {
+}
+.slider-slides:hover {
   opacity: 1;
- }
- .slider h1 {
+}
+.slider h1 {
   font-family: "Montserrat";
   max-width: 23rem;
   font-weight: 700;
- }
- .slider p {
+}
+.slider p {
   max-width: 20rem;
   font-size: 1.125rem;
   margin: 1.5rem 0;
- }
+}
 /* /Home Page */
 
 /* Signup */
@@ -105,7 +109,8 @@ h6 {
   justify-content: space-around;
 }
 
-.introText, .addGroupText {
+.introText,
+.addGroupText {
   text-transform: uppercase;
   font-weight: 500;
   color: #a1a2a3;
@@ -117,7 +122,8 @@ h6 {
   justify-content: center;
 }
 
-.logo img, .addApartment-logo img  {
+.logo img,
+.addApartment-logo img {
   width: 12em;
 }
 
@@ -134,12 +140,13 @@ h6 {
   font-size: 1.4em;
 }
 
-.signup input[type="text"], .bigbox {
+.signup input[type="text"],
+.bigbox {
   font-size: 32px;
 }
 
-.signup input[type='email'],
-input[type='password'] {
+.signup input[type="email"],
+input[type="password"] {
   font-size: 20px;
 }
 
@@ -154,20 +161,19 @@ input[type='password'] {
   width: 6em;
 }
 
-
 /* Screen width 800px */
 @media screen and (max-width: 992px) {
   .signup-logo {
     display: none;
   }
   .addApartment-logo {
-      display: none;
+    display: none;
   }
   .addFriendForm input {
-      width: 13em;
+    width: 13em;
   }
   .addFriendForm {
-      justify-content: flex-start;
+    justify-content: flex-start;
   }
 }
 
@@ -213,7 +219,8 @@ input[type='password'] {
   margin-top: 2em;
   text-align: center;
 }
-.userDummyPic, .addApartment .profileImg {
+.userDummyPic,
+.addApartment .profileImg {
   height: 1.5em;
 }
 .orange-person img {
@@ -240,29 +247,28 @@ input[type='password'] {
 
 /* createGroup */
 .addApartment .userArea {
-    justify-content: flex-start;
-
+  justify-content: flex-start;
 }
 .addFriendForm {
-    margin: 0;
+  margin: 0;
 }
 .userArea {
-    margin: 0;
+  margin: 0;
 }
 .addFriendForm input {
-    padding: 0 0.2em;
+  padding: 0 0.2em;
 }
 .removeAddFriendForm {
-    color: red;
-    font-size: 1.4em;
-    cursor: pointer;
+  color: red;
+  font-size: 1.4em;
+  cursor: pointer;
 }
 .appendNewFriendForm {
-    cursor: pointer;
-    color: blue;
+  cursor: pointer;
+  color: blue;
 }
 .appendNewFriendForm:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 /* /createGroup */
 
@@ -289,7 +295,7 @@ input[type='password'] {
   -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
   filter: grayscale(1);
 }
-.left-sidebar .row{
+.left-sidebar .row {
   justify-content: flex-start;
   color: #999;
   cursor: pointer;
@@ -297,16 +303,18 @@ input[type='password'] {
   width: 80%;
   padding: 0.5em;
 }
-.left-sidebar .row:hover{
-  background: #eee;;
+.left-sidebar .row:hover {
+  background: #eee;
 }
 .lh {
   line-height: 1;
 }
-.appendGroupNames p, .appendFriendNames p {
+.appendGroupNames p,
+.appendFriendNames p {
   margin: 3px 0;
 }
-.groupSidebar .row, .friendsSidebar .row {
+.groupSidebar .row,
+.friendsSidebar .row {
   cursor: default;
 }
 .btn-blue {
@@ -320,7 +328,7 @@ input[type='password'] {
 .dash-header {
   background: #eee;
 }
-.dash-header .row{
+.dash-header .row {
   margin: 0;
 }
 .dash-main-content {
@@ -333,7 +341,6 @@ input[type='password'] {
   text-transform: uppercase;
 }
 /* /dashboard-main */
-
 
 /* loader */
 .loader {

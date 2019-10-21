@@ -2,9 +2,9 @@ import React, { Component } from "react";
 // import UserPic from '../user.png';
 import { BrowserRouter, Link, Route } from "react-router-dom";
 // import Modal from './friends/modal';
-import './friends/friends.css';
-import fire from '../../../config/fire';
-import 'firebase/database';
+import "./friends/friends.css";
+import fire from "../../../config/fire";
+import "firebase/database";
 // import Friend from '../friend/friend'
 
 export class LeftSidebar extends Component {
@@ -15,7 +15,7 @@ export class LeftSidebar extends Component {
       friends: [],
       name: "",
       email: "",
-      group: [{ name: "You do not have any group" }]
+      group: []
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -65,12 +65,16 @@ export class LeftSidebar extends Component {
         .collection("users")
         .doc(user.uid)
         .get();
-      userData
-        .data()
-        .friends.map(val => arr.push({ email: val.email, username: val.name }));
-      this.setState({
-        friends: arr
-      });
+      if (userData.data().hasOwnProperty("friends")) {
+        userData
+          .data()
+          .friends.map(val =>
+            arr.push({ email: val.email, username: val.name })
+          );
+        this.setState({
+          friends: arr
+        });
+      }
     });
   }
 
@@ -92,14 +96,14 @@ export class LeftSidebar extends Component {
         .get();
       if (snapFriends.data().hasOwnProperty("friends")) {
         snapFriends.data().friends.forEach(doc => {
-          if(doc.email === this.state.email){
+          if (doc.email === this.state.email) {
             alreadyExist = 1;
           } else {
             friendsArr.push(doc);
           }
         });
       }
-      if(alreadyExist === 0){
+      if (alreadyExist === 0) {
         let snap = await fire
           .firestore()
           .collection("users")
@@ -147,15 +151,15 @@ export class LeftSidebar extends Component {
             email: this.state.user.email
           });
           fire
-              .firestore()
-              .collection("users")
-              .doc(friendID)
-              .set(
-                {
-                  friends: friendsArr2
-                },
-                { merge: true }
-              );
+            .firestore()
+            .collection("users")
+            .doc(friendID)
+            .set(
+              {
+                friends: friendsArr2
+              },
+              { merge: true }
+            );
           console.log(friendsArr2);
           this.setState({
             friends
@@ -164,7 +168,7 @@ export class LeftSidebar extends Component {
             name: "",
             email: ""
           });
-  
+
           document.getElementById("addFriendForm").reset();
         } else {
           document.querySelector(".errorMsg").style.display = "block";
@@ -173,8 +177,8 @@ export class LeftSidebar extends Component {
         }
       } else {
         document.querySelector(".errorMsg").style.display = "block";
-          document.querySelector(".errorMsg").textContent =
-            "user is already your friend";
+        document.querySelector(".errorMsg").textContent =
+          "user is already your friend";
       }
     } catch (e) {
       document.querySelector(".errorMsg").textContent = e;
@@ -186,11 +190,11 @@ export class LeftSidebar extends Component {
     });
   }
   handleChangeOverClick = e => {
-    document.querySelectorAll('.sidebarText').forEach(element => {
-      element.classList.remove('colorBlue');
+    document.querySelectorAll(".sidebarText").forEach(element => {
+      element.classList.remove("colorBlue");
     });
-    e.target.classList.add('colorBlue');
-    if (e.target.classList.contains('dashClass')) {
+    e.target.classList.add("colorBlue");
+    if (e.target.classList.contains("dashClass")) {
       //   console.log('Class list');
       //   e.target.previousSibling.classList.remove('grayImg');
     }
@@ -284,10 +288,6 @@ export class LeftSidebar extends Component {
             </span>
           </Link>
         </div>
-        <div className="row">
-          <span className="fa fa-flag"></span>
-          <span className="sidebarText colorBlue ml-2 lh">Recent activity</span>
-        </div>
         <div className="row mt-2">
           <Link to={`/expenses`}>
             <span className="fa fa-bars"></span>
@@ -298,21 +298,24 @@ export class LeftSidebar extends Component {
           <div className="row bg-light text-secondary px-2">
             <span className="labelListsSidebar mr-auto">Groups</span>
             <span className="addSidebar">
-              <a href="/new/apartment">
+              <a href="/new/apartment" className="text-secondary">
                 <span className="addIcon fa fa-plus mr-1"></span>add
               </a>
             </span>
           </div>
           {console.log(this.state.group)}
-          <div className="appendGroupNames ml-3 text-secondary">
+          <div className="appendGroupNames ml-3 p-2 text-secondary">
+            {this.state.group.length === 0 ? 'You do not have any group': false}
             {this.state.group.map(ele => (
               <p className="textGroups">
                 {/* {console.log(ele,'ele')} */}
-                <Link to = {{
-                  pathname:`/group/${ele.id}/${ele.name}`
-                }}>
-                <span className="fa fa-tag mr-2"></span>
-                {ele.name}
+                <Link
+                  to={{
+                    pathname: `/group/${ele.id}/${ele.name}`
+                  }}
+                >
+                  <span className="fa fa-tag mr-2"></span>
+                  {ele.name}
                 </Link>
               </p>
             ))}
@@ -323,16 +326,17 @@ export class LeftSidebar extends Component {
             <span className="labelListsSidebar mr-auto">Friends</span>
             <button
               type="button"
-              className="btn"
+              className="btn fa fa-plus addIcon text-secondary"
               data-toggle="modal"
               data-target="#exampleModal"
             >
-              <span className="addIcon fa fa-plus mr-1"> add</span>
+              <span className="ml-1">add</span>
             </button>
             <span className="addSidebar"></span>
           </div>
-          <div className="appendFriendNames ml-3">
+          <div className="appendFriendNames ml-3 text-secondary p-2">
             {/* {console.log(this.state.friends)} */}
+            {this.state.friends.length === 0 ? 'You do not have any friends': false}
             {this.state.friends.map(val => (
               <p className="textGroups">
                 <Link

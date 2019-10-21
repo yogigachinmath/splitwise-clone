@@ -17,6 +17,9 @@ class login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
   login(e) {
+    document.querySelector('.waitLoader').style.display = 'block';
+    document.querySelector('.signUpBtn').style.display = 'none';
+    document.querySelector('.forgetPassword').style.display = 'none';
     e.preventDefault();
     const target = e.target;
     fire
@@ -31,6 +34,9 @@ class login extends Component {
         console.log('Event login', target.previousSibling);
         target.previousSibling.style.display = 'block';
         target.previousSibling.textContent = 'Invalid credentials';
+        document.querySelector('.waitLoader').style.display = 'none';
+        document.querySelector('.signUpBtn').style.display = 'block';
+        document.querySelector('.forgetPassword').style.display = 'block';
       });
   }
   render() {
@@ -70,6 +76,7 @@ class login extends Component {
                     />
                   </div>
                 </div>
+                <span className="waitLoader" style={{display: 'none'}}>wait...</span>
                 <div className="errorMsg bg-danger text-light p-3 mb-3"></div>
                 <button
                   type="submit"

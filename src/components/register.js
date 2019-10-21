@@ -21,6 +21,8 @@ export class register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
   register(e) {
+    document.querySelector('.showWait').style.display = 'block';
+    document.querySelector('.signUpBtn').style.display = 'none';
     e.preventDefault();
     fire
       .auth()
@@ -38,11 +40,15 @@ export class register extends Component {
         }).catch(error => {
           document.querySelector('.errorMsg').textContent = error;
           document.querySelector('.errorMsg').style.display = 'block';
+          document.querySelector('.showWait').style.display = 'none';
+          document.querySelector('.signUpBtn').style.display = 'block';
         })
       })
       .catch(error => {
         document.querySelector('.errorMsg').textContent = error;
         document.querySelector('.errorMsg').style.display = 'block';
+        document.querySelector('.showWait').style.display = 'none';
+        document.querySelector('.signUpBtn').style.display = 'block';
       });
   }
   
@@ -97,6 +103,7 @@ export class register extends Component {
                   />
                 </div>
               </div>
+              <div className="showWait" style={{display: 'none'}}>wait...</div>
               <div className="bg-danger text-light errorMsg p-3 my-2"></div>
                 <button
                   type="submit"

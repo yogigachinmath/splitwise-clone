@@ -58,120 +58,262 @@ export class AddApartment extends Component {
   };
 
   submitForm = async e => {
+    document.querySelector(".saveBtn").style.display = "none";
+    document.querySelector(".loadingShow").style.display = "block";
     e.preventDefault();
-    let Members = [];
-    let count = 0;
-    let name = document.querySelectorAll(".inputName");
-    let email = document.querySelectorAll(".inputEmail");
-    for (let i = 0; i < name.length; i++) {
-      let snap = await fire
-        .firestore()
-        .collection("users")
-        .where("email", "==", email[i].value)
-        .where("name", "==", name[i].value)
-        .get();
-      if (snap.size > 0) {
-        snap.forEach(doc => {
-          Members.push({
-            id: doc.id,
-            name: doc.data().name,
-            email: doc.data().email
-          });
-        });
-        count++;
-      }
-    }
-    if (count === name.length) {
-      try {
-        await fire
-          .firestore()
-          .collection("users")
-          .doc(this.state.user.uid)
-          .set(
-            {
-              friends: Members
-            },
-            { merge: true }
-          );
-      } catch (e) {
-        document.querySelector(".errorMsg").textContent = e;
-      }
-      for (let i = 0; i < Members.length; i++) {
-        try {
-          await fire
-            .firestore()
-            .collection("users")
-            .doc(Members[i].id)
-            .set(
-              {
-                friends: [
-                  {
-                    id: this.state.user.uid,
-                    name: this.state.user.displayName,
-                    email: this.state.user.email
-                  }
-                ]
-              },
-              { merge: true }
-            );
-        } catch (e) {
-          document.querySelector(".errorMsg").textContent = e;
-        }
-      }
+    let snapGroupCheck = await fire
+      .firestore()
+      .collection("group")
+      .where("name", "==", document.querySelector(".bigbox").value)
+      .get();
+    if (snapGroupCheck.size === 0) {
+      let Members = [];
+      let groups = [];
+      let newMembers = [];
+      let count = 0;
+      let name = document.querySelectorAll(".inputName");
+      let email = document.querySelectorAll(".inputEmail");
+
+      // setting members
       Members.push({
         id: this.state.user.uid,
         name: this.state.user.displayName,
         email: this.state.user.email
       });
-      try {
-        await fire
+      for (let i = 0; i < name.length; i++) {
+        let snap = await fire
+          .firestore()
+          .collection("users")
+          .where("email", "==", email[i].value)
+          .where("name", "==", name[i].value)
+          .get();
+        if (snap.size > 0) {
+          snap.forEach(doc => {
+            Members.push({
+              id: doc.id,
+              name: doc.data().name,
+              email: doc.data().email
+            });
+            newMembers.push({
+              id: doc.id,
+              name: doc.data().name,
+              email: doc.data().email
+            });
+          });
+          count++;
+        }
+      }
+      // verifying existence of inputed members
+      if (count === name.length) {
+        // creating new group
+        try {
+          await fire
+            .firestore()
+            .collection("group")
+            .add({
+              Members,
+              createdBy: this.state.user.uid,
+              name: document.querySelector(".bigbox").value
+            });
+        } catch (e) {
+          document.querySelector(".errorMsg").style.display = "block";
+          document.querySelector(".saveBtn").style.display = "block";
+          document.querySelector(".loadingShow").style.display = "none";
+          document.querySelector(".errorMsg").textContent = e;
+        }
+
+        // fetching recently created group
+        let groupId;
+        let snapGroup = await fire
           .firestore()
           .collection("group")
-          .add({
-            Members,
-            createdBy: this.state.user.uid,
-            name: document.querySelector(".bigbox").value
+          .where("name", "==", document.querySelector(".bigbox").value)
+          .where("createdBy", "==", this.state.user.uid)
+          .get();
+        if (snapGroup.size > 0) {
+          snapGroup.forEach(doc => {
+            groupId = doc.id;
           });
-      } catch (e) {
-        document.querySelector(".errorMsg").textContent = e;
-      }
+        }
 
-      // fetching groups
-      let groupId;
-      let snapGroup = await fire
-        .firestore()
-        .collection("group")
-        .where("name", "==", document.querySelector(".bigbox").value)
-        .where("createdBy", "==", this.state.user.uid)
-        .get();
-      if (snapGroup.size > 0) {
-        snapGroup.forEach(doc => {
-          groupId = doc.id;
-        });
-      }
-      for (let i = 0; i < Members.length; i++) {
+        // getting authenticated user friends details
+        Members.shift(); // removing authenticated user from members
+        let friendsDetails = await fire
+          .firestore()
+          .collection("users")
+          .doc(this.state.user.uid)
+          .get();
+        if (friendsDetails.data().hasOwnProperty("friends")) {
+          friendsDetails.data().friends.forEach(ele => {
+            let exists = 0;
+            Members.forEach(ele2 => {
+              if (ele.id === ele2.id) {
+                exists = 1;
+              }
+            });
+            if(exists === 0){
+              Members.push({
+                id: ele.id,
+                name: ele.name,
+                email: ele.email
+              });
+            }
+          });
+        }
+        // inserting friends records for authenticated user
         try {
           await fire
             .firestore()
             .collection("users")
-            .doc(Members[i].id)
+            .doc(this.state.user.uid)
             .set(
               {
-                groups: [
-                  { id: groupId, name: document.querySelector(".bigbox").value }
-                ]
+                friends: Members
               },
               { merge: true }
             );
         } catch (e) {
+          document.querySelector(".errorMsg").style.display = "block";
+          document.querySelector(".saveBtn").style.display = "block";
+          document.querySelector(".loadingShow").style.display = "none";
           document.querySelector(".errorMsg").textContent = e;
         }
+        // pushing newly created group
+        groups.push({
+          id: groupId,
+          name: document.querySelector(".bigbox").value
+        });
+        // getting authenticated user group details
+        if (friendsDetails.data().hasOwnProperty("groups")) {
+          friendsDetails.data().groups.forEach(ele => {
+            groups.push({
+              id: ele.id,
+              name: ele.name
+            });
+          });
+        }
+
+        // inserting group details for authenticated user
+        try {
+          await fire
+            .firestore()
+            .collection("users")
+            .doc(this.state.user.uid)
+            .set(
+              {
+                groups
+              },
+              { merge: true }
+            );
+        } catch (e) {
+          document.querySelector(".errorMsg").style.display = "block";
+          document.querySelector(".saveBtn").style.display = "block";
+          document.querySelector(".loadingShow").style.display = "none";
+          document.querySelector(".errorMsg").textContent = e;
+        }
+
+        // setting for group members
+        for (let i = 0; i < newMembers.length; i++) {
+          let friendsNew = [];
+          let groupsNew = [];
+          let snapExistingFriendNew = await fire
+            .firestore()
+            .collection("users")
+            .doc(newMembers[i].id)
+            .get();
+
+          let exists = 0;
+          // getting friends records
+          if (snapExistingFriendNew.data().hasOwnProperty("friends")) {
+            snapExistingFriendNew.data().friends.forEach(ele => {
+              friendsNew.push({
+                id: ele.id,
+                name: ele.name,
+                email: ele.email
+              });
+              if (ele.id === this.state.user.uid) {
+                exists = 1;
+              }
+            });
+          }
+
+          if (exists === 0) {
+            // inserting authenticated user as friend
+            friendsNew.push({
+              id: this.state.user.uid,
+              name: this.state.user.displayName,
+              email: this.state.user.email
+            });
+          }
+
+          // inserting friends for group newMembers
+          try {
+            await fire
+              .firestore()
+              .collection("users")
+              .doc(newMembers[i].id)
+              .set(
+                {
+                  friends: friendsNew
+                },
+                { merge: true }
+              );
+          } catch (e) {
+            document.querySelector(".errorMsg").style.display = "block";
+            document.querySelector(".saveBtn").style.display = "block";
+            document.querySelector(".loadingShow").style.display = "none";
+            document.querySelector(".errorMsg").textContent = e;
+          }
+
+          // inserting newly created group
+          groupsNew.push({
+            id: groupId,
+            name: document.querySelector(".bigbox").value
+          });
+
+          // getting group records
+          if (snapExistingFriendNew.data().hasOwnProperty("groups")) {
+            snapExistingFriendNew.data().groups.forEach(ele => {
+              groupsNew.push({
+                id: ele.id,
+                name: ele.name
+              });
+            });
+          }
+
+          //inserting group records
+          try {
+            await fire
+              .firestore()
+              .collection("users")
+              .doc(newMembers[i].id)
+              .set(
+                {
+                  groups: groupsNew
+                },
+                { merge: true }
+              );
+          } catch (e) {
+            document.querySelector(".errorMsg").style.display = "block";
+            document.querySelector(".saveBtn").style.display = "block";
+            document.querySelector(".loadingShow").style.display = "none";
+            document.querySelector(".errorMsg").textContent = e;
+          }
+        }
+        window.location.replace("/dash/main");
+      } else {
+        document.querySelector(".errorMsg").style.display = "block";
+        document.querySelector(".saveBtn").style.display = "block";
+        document.querySelector(".loadingShow").style.display = "none";
+        document.querySelector(".errorMsg").textContent =
+          "User not found with those credentials";
       }
-      window.location.replace("/dash/main");
     } else {
       document.querySelector(".errorMsg").style.display = "block";
       document.querySelector(".errorMsg").textContent =
-        "User not found with those credentials";
+        "Group name already taken.. Try another";
+      document.querySelector(".saveBtn").style.display = "block";
+      document.querySelector(".loadingShow").style.display = "none";
     }
   };
 
@@ -231,9 +373,12 @@ export class AddApartment extends Component {
                 </span>
               </div>
               <div className="errorMsg my-3 p-3 bg-danger text-light"></div>
-              <button type="submit" className="btn btn-orange">
+              <button type="submit" className="btn btn-orange saveBtn">
                 Save
               </button>
+              <p className="loadingShow" style={{ display: "none" }}>
+                wait...
+              </p>
             </form>
           </div>
         </div>

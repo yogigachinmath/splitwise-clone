@@ -19,39 +19,32 @@ export class DashboardMain extends Component {
   }
   async getExpenses(expensesId) {
     let expenses = this.state.expensesData;
-    expensesId.forEach(expenseId => {
-      fire.auth().onAuthStateChanged(async user => {
-        if (user) {
-          this.setState(() => ({ currentUser: user.uid }));
-          this.setState(() => ({ user: user }));
-          const expenseData = await fire
-            .firestore()
-            .collection("expenses")
-            .doc(expenseId)
-            .get();
-          expenses[expenseId] = expenseData.data();
-          this.setState({ expensesData: expenses });
-        }
-      });
+    expensesId.forEach(async expenseId => {
+      const expenseData = await fire
+        .firestore()
+        .collection("expenses")
+        .doc(expenseId)
+        .get();
+      expenses[expenseId] = expenseData.data();
+      this.setState({ expensesData: expenses });
     });
   }
   getAllExpenses() {
-    return fire.auth().onAuthStateChanged(async user => {
+    fire.auth().onAuthStateChanged(async user => {
       if (user) {
         this.setState(() => ({ user: user }));
+        this.setState(() => ({ currentUser: user.uid }));
         const userData = await fire
           .firestore()
           .collection("users")
           .doc(user.uid)
           .get();
         this.getExpenses(userData.data().expenses);
-        // return userData.data();
       }
     });
   }
   componentDidMount() {
-    const user = this.getAllExpenses();
-    console.log("user", user);
+    this.getAllExpenses();
   }
   //   f3qC7AmBDnaC4uODf1HzNWyy6W72 - new
   //   Tlpa5fQ5lUdQmuq4x9I91PW6GCD3 - 2
@@ -59,7 +52,7 @@ export class DashboardMain extends Component {
     return (
       <BrowserRouter>
         {console.log(this.props.user)}
-        <Header userDetails={this.props.user} />
+        <Header userDetails={this.state.user} />
         <div className="container" style={{ display: "flex" }}>
           <div className="row">
             <div className="left-sidebar col-md-3">

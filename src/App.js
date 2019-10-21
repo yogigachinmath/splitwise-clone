@@ -18,8 +18,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authorized: true,
-      currentUser: {}
+      authorized: true
     };
   }
 
@@ -28,7 +27,6 @@ class App extends Component {
       if (user) {
         console.log("app.js user found", user);
         this.setState({ authorized: true });
-        this.setState({ currentUser: user });
       } else {
         console.log("app.js user not found", user);
         this.setState({ authorized: false });
@@ -55,10 +53,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/new/apartment" component={AddApartment} />
             <Route path="/fireBase/prac" component={FireBasePrac} />
-            <Route
-              path="/dash/main"
-              render={() => <DashboardMain user={this.state.currentUser} />}
-            />
+            <Route path="/dash/main" component={DashboardMain} />
             <Route exact path="/expenses" component={DashboardMain} />
             <Route exaact path="/dash/friend/:name" component={DashboardMain} />
             {/* <Route exact path="/dash/all" component={AllExpences} /> */}

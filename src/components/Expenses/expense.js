@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import "./AddExpense.css";
 import FriendExenses from "../FriendExpenses";
-import NoExpenses from '../noExpenses'
+import NoExpenses from "../noExpenses";
+import firebase from "firebase";
+import fire from "../../config/fire";
 
 class Expense extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    console.log("fdfj", props.match.params);
     this.state = {
       currentdesc: "",
       currentamount: "",
+      curruser1: "",
       curruser2: "",
       currentUser: this.props.match.params.name,
       expenses: {}
@@ -49,31 +52,34 @@ class Expense extends Component {
     });
   }
 
-  showSplitEqually = (e) => {
+  showSplitEqually = e => {
     e.preventDefault();
-    document.querySelector('.splitEqually').style.display = 'block';
-    document.querySelector('.splitExact').style.display = 'none';
-    document.querySelector('.splitPercentage').style.display = 'none';
-  }
+    const splitAmount = +this.state.currentamount / 2;
+    this.setState({ curruser1: splitAmount, curruser2: splitAmount });
+    document.querySelector(".splitEqually").style.display = "block";
+    document.querySelector(".splitExact").style.display = "none";
+    document.querySelector(".splitPercentage").style.display = "none";
+  };
 
-  showSplitExact = (e) => {
+  showSplitExact = e => {
     e.preventDefault();
-    document.querySelector('.splitEqually').style.display = 'none';
-    document.querySelector('.splitExact').style.display = 'block';
-    document.querySelector('.splitPercentage').style.display = 'none';
-  }
+    document.querySelector(".splitEqually").style.display = "none";
+    document.querySelector(".splitExact").style.display = "block";
+    document.querySelector(".splitPercentage").style.display = "none";
+  };
 
-  showSplitPercentage = (e) => {
+  showSplitPercentage = e => {
     e.preventDefault();
-    document.querySelector('.splitEqually').style.display = 'none';
-    document.querySelector('.splitExact').style.display = 'none';
-    document.querySelector('.splitPercentage').style.display = 'block';
-  }
+    document.querySelector(".splitEqually").style.display = "none";
+    document.querySelector(".splitExact").style.display = "none";
+    document.querySelector(".splitPercentage").style.display = "block";
+  };
 
   onSubmit = e => {
     e.preventDefault();
-    let expenses = this.state.expenses;
-    const length = Object.keys(expenses).length;
+    const currentDate = firebase.firestore.Timestamp.now();
+    // let expenses = this.state.expenses;
+    // const length = Object.keys(expenses).length;
     if (
       this.state.currentamount !== "" &&
       this.state.currentdesc !== "" &&
@@ -84,30 +90,67 @@ class Expense extends Component {
         +this.state.curruser1 + +this.state.curruser2 ===
         +this.state.currentamount
       ) {
-        const expense = {
-          description: this.state.currentdesc,
-          creationMethod: "exact payment",
-          friendId: "arun",
-          cost: this.state.currentamount,
-          repayments: [
-            {
-              from: this.props.match.params.name,
-              to: "user1",
-              amount: +this.state.curruser2
-            }
-          ],
-          createdBy: "user1",
-          createAt: "date"
+        let users = {};
+        users[this.props.user.uid] = {
+          name: this.props.user.displayName,
+          netBalance: +this.state.curruser2,
+          owedBalance: +this.state.curruser1,
+          paidShare: +this.state.currentamount
         };
-        expenses[length] = expense;
-        console.log(expenses);
-        this.setState({
-         expenses: expenses,
-          currentdesc: "",
-          currentamount: "",
-          curruser1: "",
-          curruser2: ""
-        });
+        users[this.props.match.params.id] = {
+          name: this.props.match.params.name,
+          netBalance: -+this.state.curruser2,
+          owedBalance: +this.state.curruser2,
+          paidShare: +this.state.currentamount
+        };
+        const expense = {
+          cost: this.state.currentamount,
+          createdAt: currentDate,
+          createdBy: {
+            id: this.props.user.uid,
+            name: this.props.user.displayName
+          },
+          creationMethod: "Equally",
+          descripition: this.state.currentdesc,
+          friendId: this.props.match.params.id,
+          users: users
+        };
+        console.log(expense);
+        let expenseRef = fire
+          .firestore()
+          .collection("expenses")
+          .doc();
+        console.log("expensesRef", expenseRef.id);
+        expenseRef.set(expense);
+        // let userExpenses = fire
+        //   .firestore()
+        //   .collection("users")
+        //   .doc(this.props.user.uid);
+        // console.log(userExpenses);
+        //     const expense = {
+        //       description: this.state.currentdesc,
+        //       creationMethod: "exact payment",
+        //       friendId: "arun",
+        //       cost: this.state.currentamount,
+        //       repayments: [
+        //         {
+        //           from: this.props.match.params.name,
+        //           to: "user1",
+        //           amount: +this.state.curruser2
+        //         }
+        //       ],
+        //       createdBy: "user1",
+        //       createAt: "date"
+        //     };
+        //     expenses[length] = expense;
+        //     console.log(expenses);
+        //     this.setState({
+        //       expenses: expenses,
+        //       currentdesc: "",
+        //       currentamount: "",
+        //       curruser1: "",
+        //       curruser2: ""
+        //     });
       } else {
         alert("Please split the amount correctly!");
       }
@@ -200,17 +243,33 @@ class Expense extends Component {
                       </button>
                     </div>
                     <div className="splitEqually">
-                    <h5>Split Equally</h5>
+                      <h5>Split Equally</h5>
                       <div className="innerDetails m-3">
                         <span>You</span>
-                        
+                        <input
+                          type="number"
+                          className="description ml-1 mb-2"
+                          name={"curruser1"}
+                          onChange={this.handleChange}
+                          placeholder="0.00"
+                          value={this.state.curruser1}
+                          readOnly
+                        />
                       </div>
                       <div className="innerDetails m-3">
                         <span>{this.props.match.params.name}</span>
-                       
+                        <input
+                          type="number"
+                          className="description ml-1 mb-2"
+                          name={"curruser2"}
+                          onChange={this.handleChange}
+                          placeholder="0.00"
+                          value={this.state.curruser2}
+                          readOnly
+                        />
                       </div>
                     </div>
-                    <div className="splitExact" style={{display:'none'}}>
+                    <div className="splitExact" style={{ display: "none" }}>
                       <h5>Split by exact amounts</h5>
                       <div className="innerDetails m-3">
                         <span>You</span>
@@ -221,6 +280,7 @@ class Expense extends Component {
                           onChange={this.handleChange}
                           placeholder="0.00"
                           value={this.state.curruser1}
+                          readOnly
                         />
                       </div>
                       <div className="innerDetails m-3">
@@ -235,8 +295,11 @@ class Expense extends Component {
                         />
                       </div>
                     </div>
-                    <div className="splitPercentage" style={{display: 'none'}}>
-                    <h5>Split Equally</h5>
+                    <div
+                      className="splitPercentage"
+                      style={{ display: "none" }}
+                    >
+                      <h5>Split Equally</h5>
                       <div className="innerDetails m-3">
                         <span>You</span>
                         <input
@@ -295,8 +358,11 @@ class Expense extends Component {
             </div>
           </div>
         </div>
-        {length > 0 ? <FriendExenses expenses={this.state.expenses} /> : <NoExpenses />}
-        
+        {length > 0 ? (
+          <FriendExenses expenses={this.state.expenses} />
+        ) : (
+          <NoExpenses />
+        )}
       </div>
     );
   }

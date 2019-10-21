@@ -80,8 +80,8 @@ export class DashboardMain extends Component {
             />
             <Route
               exact
-              path="/dash/friend/:name"
-              render={props => <Expense {...props} />}
+              path="/dash/friend/:id/:name"
+              render={props => <Expense {...props} {...this.state} />}
             />
             <Route
               exact

@@ -94,16 +94,17 @@ class App extends Component {
             />
             <PrivateRoute
               exaact
-              path="/dash/friend/:name"
+              path="/dash/friend/:id/:name"
               authed={this.state.authorized}
               component={DashboardMain}
             />
-              <PrivateRoute
+            <PrivateRoute
               exact
               path="/group/:groupId/:groupName"
               authed={this.state.authorized}
-              component={DashboardMain} />}
+              component={DashboardMain}
             />
+            } />
             {/* <Route exact path="/dash/all" component={AllExpences} /> */}
           </Switch>
         </div>

@@ -66,7 +66,7 @@ class App extends Component {
           </Switch>
         </div>
       </Router>
-    ) : (<div>loading...</div>)
+    ) : (<div className="loader"><div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p>Loading</p></div>)
   }
 }
 

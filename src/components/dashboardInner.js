@@ -52,7 +52,7 @@ else{
         friends[val] = {name:'',friendAllExpenses:[],friendTotalAmount:''};
       });
       this.setState({
-        noOfExpenses: userData.data().expenses.length,
+        // noOfExpenses: userData.data().expenses.length,
         uid: user.uid,
         friends
       });

@@ -26,6 +26,7 @@ export class AddApartment extends Component {
   appendAddFriendForm = e => {
     var input = document.createElement("input");
     input.setAttribute("type", "text");
+    input.setAttribute("required", true);
     input.setAttribute("class", "mr-2 inputName");
     input.setAttribute("placeholder", "Name");
     input.setAttribute("name", "name");
@@ -35,6 +36,7 @@ export class AddApartment extends Component {
     input.setAttribute("value", "");
     var email = document.createElement("input");
     email.setAttribute("type", "email");
+    email.setAttribute("required", true);
     email.setAttribute("class", "mr-2 inputEmail");
     email.setAttribute("placeholder", "Email");
     email.setAttribute("name", "email");
@@ -55,30 +57,88 @@ export class AddApartment extends Component {
     document.getElementById("appendNewFriendForm").append(row);
   };
 
-  submitForm = e => {
+  submitForm = async e => {
     e.preventDefault();
     let Members = [];
+    let count = 0;
     let name = document.querySelectorAll(".inputName");
     let email = document.querySelectorAll(".inputEmail");
     for (let i = 0; i < name.length; i++) {
-      Members.push({ name: name[i].value, email: email[i].value });
+      let snap = await fire
+        .firestore()
+        .collection("users")
+        .where("email", "==", email[i].value)
+        .where("name", "==", name[i].value)
+        .get();
+      if (snap.size > 0) {
+        snap.forEach(doc => {
+          Members.push({
+            id: doc.id,
+            name: doc.data().name,
+            email: doc.data().email
+          });
+        });
+        count++;
+      }
     }
-    Members.push({
-      name: this.state.user.displayName,
-      email: this.state.user.email
-    });
-    fire
-      .firestore()
-      .collection("group")
-      .add({
-        Members,
-        createBy: this.state.user.uid,
-        name: document.querySelector(".bigbox").value
-      })
-      .then(() => {
-        window.location.replace('/dash/main');
-      })
-      .catch(e => console.log(e));
+    if (count === name.length) {
+      try {
+        await fire
+          .firestore()
+          .collection("users")
+          .doc(this.state.user.uid)
+          .set(
+            {
+              friends: Members
+            },
+            { merge: true }
+          );
+      } catch (e) {
+        document.querySelector(".errorMsg").textContent = e;
+      }
+      for (let i = 0; i < Members.length; i++) {
+        try {
+          await fire
+            .firestore()
+            .collection("users")
+            .doc(Members[i].id)
+            .set(
+              {
+                friends: [{
+                  id: this.state.user.uid,
+                  name: this.state.user.displayName,
+                  email: this.state.user.email
+                }]
+              },
+              { merge: true }
+            );
+        } catch (e) {
+          document.querySelector(".errorMsg").textContent = e;
+        }
+      }
+      Members.push({
+        id: this.state.user.uid,
+        name: this.state.user.displayName,
+        email: this.state.user.email
+      });
+      try {
+        await fire
+          .firestore()
+          .collection("group")
+          .add({
+            Members,
+            createdBy: this.state.user.uid,
+            name: document.querySelector(".bigbox").value
+          });
+        window.location.replace("/dash/main");
+      } catch (e) {
+        document.querySelector(".errorMsg").textContent = e;
+      }
+    } else {
+      document.querySelector(".errorMsg").style.display = "block";
+      document.querySelector(".errorMsg").textContent =
+        "User not found with those credentials";
+    }
   };
 
   componentDidMount() {
@@ -136,6 +196,7 @@ export class AddApartment extends Component {
                   + Add a person
                 </span>
               </div>
+              <div className="errorMsg my-3 p-3 bg-danger text-light"></div>
               <button type="submit" className="btn btn-orange">
                 Save
               </button>

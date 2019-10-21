@@ -21,8 +21,9 @@ export class LeftSidebar extends Component {
   }
 
   componentDidMount() {
-    fire.firestore().collection('group').get().then((snap) => {
+    fire.firestore().collection('group').where('Members',"==",true).where('name', '==',this.state.userName).get().then((snap) => {
       snap.forEach(doc=>{
+        console.log("Left bar ",doc.data());
         this.setState({group: [doc.data()]})
       })
     })
@@ -161,7 +162,7 @@ export class LeftSidebar extends Component {
           <div className="row bg-light text-secondary px-2">
             <span className="labelListsSidebar mr-auto">Groups</span>
             <span className="addSidebar">
-              <span className="addIcon fa fa-plus mr-1"></span>add
+            <a href="/new/apartment"><span className="addIcon fa fa-plus mr-1"></span>add</a>
             </span>
           </div>
           <div className="appendGroupNames ml-3 text-secondary">

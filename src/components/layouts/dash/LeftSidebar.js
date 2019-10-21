@@ -11,42 +11,28 @@ export class LeftSidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
       friends: [],
-      name: "",
+      userName: "",
       email: "",
       group: [{ name: "You do not have any group" }]
     };
+    this.handleclick = this.handleclick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState(() => ({ user: user }));
-      } else {
-        // alert('please login');
-      }
-    });
-    // fire.firestore().collection('group').where('Members',"==",true).where('name', '==',this.state.userName).get().then((snap) => {
-    //   snap.forEach(doc=>{
-    //     console.log("Left bar ",doc.data());
-    //     this.setState({group: [doc.data()]})
-    //   })
-    // })
-
-    // fire
-    //   .firestore()
-    //   .collection('group')
-    //   .where('Members', '==', true)
-    //   .where('name', '==', this.state.userName)
-    //   .get()
-    //   .then(snap => {
-    //     snap.forEach(doc => {
-    //       // console.log('Left bar ', doc.data());
-    //       this.setState({ group: [doc.data()] });
-    //     });
-    //   });
+    fire
+      .firestore()
+      .collection("group")
+      .where("Members", "==", true)
+      .where("name", "==", this.state.userName)
+      .get()
+      .then(snap => {
+        snap.forEach(doc => {
+          // console.log('Left bar ', doc.data());
+          this.setState({ group: [doc.data()] });
+        });
+      });
     function getuser() {
       return new Promise(async (resolve, reject) => {
         await fire.auth().onAuthStateChanged(async user => {
@@ -65,121 +51,45 @@ export class LeftSidebar extends Component {
         .collection("users")
         .doc(user.uid)
         .get();
-      userData
-        .data()
-        .friends.map(val => arr.push({ email: val.email, username: val.name }));
+      if (userData.data().friends) {
+        userData
+          .data()
+          .friends.map(val =>
+            arr.push({ email: val.email, username: val.name })
+          );
+      }
+      // console.log(userData.data());
+      let group = [];
+      if (userData.data().groups) {
+        userData.data().groups.map(val => {
+          group.push({ name: val.name, id: val.id });
+        });
+      }
       this.setState({
-        friends: arr
+        friends: arr,
+        group
       });
     });
   }
 
-  addFriendSubmit = async e => {
-    let friendsArr = [];
-    let friendsArr2 = [];
-    let alreadyExist = 0;
-    let friendID;
+  handleclick(e) {
     e.preventDefault();
-    console.log(this.state);
-    const userinfo = { email: this.state.email, username: this.state.name };
+    // console.log(this.state);
+    const userinfo = { email: this.state.email, username: this.state.username };
     const friends = this.state.friends;
     friends.push(userinfo);
-    try {
-      let snapFriends = await fire
-        .firestore()
-        .collection("users")
-        .doc(this.state.user.uid)
-        .get();
-      if (snapFriends.data().hasOwnProperty("friends")) {
-        snapFriends.data().friends.forEach(doc => {
-          if (doc.email === this.state.email) {
-            alreadyExist = 1;
-          } else {
-            friendsArr.push(doc);
-          }
-        });
-      }
-      if (alreadyExist === 0) {
-        let snap = await fire
-          .firestore()
-          .collection("users")
-          .where("email", "==", this.state.email)
-          .where("name", "==", this.state.name)
-          .get();
-        if (snap.size > 0) {
-          console.log(snap.size, snap);
-          snap.forEach(doc => {
-            friendID = doc.id;
-            console.log("hfgf");
-            console.log(doc.data());
-            friendsArr.push({
-              email: this.state.email,
-              name: this.state.name,
-              id: doc.id
-            });
-            console.log(friendsArr);
-            fire
-              .firestore()
-              .collection("users")
-              .doc(this.state.user.uid)
-              .set(
-                {
-                  friends: friendsArr
-                },
-                { merge: true }
-              );
-          });
-          let snapFriends2 = await fire
-            .firestore()
-            .collection("users")
-            .doc(friendID)
-            .get();
-          console.log(snapFriends2.data());
-          if (snapFriends2.data().hasOwnProperty("friends")) {
-            snapFriends2.data().friends.forEach(doc => {
-              friendsArr2.push(doc);
-            });
-          }
-          console.log(friendsArr2);
-          friendsArr2.push({
-            id: this.state.user.uid,
-            name: this.state.user.displayName,
-            email: this.state.user.email
-          });
-          fire
-            .firestore()
-            .collection("users")
-            .doc(friendID)
-            .set(
-              {
-                friends: friendsArr2
-              },
-              { merge: true }
-            );
-          console.log(friendsArr2);
-          this.setState({
-            friends
-          });
-          this.setState({
-            name: "",
-            email: ""
-          });
-
-          document.getElementById("addFriendForm").reset();
-        } else {
-          document.querySelector(".errorMsg").style.display = "block";
-          document.querySelector(".errorMsg").textContent =
-            "No user found with following credentials";
-        }
-      } else {
-        document.querySelector(".errorMsg").style.display = "block";
-        document.querySelector(".errorMsg").textContent =
-          "user is already your friend";
-      }
-    } catch (e) {
-      document.querySelector(".errorMsg").textContent = e;
-    }
-  };
+    this.setState({
+      friends
+    });
+    this.setState({
+      userName: "",
+      email: ""
+    });
+    document.getElementById("addFriendForm").reset();
+    //   document.getElementById('addFriendForm')
+    // document.querySelector('.modal-dialog').setAttribute('data-dismiss',"modal");
+    // e.target.setAttribute('type', 'modal');
+  }
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -225,13 +135,13 @@ export class LeftSidebar extends Component {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form onSubmit={this.addFriendSubmit} id="addFriendForm">
+              <form onSubmit={this.handleclick} id="addFriendForm">
                 <div className="modal-body">
                   <div className="form-group">
                     <input
                       type="email"
                       name="email"
-                      value={this.state.email}
+                      value={this.state.name}
                       onChange={this.handleChange}
                       placeholder="Enter email address"
                       className="form-control"
@@ -241,7 +151,7 @@ export class LeftSidebar extends Component {
                   <div className="form-group">
                     <input
                       type="text"
-                      name="name"
+                      name="username"
                       value={this.state.name}
                       placeholder="Enter name"
                       onChange={this.handleChange}
@@ -249,7 +159,6 @@ export class LeftSidebar extends Component {
                       required
                     />
                   </div>
-                  <div className="errorMsg bg-danger text-light p-3 my-3"></div>
                 </div>
                 <div className="modal-footer">
                   <button

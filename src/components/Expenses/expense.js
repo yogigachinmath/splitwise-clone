@@ -57,25 +57,25 @@ class Expense extends Component {
     const splitAmount = +this.state.currentamount / 2;
     this.setState({ curruser1: splitAmount, curruser2: splitAmount });
     document.querySelector(".splitEqually").style.display = "block";
-    document.querySelector(".splitExact").style.display = "none";
-    document.querySelector(".splitPercentage").style.display = "none";
+    // document.querySelector(".splitExact").style.display = "none";
+    // document.querySelector(".splitPercentage").style.display = "none";
   };
 
-  showSplitExact = e => {
-    e.preventDefault();
-    document.querySelector(".splitEqually").style.display = "none";
-    document.querySelector(".splitExact").style.display = "block";
-    document.querySelector(".splitPercentage").style.display = "none";
-  };
+  // showSplitExact = e => {
+  //   e.preventDefault();
+  //   document.querySelector(".splitEqually").style.display = "none";
+  //   document.querySelector(".splitExact").style.display = "block";
+  //   document.querySelector(".splitPercentage").style.display = "none";
+  // };
 
-  showSplitPercentage = e => {
-    e.preventDefault();
-    document.querySelector(".splitEqually").style.display = "none";
-    document.querySelector(".splitExact").style.display = "none";
-    document.querySelector(".splitPercentage").style.display = "block";
-  };
+  // showSplitPercentage = e => {
+  //   e.preventDefault();
+  //   document.querySelector(".splitEqually").style.display = "none";
+  //   document.querySelector(".splitExact").style.display = "none";
+  //   document.querySelector(".splitPercentage").style.display = "block";
+  // };
 
-  onSubmit = e => {
+  onSubmit = async e => {
     e.preventDefault();
     const currentDate = firebase.firestore.Timestamp.now();
     // let expenses = this.state.expenses;
@@ -101,7 +101,7 @@ class Expense extends Component {
           name: this.props.match.params.name,
           netBalance: -+this.state.curruser2,
           owedBalance: +this.state.curruser2,
-          paidShare: +this.state.currentamount
+          paidShare: 0
         };
         const expense = {
           cost: this.state.currentamount,
@@ -111,7 +111,7 @@ class Expense extends Component {
             name: this.props.user.displayName
           },
           creationMethod: "Equally",
-          descripition: this.state.currentdesc,
+          description: this.state.currentdesc,
           friendId: this.props.match.params.id,
           users: users
         };
@@ -121,7 +121,33 @@ class Expense extends Component {
           .collection("expenses")
           .doc();
         console.log("expensesRef", expenseRef.id);
-        expenseRef.set(expense);
+        await expenseRef.set(expense);
+        let authUser = fire
+        .firestore()
+        .collection("users")
+        .doc(this.props.user.uid);
+        let authUserExpenses = [];
+        let snapAuthUser = await authUser.get();
+          if(snapAuthUser.data().hasOwnProperty('expenses')){
+            snapAuthUser.data().expenses.forEach(ele => {
+              authUserExpenses.push(ele);
+            })
+          }
+        authUserExpenses.push(expenseRef.id);
+        await authUser.set({expenses: authUserExpenses}, {merge: true});
+        let friendUser = fire
+        .firestore()
+        .collection("users")
+        .doc(this.props.match.params.id);
+        let friendUserExpenses = [];
+        let snapFriendUser = await friendUser.get();
+          if(snapFriendUser.data().hasOwnProperty('expenses')){
+            snapFriendUser.data().expenses.forEach(ele => {
+              friendUserExpenses.push(ele);
+            })
+          }
+        friendUserExpenses.push(expenseRef.id);
+        await friendUser.set({expenses: friendUserExpenses}, {merge: true});
         // let userExpenses = fire
         //   .firestore()
         //   .collection("users")
@@ -144,13 +170,12 @@ class Expense extends Component {
         //     };
         //     expenses[length] = expense;
         //     console.log(expenses);
-        //     this.setState({
-        //       expenses: expenses,
-        //       currentdesc: "",
-        //       currentamount: "",
-        //       curruser1: "",
-        //       curruser2: ""
-        //     });
+            this.setState({
+              currentdesc: "",
+              currentamount: "",
+              curruser1: "",
+              curruser2: ""
+            });
       } else {
         alert("Please split the amount correctly!");
       }
@@ -229,7 +254,7 @@ class Expense extends Component {
                       >
                         =
                       </button>
-                      <button
+                      {/* <button
                         className="btn btn-secondary mr-2"
                         onClick={this.showSplitExact}
                       >
@@ -240,7 +265,7 @@ class Expense extends Component {
                         onClick={this.showSplitPercentage}
                       >
                         %
-                      </button>
+                      </button> */}
                     </div>
                     <div className="splitEqually">
                       <h5>Split Equally</h5>
@@ -269,7 +294,7 @@ class Expense extends Component {
                         />
                       </div>
                     </div>
-                    <div className="splitExact" style={{ display: "none" }}>
+                    {/* <div className="splitExact" style={{ display: "none" }}>
                       <h5>Split by exact amounts</h5>
                       <div className="innerDetails m-3">
                         <span>You</span>
@@ -322,7 +347,7 @@ class Expense extends Component {
                           value={this.state.curruser2}
                         />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="modal-footer">
@@ -354,7 +379,6 @@ class Expense extends Component {
               >
                 Add an expense
               </button>
-              <button className="btn btn-blue ml-2">Settle up</button>
             </div>
           </div>
         </div>

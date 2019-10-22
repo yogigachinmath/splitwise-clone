@@ -128,8 +128,7 @@ class Dash extends Component {
             <div className="row">
               <h4 className="mr-auto">Dashboard</h4>
               <div className="dash-header-right ml-auto">
-                <button className="btn btn-orange">Add an expense</button>
-                <button className="btn btn-blue ml-2">Settle up</button>
+              
               </div>
             </div>
             <div className="d-flex justify-content-between border border-left-0 border-right-0 border-bottom-0 mt-3 pt-2 pb-2">
@@ -231,8 +230,6 @@ class Dash extends Component {
             <div className="row">
               <h4 className="mr-auto">Dashboard</h4>
               <div className="dash-header-right ml-auto">
-                <button className="btn btn-orange">Add an expense</button>
-                <button className="btn btn-blue ml-2">Settle up</button>
               </div>
             </div>
             <div className="d-flex justify-content-between border border-left-0 border-right-0 border-bottom-0 mt-3 pt-2 pb-2">

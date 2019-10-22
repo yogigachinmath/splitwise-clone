@@ -42,8 +42,6 @@ export class AllExpenses extends Component {
             <div className="row">
               <h4 className="mr-auto">All Expenses</h4>
               <div className="dash-header-right ml-auto">
-                <button className="btn btn-orange">Add an expense</button>
-                <button className="btn btn-blue ml-2">Settle up</button>
               </div>
             </div>
           </div>

@@ -4,18 +4,18 @@ import FriendExenses from "../FriendExpenses";
 import NoExpenses from "../noExpenses";
 import firebase from "firebase";
 import fire from "../../config/fire";
+import ShowExpense from "../ShowExpenses";
 
 class Expense extends Component {
   constructor(props) {
     super(props);
-    console.log("fdfj", props);
     this.state = {
       currentdesc: "",
       currentamount: "",
       curruser1: "",
       curruser2: "",
       currentUser: this.props.match.params.name,
-      expenses: {},
+      expensesData: [],
       friendDetail: {}
     };
     this.handleChange = this.handleChange.bind(this);
@@ -170,9 +170,24 @@ class Expense extends Component {
   };
   // this.props.addTodo(this.state.title);
   // this.setState({ title: "" });
+
+  getExpensesWithFriend(expensesData) {
+    let expensesWithFriend = [];
+    expensesData.forEach(expense => {
+      if (expense.users[this.props.match.params.id] && expense.friendId) {
+        expensesWithFriend.push(expense);
+      }
+    });
+    return expensesWithFriend;
+  }
+  sortExpenses(expenses) {
+    expenses.sort(function(a, b) {
+      return b.createdAt.seconds - a.createdAt.seconds;
+    });
+    return expenses;
+  }
+
   render() {
-    let expenses = this.state.expenses;
-    const length = Object.keys(expenses).length;
     return (
       <div className="dash-main-content col-md-6">
         {/* MOdal */}
@@ -368,8 +383,18 @@ class Expense extends Component {
             </div>
           </div>
         </div>
-        {length > 0 ? (
-          <FriendExenses expenses={this.state.expenses} />
+        {this.props.expensesData.length > 0 &&
+        this.getExpensesWithFriend(this.props.expensesData).length > 0 ? (
+          this.sortExpenses(
+            this.getExpensesWithFriend(this.props.expensesData)
+          ).map(expense => {
+            return (
+              <ShowExpense
+                expense={expense}
+                currentUser={this.props.user.uid}
+              />
+            );
+          })
         ) : (
           <NoExpenses />
         )}

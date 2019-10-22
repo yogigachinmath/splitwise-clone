@@ -56,6 +56,7 @@ class group extends Component {
     return expenses;
   }
   componentDidMount() {
+    console.log("in");
     this.getGroupDetails();
   }
   componentDidUpdate(prevProps) {

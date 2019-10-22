@@ -30,7 +30,6 @@ class App extends Component {
   componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log("app.js user found", user);
         this.setState({ authorized: true, ready: true });
       } else {
         console.log("app.js user not found", user);

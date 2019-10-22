@@ -78,6 +78,7 @@ class ShowExpenses extends Component {
                     {this.payer(this.props.expense.users)} paid
                   </small>
                   <span className="font-weight-bold">
+                    {console.log(this.props.expense)}
                     &#x20b9;{this.props.expense.cost}
                   </span>
                 </div>

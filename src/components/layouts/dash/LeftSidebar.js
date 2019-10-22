@@ -299,7 +299,6 @@ export class LeftSidebar extends Component {
               </a>
             </span>
           </div>
-          {console.log(this.state.group)}
           <div className="appendGroupNames ml-3 p-2 text-secondary">
             {this.state.group.length === 0
               ? "You do not have any group"
@@ -339,7 +338,6 @@ export class LeftSidebar extends Component {
               : false}
             {this.state.friends.map(val => (
               <p className="textGroups">
-                {console.log("val", val)}
                 <Link
                   to={{
                     pathname: `/dash/friend/${val.id}/${val.name}`,

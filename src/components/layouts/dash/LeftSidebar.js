@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 // import UserPic from '../user.png';
-import { BrowserRouter, Link, Route } from "react-router-dom";
+import { BrowserRouter, Link, Route } from 'react-router-dom';
 // import Modal from './friends/modal';
 import "./friends/friends.css";
 import fire from "../../../config/fire";
@@ -11,12 +11,12 @@ export class LeftSidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
       friends: [],
       name: "",
       email: "",
       group: []
     };
+    this.handleclick = this.handleclick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -28,25 +28,6 @@ export class LeftSidebar extends Component {
         // alert('please login');
       }
     });
-    // fire.firestore().collection('group').where('Members',"==",true).where('name', '==',this.state.userName).get().then((snap) => {
-    //   snap.forEach(doc=>{
-    //     console.log("Left bar ",doc.data());
-    //     this.setState({group: [doc.data()]})
-    //   })
-    // })
-
-    // fire
-    //   .firestore()
-    //   .collection('group')
-    //   .where('Members', '==', true)
-    //   .where('name', '==', this.state.userName)
-    //   .get()
-    //   .then(snap => {
-    //     snap.forEach(doc => {
-    //       // console.log('Left bar ', doc.data());
-    //       this.setState({ group: [doc.data()] });
-    //     });
-    //   });
     function getuser() {
       return new Promise(async (resolve, reject) => {
         await fire.auth().onAuthStateChanged(async user => {
@@ -54,7 +35,7 @@ export class LeftSidebar extends Component {
             resolve(user);
             return;
           }
-          reject("error");
+          reject('error');
         });
       });
     }
@@ -62,30 +43,40 @@ export class LeftSidebar extends Component {
       let arr = [];
       const userData = await fire
         .firestore()
-        .collection("users")
+        .collection('users')
         .doc(user.uid)
         .get();
-      if (userData.data().hasOwnProperty("friends")) {
+      if (userData.data().friends) {
         userData
           .data()
           .friends.map(val =>
-            arr.push({ email: val.email, username: val.name })
+            arr.push({ email: val.email, name: val.name })
           );
-        this.setState({
-          friends: arr
+      }
+      // console.log(userData.data());
+      let group=[];
+      if(userData.data().groups){
+        userData
+        .data()
+        .groups.map(val => {
+            group.push({name:val.name,id:val.id});
         });
       }
+      this.setState({
+        friends: arr,
+        group
+      });
     });
   }
 
-  addFriendSubmit = async e => {
-    let friendsArr = [];
-    let friendsArr2 = [];
+  handleclick = async (e) => {
+    e.preventDefault();
     let alreadyExist = 0;
     let friendID;
-    e.preventDefault();
-    console.log(this.state);
-    const userinfo = { email: this.state.email, username: this.state.name };
+    let friendsArr = [];
+    let friendsArr2 = [];
+    // console.log(this.state);
+    const userinfo = { email: this.state.email, name: this.state.name };
     const friends = this.state.friends;
     friends.push(userinfo);
 
@@ -186,6 +177,7 @@ export class LeftSidebar extends Component {
       }
     } catch (e) {
       document.querySelector(".errorMsg").textContent = e;
+      document.querySelector(".errorMsg").style.display = "block";
     }
   };
   handleChange(e) {
@@ -233,7 +225,7 @@ export class LeftSidebar extends Component {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form onSubmit={this.addFriendSubmit} id="addFriendForm">
+              <form onSubmit={this.handleclick} id="addFriendForm">
                 <div className="modal-body">
                   <div className="form-group">
                     <input
@@ -257,7 +249,7 @@ export class LeftSidebar extends Component {
                       required
                     />
                   </div>
-                  <div className="errorMsg bg-danger text-light p-3 my-3"></div>
+                  <div className="errorMsg p-3 my-3 bg-danger text-light" style={{display: 'none'}}></div>
                 </div>
                 <div className="modal-footer">
                   <button
@@ -349,14 +341,14 @@ export class LeftSidebar extends Component {
               <p className="textGroups">
                 <Link
                   to={{
-                    pathname: `/dash/friend/${val.username}`,
+                    pathname: `/dash/friend/${val.name}`,
                     state: {
-                      info: val.username
+                      info: val.name
                     }
                   }}
                 >
                   <i className="icon-user"></i>
-                  {val.username}
+                  {val.name}
                 </Link>
               </p>
             ))}

@@ -41,8 +41,9 @@ export class DashboardMain extends Component {
           .collection("users")
           .doc(user.uid)
           .get();
-        if (userData.data().expenses) {
-          this.getExpenses(userData.data().expenses);
+          console.log(userData.data(),'dataaaaaaaaaaaaaaaaa');
+        if (!userData.data().expenses) {
+          // this.getExpenses(userData.data().expenses);
         }
       }
     });

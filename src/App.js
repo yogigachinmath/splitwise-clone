@@ -16,6 +16,7 @@ import { createBrowserHistory as history } from "history";
 import PrivateRouteLogin from "./components/auth/privaterouterlogin";
 import "./App.css";
 import "./loader";
+import GenericNotFound from './components/GenericNotFound';
 
 class App extends Component {
   constructor(props) {
@@ -71,7 +72,7 @@ class App extends Component {
               component={AddApartment}
             />
             <PrivateRoute
-              path="/dash/main"
+              exact path="/dash/main"
               authed={this.state.authorized}
               component={DashboardMain}
             />
@@ -79,12 +80,6 @@ class App extends Component {
               path="/fireBase/prac"
               authed={this.state.authorized}
               component={FireBasePrac}
-            />
-            <PrivateRoute
-              exact
-              path="/dash/main"
-              authed={this.state.authorized}
-              component={DashboardMain}
             />
             <PrivateRoute
               exact
@@ -102,8 +97,9 @@ class App extends Component {
               exact
               path="/group/:groupId/:groupName"
               authed={this.state.authorized}
-              component={DashboardMain} />}
+               />}
             />
+            <Route path='*' component={GenericNotFound} />
             {/* <Route exact path="/dash/all" component={AllExpences} /> */}
           </Switch>
         </div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import fire from "../config/fire";
+import moment from "moment";
 
 class ExpenseDetail extends Component {
   payerOwes = expense => {};
@@ -17,7 +17,8 @@ class ExpenseDetail extends Component {
             <span>{expense.description}</span>
             <h5 className="m-0 font-weight-bold">INR {expense.cost}</h5>
             <small className="text-secondary">
-              Added by {expense.createdBy.name} on October 15, 2019
+              Added by {expense.createdBy.name} on{" "}
+              {moment.unix(expense.createdAt.seconds).format("MMMM DD, YYYY")}
             </small>
           </div>
         </div>
@@ -26,7 +27,7 @@ class ExpenseDetail extends Component {
           return (
             <div className="mb-2">
               <img
-                className="expense-user-img border rounded-circle"
+                className="expense-user-img border rounded-circle mr-2"
                 src="/img/default-avatar.png"
                 alt=""
               />
@@ -34,10 +35,10 @@ class ExpenseDetail extends Component {
                 <b>{expense.users[user].name}</b>
                 {expense.users[user].paidShare !== 0 && " paid "}
                 {expense.users[user].paidShare !== 0 && (
-                  <b>{expense.users[user].paidShare}</b>
+                  <b>&#x20b9;{expense.users[user].paidShare}</b>
                 )}
                 {expense.users[user].paidShare !== 0 && " and"} owes{" "}
-                <b>INR{expense.users[user].owedShare}</b>
+                <b>&#x20b9;{expense.users[user].owedBalance}</b>
               </small>
             </div>
           );

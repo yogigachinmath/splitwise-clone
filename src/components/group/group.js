@@ -8,7 +8,7 @@ class group extends Component {
     super(props);
     this.state = {
       groupDetails: {},
-      expensesData: {}
+      expensesData: []
     };
   }
   async getExpenses(expensesId) {
@@ -20,7 +20,7 @@ class group extends Component {
           .collection("expenses")
           .doc(expenseId)
           .get();
-        expenses[expenseId] = expenseData.data();
+        expenses.push(expenseData.data());
         this.setState({ expenseData: expenses });
       });
     }
@@ -36,16 +36,20 @@ class group extends Component {
     }
     this.setState({ groupDetails: groupDetails.data() });
   }
+  sortExpenses(expenses) {
+    expenses.sort(function(a, b) {
+      return b.createdAt.seconds - a.createdAt.seconds;
+    });
+    return expenses;
+  }
   componentDidMount() {
-    console.log("in did mount");
     this.getGroupDetails();
-    console.log(this.state.groupDetails);
   }
   componentDidUpdate(prevProps) {
     if (
       prevProps.match.params.groupName !== this.props.match.params.groupName
     ) {
-      this.setState({ expensesData: {} });
+      this.setState({ expensesData: [] });
       this.getGroupDetails();
     }
   }
@@ -62,12 +66,13 @@ class group extends Component {
               </div>
             </div>
           </div>
-          {Object.keys(this.state.expensesData).length !== 0 &&
-            Object.keys(this.state.expensesData).map(expenseId => {
+          {this.state.expensesData.length !== 0 &&
+            this.sortExpenses(this.state.expensesData).map(expenseId => {
               return (
                 <ShowExpense
-                  expense={this.state.expensesData[expenseId]}
+                  expense={expenseId}
                   currentUser={this.props.user.uid}
+                  group="yes"
                 />
               );
             })}

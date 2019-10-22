@@ -15,7 +15,7 @@ export class DashboardMain extends Component {
     this.state = {
       user: {},
       currentUser: {},
-      expensesData: {},
+      expensesData: [],
       expenseData: []
     };
   }
@@ -27,7 +27,7 @@ export class DashboardMain extends Component {
         .collection("expenses")
         .doc(expenseId)
         .get();
-      expenses[expenseId] = expenseData.data();
+      expenses.push(expenseData.data());
       this.setState({ expensesData: expenses });
     });
   }

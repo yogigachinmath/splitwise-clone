@@ -9,29 +9,23 @@ export class AllExpenses extends Component {
     this.state = {
       user: {},
       currentUser: null,
-      expenses: this.getUserExpenses(
-        data.expenses,
-        data.users["user1"].expenses
-      ),
-      expensesData: this.props.expensesData,
       totalBalance: 0
     };
   }
-
-  getUserExpenses = (expenses, userExpensesId) => {
-    return userExpensesId.reduce((userExpenses, userExpenseId) => {
-      userExpenses[userExpenseId] = expenses[userExpenseId];
-      return userExpenses;
-    }, {});
-  };
+  sortExpenses(expenses) {
+    expenses.sort(function(a, b) {
+      return b.createdAt.seconds - a.createdAt.seconds;
+    });
+    return expenses;
+  }
   getTotalBalance = expenses => {
-    const totalBalance = Object.keys(expenses).reduce((balance, expense) => {
-      if (expenses[expense].users[this.props.currentUser]) {
-        balance += expenses[expense].users[this.props.currentUser].netBalance;
+    const totalBalance = expenses.reduce((balance, expense) => {
+      if (expense.users[this.props.currentUser]) {
+        balance += expense.users[this.props.currentUser].netBalance;
       }
       return balance;
     }, 0);
-    return totalBalance;
+    return totalBalance.toFixed(2);
   };
   render() {
     const totalBalance = this.getTotalBalance(this.props.expensesData);
@@ -47,12 +41,11 @@ export class AllExpenses extends Component {
               </div>
             </div>
           </div>
-          {Object.keys(this.props.expensesData).length !== 0 ? (
-            Object.keys(this.props.expensesData).map(expense => {
-              console.log("here");
+          {this.props.expensesData.length !== 0 ? (
+            this.sortExpenses(this.props.expensesData).map(expense => {
               return (
                 <ShowExpense
-                  expense={this.props.expensesData[expense]}
+                  expense={expense}
                   currentUser={this.props.currentUser}
                 />
               );
@@ -94,7 +87,7 @@ export class AllExpenses extends Component {
                   you are {totalBalance < 0 ? "owe" : "owed"}
                 </h6>
                 <h3 className="font-weight-bold line-height-24 ">
-                  INR
+                  &#x20b9;
                   {totalBalance < 0 ? -totalBalance : totalBalance}
                 </h3>
               </div>

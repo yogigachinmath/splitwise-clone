@@ -20,16 +20,16 @@ export class DashboardMain extends Component {
     };
   }
   async getExpenses(expensesId) {
-    // let expenses = this.state.expensesData;
-    // expensesId.forEach(async expenseId => {
-    //   const expenseData = await fire
-    //     .firestore()
-    //     .collection("expenses")
-    //     .doc(expenseId)
-    //     .get();
-    //   expenses[expenseId] = expenseData.data();
-    //   this.setState({ expensesData: expenses });
-    // });
+    let expenses = this.state.expensesData;
+    expensesId.forEach(async expenseId => {
+      const expenseData = await fire
+        .firestore()
+        .collection("expenses")
+        .doc(expenseId)
+        .get();
+      expenses[expenseId] = expenseData.data();
+      this.setState({ expensesData: expenses });
+    });
   }
   getAllExpenses() {
     fire.auth().onAuthStateChanged(async user => {

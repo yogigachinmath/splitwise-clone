@@ -11,6 +11,19 @@ class group extends Component {
       expensesData: []
     };
   }
+  getUserBalances(expenses) {
+    const userBalances = expenses.reduce((balances, expense) => {
+      let currentBalances = balances;
+      Object.keys(expense.users).forEach(user => {
+        currentBalances[user]
+          ? (currentBalances[user] += expense.users[user].netBalance)
+          : (currentBalances[user] = expense.users[user].netBalance);
+      });
+      balances = currentBalances;
+      return balances;
+    }, {});
+    return userBalances;
+  }
   async getExpenses(expensesId) {
     if (expensesId) {
       let expenses = this.state.expensesData;
@@ -54,6 +67,7 @@ class group extends Component {
     }
   }
   render() {
+    const userBalances = this.getUserBalances(this.state.expensesData);
     return (
       <React.Fragment>
         <div className="dash-main-content col-md-6">
@@ -77,7 +91,17 @@ class group extends Component {
               );
             })}
         </div>
-        <div className="right-sidebar col-md-3"></div>
+        <div className="right-sidebar col-md-3 p-3">
+          <small className="text-secondary font-weight-bold font-size-13">
+            GROUP BALANCES
+          </small>
+          {this.state.groupDetails.Members &&
+            this.state.groupDetails.Members.map(member => {
+              return (
+                <GroupMember member={member} userBalances={userBalances} />
+              );
+            })}
+        </div>
       </React.Fragment>
     );
   }

@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/splitwiseMB/splitwiseMB.github.io/static/css/main.a85bcd76.chunk.css",
+    "main.js": "/splitwiseMB/splitwiseMB.github.io/static/js/main.46f1de98.chunk.js",
+    "main.js.map": "/splitwiseMB/splitwiseMB.github.io/static/js/main.46f1de98.chunk.js.map",
+    "runtime-main.js": "/splitwiseMB/splitwiseMB.github.io/static/js/runtime-main.5980d4ff.js",
+    "runtime-main.js.map": "/splitwiseMB/splitwiseMB.github.io/static/js/runtime-main.5980d4ff.js.map",
+    "static/js/2.f6cb6e2b.chunk.js": "/splitwiseMB/splitwiseMB.github.io/static/js/2.f6cb6e2b.chunk.js",
+    "static/js/2.f6cb6e2b.chunk.js.map": "/splitwiseMB/splitwiseMB.github.io/static/js/2.f6cb6e2b.chunk.js.map",
+    "index.html": "/splitwiseMB/splitwiseMB.github.io/index.html",
+    "precache-manifest.819d3ffea45c77f91a1ebc0436fc1802.js": "/splitwiseMB/splitwiseMB.github.io/precache-manifest.819d3ffea45c77f91a1ebc0436fc1802.js",
+    "service-worker.js": "/splitwiseMB/splitwiseMB.github.io/service-worker.js",
+    "static/css/main.a85bcd76.chunk.css.map": "/splitwiseMB/splitwiseMB.github.io/static/css/main.a85bcd76.chunk.css.map",
+    "static/media/user.png": "/splitwiseMB/splitwiseMB.github.io/static/media/user.8d17db1b.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5980d4ff.js",
+    "static/js/2.f6cb6e2b.chunk.js",
+    "static/css/main.a85bcd76.chunk.css",
+    "static/js/main.46f1de98.chunk.js"
+  ]
+}

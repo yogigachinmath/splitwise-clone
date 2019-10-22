@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./expenses.css";
 import ShowExpense from "./ShowExpenses";
 import data from "../data.json";
-import fire from "../config/fire";
 
 export class AllExpenses extends Component {
   constructor(props) {
@@ -43,12 +42,11 @@ export class AllExpenses extends Component {
             <div className="row">
               <h4 className="mr-auto">All Expenses</h4>
               <div className="dash-header-right ml-auto">
-                <button className="btn btn-orange">Add an expense</button>
-                <button className="btn btn-blue ml-2">Settle up</button>
               </div>
             </div>
           </div>
-          {Object.keys(this.props.expensesData).length ? (
+          {console.log(this.props.expensesData)}
+          {Object.keys(this.props.expensesData).length !== 0 ? (
             Object.keys(this.props.expensesData).map(expense => {
               console.log("here");
               return (

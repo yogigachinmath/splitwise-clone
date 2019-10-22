@@ -313,6 +313,10 @@ input[type="password"] {
 .appendFriendNames p {
   margin: 3px 0;
 }
+.appendGroupNames a:hover,
+.appendFriendNames a:hover {
+  text-decoration: none;
+}
 .groupSidebar .row,
 .friendsSidebar .row {
   cursor: default;

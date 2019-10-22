@@ -47,7 +47,6 @@ export class AllExpenses extends Component {
               </div>
             </div>
           </div>
-          {console.log(this.props.expensesData)}
           {Object.keys(this.props.expensesData).length !== 0 ? (
             Object.keys(this.props.expensesData).map(expense => {
               console.log("here");

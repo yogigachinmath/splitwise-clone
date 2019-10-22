@@ -8,14 +8,15 @@ import fire from "../../config/fire";
 class Expense extends Component {
   constructor(props) {
     super(props);
-    console.log("fdfj", props.match.params);
+    console.log("fdfj", props);
     this.state = {
       currentdesc: "",
       currentamount: "",
       curruser1: "",
       curruser2: "",
       currentUser: this.props.match.params.name,
-      expenses: {}
+      expenses: {},
+      friendDetail: {}
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -46,6 +47,15 @@ class Expense extends Component {
   //     alert("Error occured : Please split amount correctly ");
   //   }
   // }
+  getFriendDetail = async () => {
+    const friendDetail = await fire
+      .firestore()
+      .collection("users")
+      .doc(this.props.match.params.id)
+      .get();
+    console.log(friendDetail.data());
+    this.setState({ friendDetail: friendDetail.data() });
+  };
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value

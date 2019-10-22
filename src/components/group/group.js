@@ -1,30 +1,58 @@
 import React, { Component } from "react";
 import fire from "../../config/fire";
 import GroupMember from "./GroupMember";
+import GroupExpenses from "./GroupExpenses";
+import ShowExpense from "../ShowExpenses";
 
 class group extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      groupDetails: {}
+      groupDetails: {},
+      expensesData: {}
     };
   }
-  getGroupDetails = async () => {
+  async getExpenses(expensesId) {
+    if (expensesId) {
+      let expenses = this.state.expensesData;
+      expensesId.forEach(async expenseId => {
+        const expenseData = await fire
+          .firestore()
+          .collection("expenses")
+          .doc(expenseId)
+          .get();
+        expenses[expenseId] = expenseData.data();
+        this.setState({ expenseData: expenses });
+      });
+    }
+  }
+  async getGroupDetails() {
     const groupDetails = await fire
       .firestore()
       .collection("group")
       .doc(this.props.match.params.groupId)
       .get();
-    console.log(groupDetails.data());
+    if (groupDetails.data().expenses) {
+      this.getExpenses(groupDetails.data().expenses);
+    }
     this.setState({ groupDetails: groupDetails.data() });
-  };
+  }
   componentDidMount() {
+    console.log("in did mount");
     this.getGroupDetails();
+    console.log(this.state.groupDetails);
+  }
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.match.params.groupName !== this.props.match.params.groupName
+    ) {
+      this.setState({ expensesData: {} });
+      this.getGroupDetails();
+    }
   }
   render() {
     return (
       <React.Fragment>
-        {console.log(this.state.groupDetails)}
         <div className="dash-main-content col-md-6">
           <div className="dash-header p-3">
             <div className="row">
@@ -35,13 +63,17 @@ class group extends Component {
               </div>
             </div>
           </div>
-        </div>
-        <div className="right-sidebar col-md-3">
-          {this.state.groupDetails.Members &&
-            this.state.groupDetails.Members.map(member => {
-              return <GroupMember member={member} />;
+          {Object.keys(this.state.expensesData).length !== 0 &&
+            Object.keys(this.state.expensesData).map(expenseId => {
+              return (
+                <ShowExpense
+                  expense={this.state.expensesData[expenseId]}
+                  currentUser={this.props.user.uid}
+                />
+              );
             })}
         </div>
+        <div className="right-sidebar col-md-3"></div>
       </React.Fragment>
     );
   }

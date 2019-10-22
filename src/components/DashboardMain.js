@@ -21,7 +21,7 @@ export class DashboardMain extends Component {
   }
   async getExpenses(expensesId) {
     let expenses = this.state.expensesData;
-    expensesId.forEach(async expenseId => {
+    expensesId.map(async expenseId => {
       const expenseData = await fire
         .firestore()
         .collection("expenses")

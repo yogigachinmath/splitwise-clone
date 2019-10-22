@@ -299,7 +299,7 @@ class Expense extends Component {
                       className="splitPercentage"
                       style={{ display: "none" }}
                     >
-                      <h5>Split Equally</h5>
+                      <h5>Split By Percentage</h5>
                       <div className="innerDetails m-3">
                         <span>You</span>
                         <input

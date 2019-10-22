@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import fire from "../../config/fire";
 import GroupMember from "./GroupMember";
-import GroupExpenses from "./GroupExpenses";
 import ShowExpense from "../ShowExpenses";
 
 class group extends Component {

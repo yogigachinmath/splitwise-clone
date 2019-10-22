@@ -46,19 +46,25 @@ class Dash extends Component {
         });
       } else {
         userData.data().friends.map(val => {
-          // console.log(val, "this is val");
-          friends[val] = {
+          friends[val.id] = {
             name: "",
             friendAllExpenses: [],
             friendTotalAmount: ""
           };
         });
+        // console.log(friends,'lllllllopopopojj')
+        let expensesLen=0;
+        if(userData.data().expenses){
+           expensesLen = userData.data().expenses.length;
+        }
         this.setState({
-          // noOfExpenses: userData.data().expenses.length,
+          noOfExpenses: expensesLen,
           uid: user.uid,
           friends
         });
+        // console.log(this.state.friends,'cdm');
         if (userData.data().expenses !== undefined) {
+          
           userData.data().expenses.map(async expenseId => {
             const expenseData = await fire
               .firestore()
@@ -70,6 +76,7 @@ class Dash extends Component {
             this.setState({
               expenseData: arr
             });
+            // console.log(arr.length,'       ',this.state.noOfExpenses);
             if (arr.length === this.state.noOfExpenses) {
               this.setState({
                 ready: true
@@ -95,10 +102,18 @@ class Dash extends Component {
       }
       // totalbalance,owed,owe
       //friends
-      const friendId = val.friendId;
-      const netBalFriend = val.users[`${friendId}`].netBalance;
-      friend[friendId].friendAllExpenses.push(netBalFriend);
-      friend[friendId].name = val.users[`${friendId}`].name;
+      
+      Object.keys(val.users).map((friendInParticular => {
+        const friendId = friendInParticular;
+        if(friendId !== this.state.uid){
+        const netBalFriend = val.users[`${friendId}`].netBalance;
+        // console.log(friend,friendId,val);
+        friend[friendId].friendAllExpenses.push(netBalFriend);
+        friend[friendId].name = val.users[`${friendId}`].name;
+        }
+      }))
+      
+    
       //friends
     });
 
@@ -123,7 +138,7 @@ class Dash extends Component {
     return this.state.ready === true ? (
       <React.Fragment>
         <div className="dash-main-content col-md-6">
-          {/* {console.log(this.props)} */}
+          {console.log(this.state,'thisismejhdjhj')}
           <div className="dash-header pt-2 pl-3 pr-3 border border-top-0 border-left-0 border-right-0">
             <div className="row">
               <h4 className="mr-auto">Dashboard</h4>
@@ -155,7 +170,8 @@ class Dash extends Component {
               </span>
               <div>
                 {Object.keys(this.state.friends).map(element => {
-                  if (this.state.friends[element].friendTotalAmount > 0) {
+                  if (this.state.friends[element].friendTotalAmount < 0) {
+                   
                     return (
                       <div className="d-flex line-height-18 border border-left-0 border-top-0 border-bottom-0 mt-3">
                         <img
@@ -226,6 +242,7 @@ class Dash extends Component {
     ) : (
       <React.Fragment>
         <div className="dash-main-content col-md-6">
+        {/* {console.log(this.state,'false')} */}
           <div className="dash-header pt-2 pl-3 pr-3 border border-top-0 border-left-0 border-right-0">
             <div className="row">
               <h4 className="mr-auto">Dashboard</h4>

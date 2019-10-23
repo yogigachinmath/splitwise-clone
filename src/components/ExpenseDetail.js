@@ -35,10 +35,10 @@ class ExpenseDetail extends Component {
                 <b>{expense.users[user].name}</b>
                 {expense.users[user].paidShare !== 0 && " paid "}
                 {expense.users[user].paidShare !== 0 && (
-                  <b>&#x20b9;{expense.users[user].paidShare}</b>
+                  <b>&#x20b9;{expense.users[user].paidShare.toFixed(2)}</b>
                 )}
                 {expense.users[user].paidShare !== 0 && " and"} owes{" "}
-                <b>&#x20b9;{expense.users[user].owedBalance}</b>
+                <b>&#x20b9;{expense.users[user].owedBalance.toFixed(2)}</b>
               </small>
             </div>
           );

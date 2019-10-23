@@ -78,6 +78,7 @@ class ShowExpenses extends Component {
                     {this.payer(this.props.expense.users)} paid
                   </small>
                   <span className="font-weight-bold">
+                    {console.log(this.props.expense.cost)}
                     &#x20b9;{this.props.expense.cost}
                   </span>
                 </div>
@@ -100,10 +101,12 @@ class ShowExpenses extends Component {
                     &#x20b9;
                     {this.props.expense.users[this.props.currentUser]
                       .netBalance > 0
-                      ? this.props.expense.users[this.props.currentUser]
-                          .netBalance
-                      : -this.props.expense.users[this.props.currentUser]
-                          .netBalance}
+                      ? this.props.expense.users[
+                          this.props.currentUser
+                        ].netBalance.toFixed(2)
+                      : -this.props.expense.users[
+                          this.props.currentUser
+                        ].netBalance.toFixed(2)}
                   </span>
                 </div>
               </div>

@@ -63,6 +63,7 @@
 }
 .group-link {
   min-width: 10px;
+  width: max-content;
 }
 .font-size-10 {
   font-size: 0.625rem;

@@ -186,6 +186,7 @@ class Expense extends Component {
           curruser1: "",
           curruser2: ""
         });
+        window.location.reload();
       } else {
         alert("Please split the amount correctly!");
       }

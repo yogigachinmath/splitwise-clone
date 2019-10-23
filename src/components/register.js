@@ -167,7 +167,7 @@ export class register extends Component {
                 onClick={this.handleregister}
               >
                 <img src="https://dx0qysuen8cbs.cloudfront.net/assets/fat_rabbit/signup/google-2017-a5b76a1c1eebd99689b571954b1ed40e13338b8a08d6649ffc5ca2ea1bfcb953.png" />
-                <span className="p-2 text-white">Sign up with Google</span>
+                <span className="p-2 text-secondary">Sign up with Google</span>
               </button>
             </form>
           </div>

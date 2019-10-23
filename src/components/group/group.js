@@ -153,12 +153,25 @@ class group extends Component {
         userExpenses.push(expenseRef.id);
         await user.set({ expenses: userExpenses }, { merge: true });
       });
+      let grpExpenses = [];
+      if (this.state.groupDetails.hasOwnProperty("expenses")) {
+        this.state.groupDetails.expenses.forEach(ele => {
+          grpExpenses.push(ele);
+        });
+      }
+      grpExpenses.push(expenseRef.id);
+      await fire
+        .firestore()
+        .collection("group")
+        .doc(this.props.match.params.groupId)
+        .set({ expenses: grpExpenses }, { merge: true });
       this.setState({
         currentdesc: "",
         currentamount: "",
         curruser1: "",
         curruser2: ""
       });
+      window.location.reload();
     } else {
       alert("Please input correctly!");
     }

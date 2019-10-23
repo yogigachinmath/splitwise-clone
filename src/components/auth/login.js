@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../layouts/nav';
 import fire from '../../config/fire';
+import firebase from 'firebase'
 
 class login extends Component {
   constructor(props) {
@@ -15,6 +16,17 @@ class login extends Component {
   }
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+  handlelogin = (e) => {
+    e.preventDefault();
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+    firebase.auth().signInWithPopup(provider).then(u => {
+      console.log('succesfully loggedIn');
+    }).catch = (error) => {
+      console.log(error);  
+    }
   }
   login(e) {
     document.querySelector('.waitLoader').style.display = 'block';
@@ -85,8 +97,9 @@ class login extends Component {
                 >
                   Log in
                 </button>
+                <button className="btn m-2 btn-outline-info" onClick={this.handlelogin} ><img src='https://dx0qysuen8cbs.cloudfront.net/assets/fat_rabbit/signup/google-2017-a5b76a1c1eebd99689b571954b1ed40e13338b8a08d6649ffc5ca2ea1bfcb953.png' /><span className='p-1'>  Google</span></button>
                 <p className="forgetPassword">
-                  Forgot your password? <a href="/forgotPassword"> Click here</a>
+                  {/* Forgot your password? <a href="/forgotPassword"> Click here</a> */}
                 </p>
               </form>
             </div>

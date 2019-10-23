@@ -33,7 +33,7 @@ export const PrivateRouteRegister = ({
         authed === false ? (
           <RouteComponent {...props} />
         ) : (
-          <Redirect to={"/dash/main"} />
+          <Redirect to={"/dashboard"} />
         )
       }
     />

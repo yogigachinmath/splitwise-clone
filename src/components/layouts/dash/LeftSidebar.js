@@ -103,17 +103,17 @@ export class LeftSidebar extends Component {
           .where("name", "==", this.state.name)
           .get();
         if (snap.size > 0) {
-          console.log(snap.size, snap);
+          // console.log(snap.size, snap);
           snap.forEach(doc => {
             friendID = doc.id;
-            console.log("hfgf");
-            console.log(doc.data());
+            // console.log("hfgf");
+            // console.log(doc.data());
             friendsArr.push({
               email: this.state.email,
               name: this.state.name,
               id: doc.id
             });
-            console.log(friendsArr);
+            // console.log(friendsArr);
           });
           fire
             .firestore()
@@ -130,13 +130,13 @@ export class LeftSidebar extends Component {
             .collection("users")
             .doc(friendID)
             .get();
-          console.log(snapFriends2.data());
+          // console.log(snapFriends2.data());
           if (snapFriends2.data().hasOwnProperty("friends")) {
             snapFriends2.data().friends.forEach(doc => {
               friendsArr2.push(doc);
             });
           }
-          console.log(friendsArr2);
+          // console.log(friendsArr2);
           friendsArr2.push({
             id: this.state.user.uid,
             name: this.state.user.displayName,
@@ -152,7 +152,7 @@ export class LeftSidebar extends Component {
               },
               { merge: true }
             );
-          console.log(friendsArr2);
+          // console.log(friendsArr2);
           this.setState({
             friends
           });
@@ -299,6 +299,7 @@ export class LeftSidebar extends Component {
               </a>
             </span>
           </div>
+          {/* {console.log(this.state.group)} */}
           <div className="appendGroupNames ml-3 p-2 text-secondary">
             {this.state.group.length === 0
               ? "You do not have any group"
@@ -338,6 +339,7 @@ export class LeftSidebar extends Component {
               : false}
             {this.state.friends.map(val => (
               <p className="textGroups">
+                {/* {console.log("val", val)} */}
                 <Link
                   to={{
                     pathname: `/dash/friend/${val.id}/${val.name}`,

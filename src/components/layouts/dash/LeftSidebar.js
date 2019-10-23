@@ -184,7 +184,7 @@ export class LeftSidebar extends Component {
   }
   handleChangeOverClick = e => {
     document.querySelectorAll(".sidebarText").forEach(element => {
-      element.classList.remove("colorBlue");
+      element.firstChild.classList.remove("colorBlue");
     });
     e.target.classList.add("colorBlue");
     if (e.target.classList.contains("dashClass")) {
@@ -287,7 +287,7 @@ export class LeftSidebar extends Component {
         <div className="row mt-2">
           <Link to={`/expenses`}>
             <span className="fa fa-bars"></span>
-            <span className="sidebarExpensesText ml-2 lh">All expenses</span>
+            <span className="sidebarExpensesText sidebarText ml-2 lh" onClick={this.handleChangeOverClick}>All expenses</span>
           </Link>
         </div>
         <div className="groupSidebar">
@@ -305,7 +305,7 @@ export class LeftSidebar extends Component {
               ? "You do not have any group"
               : false}
             {this.state.group.map(ele => (
-              <p className="textGroups">
+              <p className="sidebarText textGroups"  onClick={this.handleChangeOverClick}>
                 {/* {console.log(ele,'ele')} */}
                 <Link
                   to={{
@@ -338,7 +338,7 @@ export class LeftSidebar extends Component {
               ? "You do not have any friends"
               : false}
             {this.state.friends.map(val => (
-              <p className="textGroups">
+              <p className="textGroups sidebarText" onClick={this.handleChangeOverClick}>
                 {console.log("val", val)}
                 <Link
                   to={{

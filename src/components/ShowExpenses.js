@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ExpenseDetail from "./ExpenseDetail";
+import moment from "moment";
 
 class ShowExpenses extends Component {
   state = { showExpenseDetails: false };
@@ -32,10 +33,18 @@ class ShowExpenses extends Component {
         <div className="expense" onClick={this.showDetails}>
           <div className="row expence-row line-height-18 border border-top-0 border-left-0 border-right-0">
             <div className="d-flex justify-content-between container">
-              <div className="d-flex expenses-child-1 ">
-                <div className="d-flex flex-column mr-2 text-secondary">
-                  <small>Oct</small>
-                  <h5 className="line-height-18">14</h5>
+              <div className="d-flex expenses-child-1 align-items-center">
+                <div className="d-flex flex-column mr-2 text-secondary align-items-center line-height-18">
+                  <small className="text-uppercase font-size-10">
+                    {moment
+                      .unix(this.props.expense.createdAt.seconds)
+                      .format("MMM")}
+                  </small>
+                  <h5 className="line-height-18 mb-1">
+                    {moment
+                      .unix(this.props.expense.createdAt.seconds)
+                      .format("DD")}
+                  </h5>
                 </div>
                 <img
                   className="expense-img mr-2"
@@ -49,10 +58,13 @@ class ShowExpenses extends Component {
                   >
                     {this.props.expense.description}
                   </a>
-                  {this.props.expense.groupId ? (
-                    <a href="#">
+                  {this.props.expense.group && !this.props.group ? (
+                    <a
+                      href={`./group/${this.props.expense.group.id}/${this.props.expense.group.name}`}
+                      className="group-link"
+                    >
                       <small className="text-secondary group-expense-link">
-                        Hacker
+                        {this.props.expense.group.name}
                       </small>
                     </a>
                   ) : (
@@ -66,7 +78,8 @@ class ShowExpenses extends Component {
                     {this.payer(this.props.expense.users)} paid
                   </small>
                   <span className="font-weight-bold">
-                    INR {this.props.expense.cost}
+                    {console.log(this.props.expense.cost)}
+                    &#x20b9;{this.props.expense.cost}
                   </span>
                 </div>
                 <div className="d-flex flex-column w-50">
@@ -85,13 +98,15 @@ class ShowExpenses extends Component {
                         : "font-weight-bold orange-color"
                     }
                   >
-                    INR
+                    &#x20b9;
                     {this.props.expense.users[this.props.currentUser]
                       .netBalance > 0
-                      ? this.props.expense.users[this.props.currentUser]
-                          .netBalance
-                      : -this.props.expense.users[this.props.currentUser]
-                          .netBalance}
+                      ? this.props.expense.users[
+                          this.props.currentUser
+                        ].netBalance.toFixed(2)
+                      : -this.props.expense.users[
+                          this.props.currentUser
+                        ].netBalance.toFixed(2)}
                   </span>
                 </div>
               </div>

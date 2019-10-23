@@ -1,20 +1,70 @@
-import React, { Component } from "react";
-import fire from "../config/fire";
+import React, { Component } from 'react';
+import fire from '../config/fire';
 import 'firebase/firestore';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase';
 
 export class register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      email: "",
-      password: ""
+      name: '',
+      email: '',
+      password: ''
     };
     this.register = this.register.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+  handleregister = e => {
+    e.preventDefault();
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(u => {
+        fire
+          .firestore()
+          .collection('users')
+          .doc(u.user.uid)
+          .get()
+          .then(val => {
+            console.log("exact" in val, 'val222');
+            if ("exact" in val === false) {
+              console.log('sdkjdh');
+              u.user.updateProfile({
+                displayName: u.user.providerData[0].displayName
+              });
+              fire
+                .firestore()
+                .collection('users')
+                .doc(u.user.uid)
+                .set({
+                  name: u.user.displayName,
+                  email: u.user.email
+                })
+                .then(() => {
+                  this.props.history.push('/dashboard');
+                })
+                .catch(error => {
+                  console.log('error', error);
+                  document.querySelector('.errorMsg').textContent = error;
+                  document.querySelector('.errorMsg').style.display = 'block';
+                });
+            }
+          }).catch = () => {
+          console.log('this is me');
+        };
+      })
+      .catch(error => {
+        console.log('error', error);
+        document.querySelector('.errorMsg').textContent = error;
+        document.querySelector('.errorMsg').style.display = 'block';
+      });
+  };
   displayContentOnChange = e => {
-    e.target.parentElement.nextSibling.style.display = "block";
+    e.target.parentElement.nextSibling.style.display = 'block';
     this.setState({ [e.target.name]: e.target.value });
   };
   handleChange(e) {
@@ -30,7 +80,7 @@ export class register extends Component {
       .then(u => {
         u.user.updateProfile({
           displayName: this.state.name
-        })
+        });
         console.log(u.user.uid);
         fire.firestore().collection('users').doc(u.user.uid).set({
           name: this.state.name,
@@ -51,7 +101,7 @@ export class register extends Component {
         document.querySelector('.signUpBtn').style.display = 'block';
       });
   }
-  
+
   render() {
     return (
       <div className="container main">
@@ -105,13 +155,20 @@ export class register extends Component {
               </div>
               <div className="showWait" style={{display: 'none'}}>wait...</div>
               <div className="bg-danger text-light errorMsg p-3 my-2"></div>
-                <button
-                  type="submit"
-                  className="btn btn-orange signUpBtn"
-                  onClick={this.register}
-                >
-                  Sign me up!
-                </button>
+              <button
+                type="submit"
+                className="btn btn-orange signUpBtn"
+                onClick={this.register}
+              >
+                Sign me up!
+              </button>
+              <button
+                className="btn btn-outline-success googlebtn m-3 "
+                onClick={this.handleregister}
+              >
+                <img src="https://dx0qysuen8cbs.cloudfront.net/assets/fat_rabbit/signup/google-2017-a5b76a1c1eebd99689b571954b1ed40e13338b8a08d6649ffc5ca2ea1bfcb953.png" />
+                <span className="p-2 text-white">Sign up with Google</span>
+              </button>
             </form>
           </div>
         </div>

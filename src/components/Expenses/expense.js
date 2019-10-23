@@ -4,18 +4,19 @@ import FriendExenses from "../FriendExpenses";
 import NoExpenses from "../noExpenses";
 import firebase from "firebase";
 import fire from "../../config/fire";
+import ShowExpense from "../ShowExpenses";
 
 class Expense extends Component {
   constructor(props) {
     super(props);
-    console.log("fdfj", props.match.params);
     this.state = {
       currentdesc: "",
       currentamount: "",
       curruser1: "",
       curruser2: "",
       currentUser: this.props.match.params.name,
-      expenses: {}
+      expensesData: [],
+      friendDetail: {}
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -46,6 +47,15 @@ class Expense extends Component {
   //     alert("Error occured : Please split amount correctly ");
   //   }
   // }
+  getFriendDetail = async () => {
+    const friendDetail = await fire
+      .firestore()
+      .collection("users")
+      .doc(this.props.match.params.id)
+      .get();
+    console.log(friendDetail.data());
+    this.setState({ friendDetail: friendDetail.data() });
+  };
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -123,31 +133,31 @@ class Expense extends Component {
         console.log("expensesRef", expenseRef.id);
         await expenseRef.set(expense);
         let authUser = fire
-        .firestore()
-        .collection("users")
-        .doc(this.props.user.uid);
+          .firestore()
+          .collection("users")
+          .doc(this.props.user.uid);
         let authUserExpenses = [];
         let snapAuthUser = await authUser.get();
-          if(snapAuthUser.data().hasOwnProperty('expenses')){
-            snapAuthUser.data().expenses.forEach(ele => {
-              authUserExpenses.push(ele);
-            })
-          }
+        if (snapAuthUser.data().hasOwnProperty("expenses")) {
+          snapAuthUser.data().expenses.forEach(ele => {
+            authUserExpenses.push(ele);
+          });
+        }
         authUserExpenses.push(expenseRef.id);
-        await authUser.set({expenses: authUserExpenses}, {merge: true});
+        await authUser.set({ expenses: authUserExpenses }, { merge: true });
         let friendUser = fire
-        .firestore()
-        .collection("users")
-        .doc(this.props.match.params.id);
+          .firestore()
+          .collection("users")
+          .doc(this.props.match.params.id);
         let friendUserExpenses = [];
         let snapFriendUser = await friendUser.get();
-          if(snapFriendUser.data().hasOwnProperty('expenses')){
-            snapFriendUser.data().expenses.forEach(ele => {
-              friendUserExpenses.push(ele);
-            })
-          }
+        if (snapFriendUser.data().hasOwnProperty("expenses")) {
+          snapFriendUser.data().expenses.forEach(ele => {
+            friendUserExpenses.push(ele);
+          });
+        }
         friendUserExpenses.push(expenseRef.id);
-        await friendUser.set({expenses: friendUserExpenses}, {merge: true});
+        await friendUser.set({ expenses: friendUserExpenses }, { merge: true });
         // let userExpenses = fire
         //   .firestore()
         //   .collection("users")
@@ -170,12 +180,12 @@ class Expense extends Component {
         //     };
         //     expenses[length] = expense;
         //     console.log(expenses);
-            this.setState({
-              currentdesc: "",
-              currentamount: "",
-              curruser1: "",
-              curruser2: ""
-            });
+        this.setState({
+          currentdesc: "",
+          currentamount: "",
+          curruser1: "",
+          curruser2: ""
+        });
       } else {
         alert("Please split the amount correctly!");
       }
@@ -185,76 +195,108 @@ class Expense extends Component {
   };
   // this.props.addTodo(this.state.title);
   // this.setState({ title: "" });
+
+  getExpensesWithFriend(expensesData) {
+    let expensesWithFriend = [];
+    expensesData.forEach(expense => {
+      if (expense.users[this.props.match.params.id] && expense.friendId) {
+        expensesWithFriend.push(expense);
+      }
+    });
+    return expensesWithFriend;
+  }
+  sortExpenses(expenses) {
+    expenses.sort(function(a, b) {
+      return b.createdAt.seconds - a.createdAt.seconds;
+    });
+    return expenses;
+  }
+  getUserBalance(expenses) {
+    const userBalance = expenses.reduce((totalBalance, expense) => {
+      totalBalance += expense.users[this.props.user.uid].netBalance;
+      return totalBalance;
+    }, 0);
+    return userBalance;
+  }
+
   render() {
-    let expenses = this.state.expenses;
-    const length = Object.keys(expenses).length;
+    const userBalance = this.getUserBalance(
+      this.getExpensesWithFriend(this.props.expensesData)
+    );
     return (
-      <div className="dash-main-content col-md-6">
-        {/* MOdal */}
-        <form onSubmit={this.onSubmit}>
-          <div
-            className="modal fade"
-            id="exampleModalCenter"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header" style={{ background: "#5cc5a7" }}>
-                  <h6 className="modal-title" id="exampleModalCenterTitle">
-                    Add an expense
-                  </h6>
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="modal"
-                    style={{ color: "white" }}
-                    aria-label="Close"
+      <React.Fragment>
+        <div className="dash-main-content col-md-6">
+          {/* MOdal */}
+          <form onSubmit={this.onSubmit}>
+            <div
+              className="modal fade"
+              id="exampleModalCenter"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalCenterTitle"
+              aria-hidden="true"
+            >
+              <div
+                className="modal-dialog modal-dialog-centered"
+                role="document"
+              >
+                <div className="modal-content">
+                  <div
+                    className="modal-header"
+                    style={{ background: "#5cc5a7" }}
                   >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <p className="modal-title" id="exampleModalCenterTitle">
-                    With <b>you</b> and <b>{this.props.match.params.name}</b>
-                  </p>
-                  <hr />
-                  <div className="infoDesc">
-                    <img src="/img/desc.png" />
-                    <div className="main-content">
-                      <input
-                        type="text"
-                        className="description ml-3 mb-4"
-                        name={"currentdesc"}
-                        onChange={this.handleChange}
-                        value={this.state.currentdesc}
-                        placeholder="Enter a description"
-                        style={{ "font-size": "20px" }}
-                      />
-                      <div className="cost-conatiner ml-3">
-                        <span className="currency_code">Rs</span>
+                    <h6 className="modal-title" id="exampleModalCenterTitle">
+                      Add an expense
+                    </h6>
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      style={{ color: "white" }}
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div className="modal-body">
+                    <p className="modal-title" id="exampleModalCenterTitle">
+                      With <b>you</b> and <b>{this.props.match.params.name}</b>
+                    </p>
+                    <hr />
+                    <div className="infoDesc">
+                      <img src="/img/desc.png" />
+                      <div className="main-content">
                         <input
-                          type="number"
-                          className="ml-1 mb-2"
-                          name={"currentamount"}
+                          type="text"
+                          className="description ml-3 mb-4"
+                          name={"currentdesc"}
                           onChange={this.handleChange}
-                          placeholder="0.00"
-                          value={this.state.currentamount}
+                          value={this.state.currentdesc}
+                          placeholder="Enter a description"
+                          style={{ "font-size": "20px" }}
                         />
+                        <div className="cost-conatiner ml-3">
+                          <span className="currency_code">Rs</span>
+                          <input
+                            type="number"
+                            className="ml-1 mb-2"
+                            name={"currentamount"}
+                            onChange={this.handleChange}
+                            placeholder="0.00"
+                            value={this.state.currentamount}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="splitAmount mt-3">
-                    <div className="row mb-3">
-                      <button
-                        className="btn btn-secondary mr-2"
-                        onClick={this.showSplitEqually}
-                      >
-                        =
-                      </button>
-                      {/* <button
+                    <div className="splitAmount mt-3">
+                      <div className="row mb-3">
+                        <button
+                          className="btn btn-secondary mr-2"
+                          onClick={this.showSplitEqually}
+                        >
+                          =
+                        </button>
+                        {/* <button
                         className="btn btn-secondary mr-2"
                         onClick={this.showSplitExact}
                       >
@@ -266,35 +308,35 @@ class Expense extends Component {
                       >
                         %
                       </button> */}
-                    </div>
-                    <div className="splitEqually">
-                      <h5>Split Equally</h5>
-                      <div className="innerDetails m-3">
-                        <span>You</span>
-                        <input
-                          type="number"
-                          className="description ml-1 mb-2"
-                          name={"curruser1"}
-                          onChange={this.handleChange}
-                          placeholder="0.00"
-                          value={this.state.curruser1}
-                          readOnly
-                        />
                       </div>
-                      <div className="innerDetails m-3">
-                        <span>{this.props.match.params.name}</span>
-                        <input
-                          type="number"
-                          className="description ml-1 mb-2"
-                          name={"curruser2"}
-                          onChange={this.handleChange}
-                          placeholder="0.00"
-                          value={this.state.curruser2}
-                          readOnly
-                        />
+                      <div className="splitEqually">
+                        <h5>Split Equally</h5>
+                        <div className="innerDetails m-3">
+                          <span>You</span>
+                          <input
+                            type="number"
+                            className="description ml-1 mb-2"
+                            name={"curruser1"}
+                            onChange={this.handleChange}
+                            placeholder="0.00"
+                            value={this.state.curruser1}
+                            readOnly
+                          />
+                        </div>
+                        <div className="innerDetails m-3">
+                          <span>{this.props.match.params.name}</span>
+                          <input
+                            type="number"
+                            className="description ml-1 mb-2"
+                            name={"curruser2"}
+                            onChange={this.handleChange}
+                            placeholder="0.00"
+                            value={this.state.curruser2}
+                            readOnly
+                          />
+                        </div>
                       </div>
-                    </div>
-                    {/* <div className="splitExact" style={{ display: "none" }}>
+                      {/* <div className="splitExact" style={{ display: "none" }}>
                       <h5>Split by exact amounts</h5>
                       <div className="innerDetails m-3">
                         <span>You</span>
@@ -348,46 +390,77 @@ class Expense extends Component {
                         />
                       </div>
                     </div> */}
+                    </div>
                   </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Save changes
-                  </button>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="submit" className="btn btn-primary">
+                      Save changes
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
-        {/* modal */}
-        <div className="dash-header p-3">
-          <div className="row">
-            <h4 className="mr-auto">{this.props.match.params.name}</h4>
-            <div className="dash-header-right ml-auto">
-              <button
-                type="button"
-                className="btn btn-orange"
-                data-toggle="modal"
-                data-target="#exampleModalCenter"
-              >
-                Add an expense
-              </button>
+          </form>
+          {/* modal */}
+          <div className="dash-header p-3">
+            <div className="row">
+              <h4 className="mr-auto">{this.props.match.params.name}</h4>
+              <div className="dash-header-right ml-auto">
+                <button
+                  type="button"
+                  className="btn btn-orange"
+                  data-toggle="modal"
+                  data-target="#exampleModalCenter"
+                >
+                  Add an expense
+                </button>
+              </div>
             </div>
           </div>
+          {this.props.expensesData.length > 0 &&
+          this.getExpensesWithFriend(this.props.expensesData).length > 0 ? (
+            this.sortExpenses(
+              this.getExpensesWithFriend(this.props.expensesData)
+            ).map(expense => {
+              return (
+                <ShowExpense
+                  expense={expense}
+                  currentUser={this.props.user.uid}
+                />
+              );
+            })
+          ) : (
+            <NoExpenses />
+          )}
         </div>
-        {length > 0 ? (
-          <FriendExenses expenses={this.state.expenses} />
-        ) : (
-          <NoExpenses />
-        )}
-      </div>
+        <div className="right-sidebar col-md-3 p-3">
+          <small className="text-secondary font-weight-bold font-size-13">
+            YOUR BALANCE
+          </small>
+          {userBalance === 0 ? (
+            <div className="d-flex flex-column mt-2 text-secondary">
+              <span>You are all settled up</span>
+            </div>
+          ) : userBalance > 0 ? (
+            <div className="d-flex flex-column mt-2 colorBlue">
+              <span className="">{this.props.match.params.name} owes you</span>
+              <h3 className="font-weight-bold">&#x20b9;{userBalance}</h3>
+            </div>
+          ) : (
+            <div className="d-flex flex-column mt-2 orange-color">
+              <span className="">You owe {this.props.match.params.name}</span>
+              <h3 className="font-weight-bold">&#x20b9;{-userBalance}</h3>
+            </div>
+          )}
+        </div>
+      </React.Fragment>
     );
   }
 }

@@ -1,8 +1,11 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-export const PrivateRoute = ({ component: RouteComponent, authed, ...rest }) => {
-  console.log(authed);
+export const PrivateRoute = ({
+  component: RouteComponent,
+  authed,
+  ...rest
+}) => {
   return (
     <Route
       {...rest}
@@ -15,9 +18,13 @@ export const PrivateRoute = ({ component: RouteComponent, authed, ...rest }) => 
       }
     />
   );
-}
- 
-export const PrivateRouteRegister = ({ component: RouteComponent, authed, ...rest }) => {
+};
+
+export const PrivateRouteRegister = ({
+  component: RouteComponent,
+  authed,
+  ...rest
+}) => {
   console.log(authed);
   return (
     <Route
@@ -26,9 +33,9 @@ export const PrivateRouteRegister = ({ component: RouteComponent, authed, ...res
         authed === false ? (
           <RouteComponent {...props} />
         ) : (
-          <Redirect to={"/dash/main"} />
+          <Redirect to={"/dashboard"} />
         )
       }
     />
   );
-}
+};

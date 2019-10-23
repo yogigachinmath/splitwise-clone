@@ -83,9 +83,10 @@ export class DashboardMain extends Component {
   render() {
     return (
       <React.Fragment>
-        {Object.keys(this.props.expenses).map(expense => {
+        <h2>New</h2>
+        {/*Object.keys(this.props.expenses).map(expense => {
           return <Expense expense={this.props.expenses[expense]} />;
-        })}
+        })*/}
       </React.Fragment>
     );
   }

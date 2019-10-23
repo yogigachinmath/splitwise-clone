@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import fire from "../../config/fire";
 import GroupMember from "./GroupMember";
+import ShowExpense from "../ShowExpenses";
 import firebase from "firebase";
 
 class group extends Component {
@@ -10,9 +11,37 @@ class group extends Component {
       groupDetails: {},
       currentdesc: "",
       currentamount: "",
-      splitAmount: ""
+      splitAmount: "",
+      expensesData: []
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+  getUserBalances(expenses) {
+    const userBalances = expenses.reduce((balances, expense) => {
+      let currentBalances = balances;
+      Object.keys(expense.users).forEach(user => {
+        currentBalances[user]
+          ? (currentBalances[user] += expense.users[user].netBalance)
+          : (currentBalances[user] = expense.users[user].netBalance);
+      });
+      balances = currentBalances;
+      return balances;
+    }, {});
+    return userBalances;
+  }
+  async getExpenses(expensesId) {
+    if (expensesId) {
+      let expenses = this.state.expensesData;
+      expensesId.forEach(async expenseId => {
+        const expenseData = await fire
+          .firestore()
+          .collection("expenses")
+          .doc(expenseId)
+          .get();
+        expenses.push(expenseData.data());
+        this.setState({ expenseData: expenses });
+      });
+    }
   }
 
   handleChange(e) {
@@ -27,11 +56,27 @@ class group extends Component {
       .collection("group")
       .doc(this.props.match.params.groupId)
       .get();
-    console.log(groupDetails.data());
+    if (groupDetails.data().expenses) {
+      this.getExpenses(groupDetails.data().expenses);
+    }
     this.setState({ groupDetails: groupDetails.data() });
   };
+  sortExpenses(expenses) {
+    expenses.sort(function(a, b) {
+      return b.createdAt.seconds - a.createdAt.seconds;
+    });
+    return expenses;
+  }
   componentDidMount() {
     this.getGroupDetails();
+  }
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.match.params.groupName !== this.props.match.params.groupName
+    ) {
+      this.setState({ expensesData: [] });
+      this.getGroupDetails();
+    }
   }
 
   showSplitEqually = e => {
@@ -52,22 +97,24 @@ class group extends Component {
     if (this.state.currentamount !== "" && this.state.currentdesc !== "") {
       let users = {};
       this.state.groupDetails.Members.forEach(mem => {
-        if(mem.id === this.props.user.uid) {
+        if (mem.id === this.props.user.uid) {
           users[mem.id] = {
             name: mem.name,
-            netBalance: +this.state.splitAmount*this.state.groupDetails.Members.length - +this.state.splitAmount,
+            netBalance:
+              +this.state.splitAmount * this.state.groupDetails.Members.length -
+              +this.state.splitAmount,
             owedBalance: +this.state.splitAmount,
             paidShare: +this.state.currentamount
-          }
+          };
         } else {
           users[mem.id] = {
             name: mem.name,
             netBalance: -+this.state.splitAmount,
             owedBalance: +this.state.splitAmount,
             paidShare: 0
-          }
+          };
         }
-      })
+      });
 
       const expense = {
         cost: this.state.currentamount,
@@ -91,7 +138,7 @@ class group extends Component {
         .doc();
       console.log("expensesRef", expenseRef.id);
       await expenseRef.set(expense);
-      this.state.groupDetails.Members.forEach(async mem => {       
+      this.state.groupDetails.Members.forEach(async mem => {
         let user = fire
           .firestore()
           .collection("users")
@@ -105,7 +152,7 @@ class group extends Component {
         }
         userExpenses.push(expenseRef.id);
         await user.set({ expenses: userExpenses }, { merge: true });
-      })
+      });
       this.setState({
         currentdesc: "",
         currentamount: "",
@@ -117,6 +164,7 @@ class group extends Component {
     }
   };
   render() {
+    const userBalances = this.getUserBalances(this.state.expensesData);
     return (
       <React.Fragment>
         {console.log(this.state.groupDetails)}
@@ -200,7 +248,12 @@ class group extends Component {
                     </div>
                     <div className="splitEqually">
                       <h5>Split Equally</h5>
-                      <span className="showSplittedAmount" style={{display: 'none'}}>Individual Share: {this.state.splitAmount}</span>
+                      <span
+                        className="showSplittedAmount"
+                        style={{ display: "none" }}
+                      >
+                        Individual Share: {this.state.splitAmount}
+                      </span>
                     </div>
                     {/* <div className="splitExact" style={{ display: "none" }}>
                       <h5>Split by exact amounts</h5>
@@ -291,11 +344,26 @@ class group extends Component {
               </div>
             </div>
           </div>
+          {this.state.expensesData.length !== 0 &&
+            this.sortExpenses(this.state.expensesData).map(expenseId => {
+              return (
+                <ShowExpense
+                  expense={expenseId}
+                  currentUser={this.props.user.uid}
+                  group="yes"
+                />
+              );
+            })}
         </div>
-        <div className="right-sidebar col-md-3">
+        <div className="right-sidebar col-md-3 p-3">
+          <small className="text-secondary font-weight-bold font-size-13">
+            GROUP BALANCES
+          </small>
           {this.state.groupDetails.Members &&
             this.state.groupDetails.Members.map(member => {
-              return <GroupMember member={member} />;
+              return (
+                <GroupMember member={member} userBalances={userBalances} />
+              );
             })}
         </div>
       </React.Fragment>

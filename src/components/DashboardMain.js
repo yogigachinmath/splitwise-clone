@@ -15,19 +15,19 @@ export class DashboardMain extends Component {
     this.state = {
       user: {},
       currentUser: {},
-      expensesData: {},
+      expensesData: [],
       expenseData: []
     };
   }
   async getExpenses(expensesId) {
     let expenses = this.state.expensesData;
-    expensesId.forEach(async expenseId => {
+    expensesId.map(async expenseId => {
       const expenseData = await fire
         .firestore()
         .collection("expenses")
         .doc(expenseId)
         .get();
-      expenses[expenseId] = expenseData.data();
+      expenses.push(expenseData.data());
       this.setState({ expensesData: expenses });
     });
   }

@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/split-wise-project/static/css/main.973b59cd.chunk.css",
-    "main.js": "/split-wise-project/static/js/main.66fdbcb1.chunk.js",
-    "main.js.map": "/split-wise-project/static/js/main.66fdbcb1.chunk.js.map",
-    "runtime-main.js": "/split-wise-project/static/js/runtime-main.f2e0a3c8.js",
-    "runtime-main.js.map": "/split-wise-project/static/js/runtime-main.f2e0a3c8.js.map",
-    "static/js/2.ee656633.chunk.js": "/split-wise-project/static/js/2.ee656633.chunk.js",
-    "static/js/2.ee656633.chunk.js.map": "/split-wise-project/static/js/2.ee656633.chunk.js.map",
-    "index.html": "/split-wise-project/index.html",
-    "precache-manifest.6745e8be6e777261c1ecfa97ae36d2de.js": "/split-wise-project/precache-manifest.6745e8be6e777261c1ecfa97ae36d2de.js",
-    "service-worker.js": "/split-wise-project/service-worker.js",
-    "static/css/main.973b59cd.chunk.css.map": "/split-wise-project/static/css/main.973b59cd.chunk.css.map",
-    "static/media/user.png": "/split-wise-project/static/media/user.8d17db1b.png"
+    "main.css": "/arunprajapati1/split-wise-project/static/css/main.973b59cd.chunk.css",
+    "main.js": "/arunprajapati1/split-wise-project/static/js/main.844ef383.chunk.js",
+    "main.js.map": "/arunprajapati1/split-wise-project/static/js/main.844ef383.chunk.js.map",
+    "runtime-main.js": "/arunprajapati1/split-wise-project/static/js/runtime-main.34af9d62.js",
+    "runtime-main.js.map": "/arunprajapati1/split-wise-project/static/js/runtime-main.34af9d62.js.map",
+    "static/js/2.a5a839ba.chunk.js": "/arunprajapati1/split-wise-project/static/js/2.a5a839ba.chunk.js",
+    "static/js/2.a5a839ba.chunk.js.map": "/arunprajapati1/split-wise-project/static/js/2.a5a839ba.chunk.js.map",
+    "index.html": "/arunprajapati1/split-wise-project/index.html",
+    "precache-manifest.0157917bb31047f4dc97a680d9c20f52.js": "/arunprajapati1/split-wise-project/precache-manifest.0157917bb31047f4dc97a680d9c20f52.js",
+    "service-worker.js": "/arunprajapati1/split-wise-project/service-worker.js",
+    "static/css/main.973b59cd.chunk.css.map": "/arunprajapati1/split-wise-project/static/css/main.973b59cd.chunk.css.map",
+    "static/media/user.png": "/arunprajapati1/split-wise-project/static/media/user.8d17db1b.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.f2e0a3c8.js",
-    "static/js/2.ee656633.chunk.js",
+    "static/js/runtime-main.34af9d62.js",
+    "static/js/2.a5a839ba.chunk.js",
     "static/css/main.973b59cd.chunk.css",
-    "static/js/main.66fdbcb1.chunk.js"
+    "static/js/main.844ef383.chunk.js"
   ]
 }
